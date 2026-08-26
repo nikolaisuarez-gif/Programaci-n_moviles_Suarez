@@ -1,11 +1,7 @@
 package com.Suarez.lab02carritokotlinconIA
 
-/**
- * DATA CLASS PRODUCTO
- * nombre y precio son 'val' porque no deben cambiar (inmutables).
- * cantidad es 'var' porque el usuario puede decidir llevar más después (mutable).
- * Si intentamos cambiar el precio (val), el programa dará un error de compilación.
- */
+import java.util.Scanner
+
 data class Producto(
     val nombre: String,
     val precio: Double,
@@ -13,71 +9,109 @@ data class Producto(
 )
 
 fun main() {
+    val lector = Scanner(System.`in`)
+    val carrito = mutableListOf<Producto>()
+    
+    // Catálogo de productos disponibles
+    val catalogo = listOf(
+        Producto("Laptop HP", 2500.0, 0),
+        Producto("Mouse Logitech", 45.5, 0),
+        Producto("Teclado Gamer", 120.0, 0),
+        Producto("Monitor LG", 850.0, 0),
+        Producto("Audifonos Sony", 250.0, 0)
+    )
+
     println("=========================================")
     println(" CARRITO DE COMPRAS - TIENDA TECSUP ")
     println("=========================================")
-
-    val nombreCliente = "Nikolai Suarez"
-    val carrito = mutableListOf<Producto>()
-
-    println("Cliente: $nombreCliente")
-    println()
-
-    // 2. Agregar productos iniciales
-    carrito.add(Producto("Laptop HP", 2500.0, 1))
-    carrito.add(Producto("Mouse Logitech", 45.5, 2))
-    carrito.add(Producto("Teclado Gamer", 120.0, 1))
-    carrito.add(Producto("Monitor LG", 850.0, 1))
-
-    println("PRODUCTOS AGREGADOS:")
-    for (producto in carrito) {
-        println("- Producto agregado: ${producto.nombre}")
-    }
-    println()
-
-    // 4. Mostrar detalle inicial
-    mostrarDetalle(carrito)
     
-    // 3, 5 y 6. Cálculos, producto caro y totales
-    imprimirResumen(carrito)
+    // 1. Registro del Cliente
+    print("Ingrese su nombre completo: ")
+    val nombreCliente = lector.nextLine()
+    println("\n¡Bienvenido/a $nombreCliente!")
 
-    // 7. Reto: Buscar producto
-    println("\n--- BUSQUEDA DE PRODUCTO ---")
-    val aBuscar = "laptop hp"
-    val encontrado = buscarProducto(carrito, aBuscar)
-    if (encontrado != null) {
-        println("Encontrado: ${encontrado.nombre} (S/ ${encontrado.precio})")
-    } else {
-        println("El producto '$aBuscar' no se encuentra.")
-    }
+    var opcion: Int
+    do {
+        println("\n--- MENÚ PRINCIPAL ---")
+        println("1. Ver catálogo y agregar al carrito")
+        println("2. Ver mi carrito")
+        println("3. Buscar producto en el carrito")
+        println("4. Eliminar producto del carrito")
+        println("5. Finalizar compra (Checkout)")
+        println("0. Salir")
+        print("Seleccione una opción: ")
+        
+        opcion = lector.nextInt()
+        lector.nextLine() // Limpiar el buffer
 
-    // 7. Reto: Eliminar producto (Mouse Logitech)
-    println("\n--- ELIMINANDO PRODUCTO (Mouse Logitech) ---")
-    carrito.removeIf { it.nombre.equals("Mouse Logitech", ignoreCase = true) }
+        when (opcion) {
+            1 -> {
+                println("\n--- CATÁLOGO ---")
+                catalogo.forEachIndexed { index, p -> 
+                    println("${index + 1}. ${p.nombre} (S/ ${p.precio})") 
+                }
+                print("Elija el número del producto: ")
+                val indice = lector.nextInt() - 1
+                if (indice in catalogo.indices) {
+                    print("¿Cuántas unidades de '${catalogo[indice].nombre}' desea? ")
+                    val cant = lector.nextInt()
+                    if (cant > 0) {
+                        // Agregamos una copia con la cantidad elegida
+                        val pElegido = catalogo[indice].copy(cantidad = cant)
+                        carrito.add(pElegido)
+                        println("¡Agregado con éxito!")
+                    } else println("Cantidad no válida.")
+                } else println("Opción incorrecta.")
+            }
+            2 -> {
+                if (carrito.isEmpty()) println("El carrito está vacío.")
+                else {
+                    mostrarDetalle(carrito)
+                    imprimirResumen(carrito)
+                }
+            }
+            3 -> {
+                print("Nombre del producto a buscar: ")
+                val nombre = lector.nextLine()
+                val hallado = buscarProducto(carrito, nombre)
+                if (hallado != null) {
+                    println("Encontrado: ${hallado.nombre} x${hallado.cantidad} - S/ ${hallado.precio}")
+                } else println("No se encontró '$nombre' en tu carrito.")
+            }
+            4 -> {
+                print("Nombre del producto a eliminar: ")
+                val eliminar = lector.nextLine()
+                val removido = carrito.removeIf { it.nombre.equals(eliminar, ignoreCase = true) }
+                if (removido) println("Producto eliminado.")
+                else println("No se encontró el producto.")
+            }
+            5 -> {
+                if (carrito.isEmpty()) {
+                    println("No puedes finalizar si el carrito está vacío.")
+                } else {
+                    println("\n--- TICKET FINAL ---")
+                    println("Cliente: $nombreCliente")
+                    mostrarDetalle(carrito)
+                    imprimirResumen(carrito)
+                    println("¡Gracias por su compra!")
+                    opcion = 0 // Salir del loop
+                }
+            }
+        }
+    } while (opcion != 0)
 
-    // Mostrar detalle actualizado
-    println("REPORTE FINAL ACTUALIZADO:")
-    mostrarDetalle(carrito)
-    imprimirResumen(carrito)
-
-    println("=========================================")
+    println("\nPrograma finalizado. ¡Vuelve pronto!")
 }
 
-// --- FUNCIONES DE CÁLCULO (Parte 3) ---
+// --- FUNCIONES DE LÓGICA (Manteniendo la estructura anterior) ---
 
 fun calcularSubtotal(productos: List<Producto>): Double {
-    var subtotal = 0.0
-    for (p in productos) {
-        subtotal += p.precio * p.cantidad
-    }
-    return subtotal
+    return productos.sumOf { it.precio * it.cantidad }
 }
 
 fun calcularIGV(subtotal: Double): Double = subtotal * 0.18
 
 fun calcularTotal(subtotal: Double, igv: Double): Double = subtotal + igv
-
-// --- LÓGICA DE DESCUENTO (Parte 6) ---
 
 fun calcularDescuento(total: Double): Double {
     return when {
@@ -87,11 +121,8 @@ fun calcularDescuento(total: Double): Double {
     }
 }
 
-// --- REPORTE DEL CARRITO (Parte 4) ---
-
 fun mostrarDetalle(productos: List<Producto>) {
     println("--------- DETALLE DEL CARRITO ---------")
-    println("Cantidad de productos: ${productos.size}")
     var i = 1
     for (p in productos) {
         val importe = p.precio * p.cantidad
@@ -111,20 +142,11 @@ fun imprimirResumen(carrito: List<Producto>) {
     println(String.format("%-25s S/ %8.2f", "Subtotal:", sub))
     println(String.format("%-25s S/ %8.2f", "IGV (18%):", igv))
     println(String.format("%-25s S/ %8.2f", "TOTAL A PAGAR:", totalSin))
-    
     if (desc > 0) {
         println(String.format("%-25s S/ %8.2f", "Descuento aplicado:", desc))
         println(String.format("%-25s S/ %8.2f", "TOTAL CON DESCUENTO:", totalFinal))
     }
-
-    // Parte 5: Producto más caro
-    val masCaro = carrito.maxByOrNull { it.precio }
-    if (masCaro != null) {
-        println(String.format("Producto mas caro: %s (S/ %.2f)", masCaro.nombre, masCaro.precio))
-    }
 }
-
-// --- RETO: BUSCAR (Parte 7) ---
 
 fun buscarProducto(productos: List<Producto>, nombre: String): Producto? {
     return productos.find { it.nombre.equals(nombre, ignoreCase = true) }
