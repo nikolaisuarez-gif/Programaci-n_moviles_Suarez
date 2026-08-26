@@ -1,5 +1,7 @@
 package com.suarez.lab02carritokotlin
 
+import java.util.Scanner
+
 data class Producto(
     val nombre: String,
     val precio: Double,
@@ -7,111 +9,108 @@ data class Producto(
 )
 
 fun main() {
+    val sc = Scanner(System.`in`)
+
     println("=========================================")
     println(" CARRITO DE COMPRAS - TIENDA TECSUP ")
     println("=========================================")
 
-    val nombreCliente = "Nikolai Suarez"
+    print("Nombre del cliente: ")
+    val cliente = sc.nextLine()
     val carrito = mutableListOf<Producto>()
 
-    println("Cliente: $nombreCliente")
-    println()
+    val productos = listOf(
+        Producto("Laptop HP", 2500.0, 1),
+        Producto("Mouse Logitech", 45.5, 2),
+        Producto("Teclado Mecánico", 150.0, 1),
+        Producto("Monitor 24''", 600.0, 1)
+    )
 
-    // Parte 2: Agregar productos
-    carrito.add(Producto("Laptop HP", 2500.0, 1))
-    carrito.add(Producto("Mouse Logitech", 45.5, 2))
-    carrito.add(Producto("Teclado Mecánico", 150.0, 1))
-    carrito.add(Producto("Monitor 24''", 600.0, 1))
-
-    // Parte 4: Mostrar detalle
-    mostrarDetalle(carrito)
-
-    // Parte 3 y 5: Cálculos y Reporte Inicial
-    imprimirTotales(carrito)
-
-    // VI. Reto adicional: Buscar producto
-    println("\n--- BUSQUEDA DE PRODUCTO ---")
-    val busqueda = "Laptop HP"
-    val encontrado = buscarProducto(carrito, busqueda)
-    if (encontrado != null) {
-        println("Producto encontrado: ${encontrado.nombre} - Precio: S/ ${encontrado.precio}")
-    } else {
-        println("El producto '$busqueda' no existe en el carrito.")
+    println("\n--- PRODUCTOS DISPONIBLES ---")
+    productos.forEachIndexed { i, p ->
+        println("${i + 1}. ${p.nombre} - S/ ${p.precio}")
     }
 
-    // VI. Reto adicional: Eliminar producto
-    println("\n--- ELIMINANDO PRODUCTO (Mouse Logitech) ---")
-    carrito.removeIf { it.nombre == "Mouse Logitech" }
-    
-    // Mostrar detalle y totales actualizados
+    print("\n¿Cuántos desea agregar?: ")
+    val n = sc.nextInt()
+
+    repeat(n) {
+        print("Elija producto (1-4): ")
+        val op = sc.nextInt()
+
+        if (op in 1..4) {
+            print("Cantidad: ")
+            val cant = sc.nextInt()
+            val p = productos[op - 1]
+            carrito.add(Producto(p.nombre, p.precio, cant))
+            println("Producto agregado: ${p.nombre}")
+        } else println("Opción inválida.")
+    }
+
+    println("\nCliente: $cliente")
+    println("Cantidad de productos: ${carrito.size}")
     mostrarDetalle(carrito)
     imprimirTotales(carrito)
-    
-    println("=========================================")
+
+    sc.nextLine()
+
+    println("\n--- ELIMINAR PRODUCTO ---")
+    print("Nombre: ")
+    val eliminar = sc.nextLine()
+
+    if (carrito.removeIf { it.nombre.equals(eliminar, true) })
+        println("Producto eliminado.")
+    else
+        println("Producto no encontrado.")
+
+    println("\n--- CARRITO ACTUALIZADO ---")
+    mostrarDetalle(carrito)
+    imprimirTotales(carrito)
+
+    sc.close()
 }
 
-// Funciones de Cálculo
-fun calcularSubtotal(productos: List<Producto>): Double {
+fun calcularSubtotal(lista: List<Producto>): Double {
     var subtotal = 0.0
-    for (p in productos) {
-        subtotal += p.precio * p.cantidad
-    }
+    for (p in lista) subtotal += p.precio * p.cantidad
     return subtotal
 }
 
-fun calcularIGV(subtotal: Double): Double {
-    return subtotal * 0.18
+fun calcularIGV(subtotal: Double) = subtotal * 0.18
+
+fun calcularTotal(subtotal: Double, igv: Double) = subtotal + igv
+
+fun calcularDescuento(total: Double) = when {
+    total > 5000 -> total * 0.10
+    total > 3000 -> total * 0.05
+    else -> 0.0
 }
 
-fun calcularTotal(subtotal: Double, igv: Double): Double {
-    return subtotal + igv
-}
-
-fun calcularDescuento(total: Double): Double {
-    return when {
-        total > 5000 -> total * 0.10
-        total > 3000 -> total * 0.05
-        else -> 0.0
-    }
-}
-
-// Función para imprimir todos los totales (reutilizable)
 fun imprimirTotales(carrito: List<Producto>) {
     val subtotal = calcularSubtotal(carrito)
     val igv = calcularIGV(subtotal)
-    val totalSinDescuento = calcularTotal(subtotal, igv)
-    val descuento = calcularDescuento(totalSinDescuento)
-    val totalFinal = totalSinDescuento - descuento
+    val total = calcularTotal(subtotal, igv)
+    val descuento = calcularDescuento(total)
 
-    println(String.format("%-25s S/ %8.2f", "Subtotal:", subtotal))
-    println(String.format("%-25s S/ %8.2f", "IGV (18%):", igv))
-    println(String.format("%-25s S/ %8.2f", "TOTAL A PAGAR:", totalSinDescuento))
-    
-    if (descuento > 0) {
-        println(String.format("Descuento aplicado:    - S/ %8.2f", descuento))
-    }
-    println(String.format("TOTAL CON DESCUENTO:     S/ %8.2f", totalFinal))
+    println("\nSubtotal:       S/ %.2f".format(subtotal))
+    println("IGV (18%%):      S/ %.2f".format(igv))
+    println("TOTAL:          S/ %.2f".format(total))
+    println("Descuento:     -S/ %.2f".format(descuento))
+    println("TOTAL FINAL:    S/ %.2f".format(total - descuento))
 
-    val masCaro = carrito.maxByOrNull { it.precio }
-    if (masCaro != null) {
-        println("Producto mas caro: ${masCaro.nombre} (S/ ${masCaro.precio})")
-    }
+    val caro = carrito.maxByOrNull { it.precio }
+    if (caro != null) println("Producto mas caro: ${caro.nombre}")
 }
 
-// Función de Reporte
-fun mostrarDetalle(productos: List<Producto>) {
-    println("--------- DETALLE DEL CARRITO ---------")
-    var i = 1
-    for (p in productos) {
+fun mostrarDetalle(lista: List<Producto>) {
+    println("\n--------- DETALLE DEL CARRITO ---------")
+    for ((i, p) in lista.withIndex()) {
         val importe = p.precio * p.cantidad
-        println(String.format("%d. %-20s x%d S/ %8.2f",
-            i, p.nombre, p.cantidad, importe))
-        i++
+        println("${i + 1}. ${p.nombre} x${p.cantidad} S/ %.2f".format(importe))
     }
     println("---------------------------------------")
 }
 
-// Reto Adicional: Buscar
-fun buscarProducto(productos: List<Producto>, nombre: String): Producto? {
-    return productos.find { it.nombre.equals(nombre, ignoreCase = true) }
+fun buscarProducto(lista: List<Producto>, nombre: String): Producto? {
+    return lista.find { it.nombre.equals(nombre, true) }
 }
