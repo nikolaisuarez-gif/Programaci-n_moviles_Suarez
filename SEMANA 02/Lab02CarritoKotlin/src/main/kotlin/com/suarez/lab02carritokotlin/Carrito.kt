@@ -17,45 +17,40 @@ fun main() {
     println("Cliente: $nombreCliente")
     println()
 
-    // Agregar productos
+    // Parte 2: Agregar productos
     carrito.add(Producto("Laptop HP", 2500.0, 1))
     carrito.add(Producto("Mouse Logitech", 45.5, 2))
     carrito.add(Producto("Teclado Mecánico", 150.0, 1))
     carrito.add(Producto("Monitor 24''", 600.0, 1))
 
-    // Parte 4: Mostrar detalle y totales
+    // Parte 4: Mostrar detalle
     mostrarDetalle(carrito)
 
-    val subtotal = calcularSubtotal(carrito)
-    val igv = calcularIGV(subtotal)
-    val totalSinDescuento = calcularTotal(subtotal, igv)
+    // Parte 3 y 5: Cálculos y Reporte Inicial
+    imprimirTotales(carrito)
 
-    println(String.format("%-25s S/ %8.2f", "Subtotal:", subtotal))
-    println(String.format("%-25s S/ %8.2f", "IGV (18%):", igv))
-    println(String.format("%-25s S/ %8.2f", "TOTAL A PAGAR:", totalSinDescuento))
-    println("---------------------------------------")
-
-    // Parte 5: Producto más caro y Descuento
-    val masCaro = carrito.maxByOrNull { it.precio }
-    if (masCaro != null) {
-        println("Producto mas caro: ${masCaro.nombre} " +
-                String.format("(S/ %.2f)", masCaro.precio))
-    }
-
-    val descuento = calcularDescuento(totalSinDescuento)
-    val totalFinal = totalSinDescuento - descuento
-
-    if (descuento > 0) {
-        println(String.format("Descuento aplicado: S/ %.2f", descuento))
+    // VI. Reto adicional: Buscar producto
+    println("\n--- BUSQUEDA DE PRODUCTO ---")
+    val busqueda = "Laptop HP"
+    val encontrado = buscarProducto(carrito, busqueda)
+    if (encontrado != null) {
+        println("Producto encontrado: ${encontrado.nombre} - Precio: S/ ${encontrado.precio}")
     } else {
-        println("Descuento aplicado: S/ 0.00 (No aplica)")
+        println("El producto '$busqueda' no existe en el carrito.")
     }
+
+    // VI. Reto adicional: Eliminar producto
+    println("\n--- ELIMINANDO PRODUCTO (Mouse Logitech) ---")
+    carrito.removeIf { it.nombre == "Mouse Logitech" }
     
-    println(String.format("TOTAL CON DESCUENTO: S/ %.2f", totalFinal))
+    // Mostrar detalle y totales actualizados
+    mostrarDetalle(carrito)
+    imprimirTotales(carrito)
+    
     println("=========================================")
 }
 
-// Funciones de Cálculo (Parte 3)
+// Funciones de Cálculo
 fun calcularSubtotal(productos: List<Producto>): Double {
     var subtotal = 0.0
     for (p in productos) {
@@ -72,10 +67,40 @@ fun calcularTotal(subtotal: Double, igv: Double): Double {
     return subtotal + igv
 }
 
-// Función de Reporte (Parte 4)
+fun calcularDescuento(total: Double): Double {
+    return when {
+        total > 5000 -> total * 0.10
+        total > 3000 -> total * 0.05
+        else -> 0.0
+    }
+}
+
+// Función para imprimir todos los totales (reutilizable)
+fun imprimirTotales(carrito: List<Producto>) {
+    val subtotal = calcularSubtotal(carrito)
+    val igv = calcularIGV(subtotal)
+    val totalSinDescuento = calcularTotal(subtotal, igv)
+    val descuento = calcularDescuento(totalSinDescuento)
+    val totalFinal = totalSinDescuento - descuento
+
+    println(String.format("%-25s S/ %8.2f", "Subtotal:", subtotal))
+    println(String.format("%-25s S/ %8.2f", "IGV (18%):", igv))
+    println(String.format("%-25s S/ %8.2f", "TOTAL A PAGAR:", totalSinDescuento))
+    
+    if (descuento > 0) {
+        println(String.format("Descuento aplicado:    - S/ %8.2f", descuento))
+    }
+    println(String.format("TOTAL CON DESCUENTO:     S/ %8.2f", totalFinal))
+
+    val masCaro = carrito.maxByOrNull { it.precio }
+    if (masCaro != null) {
+        println("Producto mas caro: ${masCaro.nombre} (S/ ${masCaro.precio})")
+    }
+}
+
+// Función de Reporte
 fun mostrarDetalle(productos: List<Producto>) {
     println("--------- DETALLE DEL CARRITO ---------")
-    println(String.format("Cantidad de productos: %d", productos.size))
     var i = 1
     for (p in productos) {
         val importe = p.precio * p.cantidad
@@ -86,11 +111,7 @@ fun mostrarDetalle(productos: List<Producto>) {
     println("---------------------------------------")
 }
 
-// Lógica adicional (Parte 5)
-fun calcularDescuento(total: Double): Double {
-    return when {
-        total > 5000 -> total * 0.10
-        total > 3000 -> total * 0.05
-        else -> 0.0
-    }
+// Reto Adicional: Buscar
+fun buscarProducto(productos: List<Producto>, nombre: String): Producto? {
+    return productos.find { it.nombre.equals(nombre, ignoreCase = true) }
 }
