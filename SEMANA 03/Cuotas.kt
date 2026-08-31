@@ -3,23 +3,33 @@ import java.util.Scanner
 fun main() {
     val sc = Scanner(System.`in`)
 
+    // Definimos el catálogo predeterminado
+    val nombres = listOf("PS5 Pro", "iPhone 18 Pro Max", "Laptop Razer Blade", "Audífonos Sony XM5")
+    val precios = listOf(3500.0, 6800.0, 9500.0, 1400.0)
+
     println("=========================================")
     println("      SISTEMA DE VENTAS EN CUOTAS       ")
     println("=========================================")
     
-    print("Ingrese el nombre del producto: ")
-    val producto = sc.nextLine()
-
-    var precio = 0.0
-    while (precio <= 0) {
-        print("Ingrese el precio unitario: ")
-        precio = sc.nextDouble()
-        if (precio <= 0) println("El precio debe ser mayor a 0.")
+    // Mostramos las opciones al usuario
+    println("CATÁLOGO DE PRODUCTOS:")
+    for (i in nombres.indices) {
+        println("${i + 1}. ${nombres[i]} - S/ ${precios[i]}")
     }
+
+    var seleccion = 0
+    while (seleccion !in 1..nombres.size) {
+        print("\nSeleccione el número del producto (1-${nombres.size}): ")
+        seleccion = sc.nextInt()
+        if (seleccion !in 1..nombres.size) println("Error: Opción no válida.")
+    }
+
+    val productoSeleccionado = nombres[seleccion - 1]
+    val precioUnitario = precios[seleccion - 1]
 
     var cantidad = 0
     while (cantidad <= 0) {
-        print("Ingrese la cantidad: ")
+        print("¿Cuántas unidades de '$productoSeleccionado' desea?: ")
         cantidad = sc.nextInt()
         if (cantidad <= 0) println("La cantidad debe ser mayor a 0.")
     }
@@ -27,7 +37,7 @@ fun main() {
     var cuotas = 0
     var interesPorcentaje = 0.0
     while (cuotas != 6 && cuotas != 12 && cuotas != 24) {
-        print("Ingrese número de cuotas (6, 12 o 24): ")
+        print("Elija el plan de cuotas (6, 12 o 24): ")
         cuotas = sc.nextInt()
         interesPorcentaje = when (cuotas) {
             6 -> 0.20
@@ -41,7 +51,7 @@ fun main() {
     }
 
     // Cálculos Finales
-    val montoInicial = precio * cantidad
+    val montoInicial = precioUnitario * cantidad
     val montoInteres = montoInicial * interesPorcentaje
     val montoTotal = montoInicial + montoInteres
     val pagoMensual = montoTotal / cuotas
@@ -49,8 +59,8 @@ fun main() {
     println("\n=========================================")
     println("           RESUMEN DE COMPRA            ")
     println("=========================================")
-    println("Producto:            $producto")
-    println("Precio Unitario:     S/ %.2f".format(precio))
+    println("Producto:            $productoSeleccionado")
+    println("Precio Unitario:     S/ %.2f".format(precioUnitario))
     println("Cantidad:            $cantidad")
     println("Monto Inicial:       S/ %.2f".format(montoInicial))
     println("Interés Aplicado:    ${(interesPorcentaje * 100).toInt()}%")
@@ -63,7 +73,8 @@ fun main() {
     println("          CALENDARIO DE PAGOS           ")
     println("=========================================")
     for (i in 1..cuotas) {
-        println("Cuota $i: S/ %.2f".format(pagoMensual))
+        println("Mes $i: S/ %.2f".format(pagoMensual))
     }
     println("=========================================")
+    println("¡Gracias por su compra en Tecsup!")
 }
