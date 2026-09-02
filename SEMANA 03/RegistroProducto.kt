@@ -6,7 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun PantallaRegistro(modifier: Modifier = Modifier) {
@@ -100,5 +100,13 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
                 fontWeight = FontWeight.Bold
             )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PantallaRegistroPreview() {
+    MaterialTheme {
+        PantallaRegistro()
     }
 }
