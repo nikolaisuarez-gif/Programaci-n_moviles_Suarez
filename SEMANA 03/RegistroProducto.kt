@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
@@ -19,6 +20,7 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        // Encabezado
         Text(
             text = "Nuevo producto",
             style = MaterialTheme.typography.headlineSmall
@@ -30,6 +32,7 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Campos de ingreso
         OutlinedTextField(
             value = nombre,
             onValueChange = { nombre = it },
@@ -55,7 +58,6 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
             )
         }
 
-        // Parte 4: Botón y Card de resumen
         Spacer(modifier = Modifier.height(24.dp))
         Button(
             onClick = { mostrarResumen = true },
@@ -69,6 +71,7 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
             val precioNum = precio.toDoubleOrNull() ?: 0.0
             val cantidadNum = cantidad.toIntOrNull() ?: 0
             val importe = precioNum * cantidadNum
+            
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
@@ -87,6 +90,15 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
                     )
                 }
             }
+
+            // Parte 5: Mensaje de confirmación
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "✓ Producto registrado correctamente",
+                color = Color(0xFF2E7D32),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
