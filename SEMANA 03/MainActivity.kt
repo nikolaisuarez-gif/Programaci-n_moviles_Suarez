@@ -13,7 +13,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                PantallaRegistro()
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    PantallaRegistro(modifier = Modifier.padding(innerPadding))
+                }
             }
         }
     }
