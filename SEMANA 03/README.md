@@ -1,16 +1,7 @@
- SEMANA 03: Registro de Producto
+Semana 3: Registro de Producto
+Estudiante: Nikolai Suarez
 
-Estudiante:**Nikolai Suarez
-Curso: Programación de Móviles
+Hola! Aquí te presento mi aplicación de la semana 3. He creado un registro de productos donde puedes poner el nombre, el precio y la cantidad. Al darle al botón de "Agregar", la app te muestra el resumen con el precio total y un mensajito verde de que todo salió bien.
 
- Descripción
-Esta aplicación permite registrar un producto ingresando su nombre, precio y cantidad. Al presionar el botón "AGREGAR PRODUCTO", se muestra un resumen con el importe total calculado y un mensaje de confirmación.
-
- Capturas de Pantalla
-(Nota: Por favor, adjunte aquí las capturas del emulador)
-Pantalla vacía: ![Pantalla Vacía](vacia.png)
-registrado: ![Producto Registrado](registrado.png)
-
- Pregunta sobre `remember`
-¿Qué pasaría si declaras las variables de los campos SIN `remember`?
-Si las variables se declaran sin `remember`, el estado no se preservaría entre recomposiciones. Cada vez que el usuario escriba un carácter, el Composable se volvería a ejecutar y las variables se reiniciarían a su valor inicial (cadena vacía). Como resultado, el texto nunca aparecería en los campos y el usuario no podría ingresar información.
+Sobre la pregunta de qué pasaría si no usamos "remember":
+Hice la prueba y la aplicación básicamente se rompe. En Compose, cada vez que tecleas una letra, la pantalla se vuelve a dibujar. Si no le ponemos el "remember", la variable se resetea a cada rato y nunca se guarda lo que escribes. Es como si la app tuviera amnesia y se olvidara de lo que acabas de poner. ¡Es súper importante usarlo para que los datos se queden ahí!
