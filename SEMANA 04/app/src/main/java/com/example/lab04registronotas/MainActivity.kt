@@ -106,7 +106,81 @@ fun RegistroNotasApp() {
                     color = Color.Gray,
                     modifier = Modifier.padding(top = 8.dp)
                 )
+            } else {
+                val ponderado = (nota1 * 0.20f) + (nota2 * 0.25f) + (nota3 * 0.30f) + (nota4 * 0.25f)
+                val promedioFinal = if (redondeo) kotlin.math.round(ponderado).toInt().toFloat() else ponderado
+
+                val (observacion, color) = when {
+                    promedioFinal >= 17 -> "EXCELENTE" to Color(0xFF1B5E20) // Verde oscuro
+                    promedioFinal >= 13 -> "APROBADO" to Color(0xFF4CAF50) // Verde
+                    promedioFinal >= 10 -> "EN RECUPERACIÓN" to Color(0xFFFFC107) // Ámbar
+                    else -> "DESAPROBADO" to Color(0xFFD32F2F) // Rojo
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.7f))
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text("Detalle por curso:", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+                        Text("• Fundamentos: ${nota1.toInt()} x 20% = ${String.format("%.2f", nota1 * 0.20f)}", style = MaterialTheme.typography.bodySmall)
+                        Text("• POO: ${nota2.toInt()} x 25% = ${String.format("%.2f", nota2 * 0.25f)}", style = MaterialTheme.typography.bodySmall)
+                        Text("• Móviles: ${nota3.toInt()} x 30% = ${String.format("%.2f", nota3 * 0.30f)}", style = MaterialTheme.typography.bodySmall)
+                        Text("• Base de Datos: ${nota4.toInt()} x 25% = ${String.format("%.2f", nota4 * 0.25f)}", style = MaterialTheme.typography.bodySmall)
+                        
+                        Divider(modifier = Modifier.padding(vertical = 8.dp))
+
+                        Text("Promedio ponderado: ${String.format("%.2f", ponderado)}")
+                        Text(
+                            "Promedio final: ${if (redondeo) promedioFinal.toInt() else String.format("%.2f", promedioFinal)}",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold
+                        )
+                        if (redondeo) {
+                            Text("(redondeado)", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                        }
+                        
+                        Spacer(modifier = Modifier.height(8.dp))
+                        
+                        Surface(
+                            color = color,
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Text(
+                                text = observacion,
+                                color = Color.White,
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                                style = MaterialTheme.typography.labelMedium,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                OutlinedButton(
+                    onClick = {
+                        nota1 = 0f; nota2 = 0f; nota3 = 0f; nota4 = 0f
+                        redondeo = false; confirmado = false; mostrarResultado = false
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("LIMPIAR DATOS")
+                }
             }
+
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                "Desarrollado por: Nikolai Suarez",
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                style = MaterialTheme.typography.bodySmall,
+                color = Color.DarkGray
+            )
         }
     }
 }
