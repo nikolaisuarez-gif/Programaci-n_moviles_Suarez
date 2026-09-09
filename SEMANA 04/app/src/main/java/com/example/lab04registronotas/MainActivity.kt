@@ -5,11 +5,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
@@ -47,7 +51,7 @@ fun RegistroNotasApp() {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Registro de Notas") }
+                title = { Text("Registro de Notas", fontWeight = FontWeight.Bold) }
             )
         }
     ) { padding ->
@@ -58,10 +62,48 @@ fun RegistroNotasApp() {
                 .background(gradientBackground)
                 .padding(16.dp)
         ) {
-            Text("Complete los datos del estudiante")
+            Text("Complete los datos del ciclo", style = MaterialTheme.typography.titleMedium)
+            Text("Desliza para asignar cada nota (0 a 20)", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
             Spacer(modifier = Modifier.height(16.dp))
-            
-            // Aquí irán los Sliders en el siguiente commit
+
+            CursoSlider(label = "Fundamentos de Programación (20%)", value = nota1, onValueChange = { nota1 = it })
+            CursoSlider(label = "Programación Orientada a Objetos (25%)", value = nota2, onValueChange = { nota2 = it })
+            CursoSlider(label = "Programación en Móviles (30%)", value = nota3, onValueChange = { nota3 = it })
+            CursoSlider(label = "Base de Datos (25%)", value = nota4, onValueChange = { nota4 = it })
+
+            Spacer(modifier = Modifier.height(16.dp))
         }
+    }
+}
+
+@Composable
+fun CursoSlider(label: String, value: Float, onValueChange: (Float) -> Unit) {
+    Column(modifier = Modifier.padding(vertical = 4.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(label, style = MaterialTheme.typography.bodyMedium)
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(50))
+                    .background(MaterialTheme.colorScheme.primaryContainer)
+                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = value.toInt().toString(),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
+        }
+        Slider(
+            value = value,
+            onValueChange = onValueChange,
+            valueRange = 0f..20f,
+            steps = 19
+        )
     }
 }
