@@ -71,7 +71,42 @@ fun RegistroNotasApp() {
             CursoSlider(label = "Programación en Móviles (30%)", value = nota3, onValueChange = { nota3 = it })
             CursoSlider(label = "Base de Datos (25%)", value = nota4, onValueChange = { nota4 = it })
 
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Redondear promedio final", modifier = Modifier.weight(1f))
+                Switch(checked = redondeo, onCheckedChange = { redondeo = it })
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(checked = confirmado, onCheckedChange = { confirmado = it })
+                Text("Confirmo que las notas son correctas", style = MaterialTheme.typography.bodyMedium)
+            }
+
             Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = { mostrarResultado = true },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = confirmado
+            ) {
+                Text("CALCULAR PROMEDIO")
+            }
+
+            if (!mostrarResultado) {
+                Text(
+                    text = "Asigna las notas y confirma para calcular",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.Gray,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
         }
     }
 }
