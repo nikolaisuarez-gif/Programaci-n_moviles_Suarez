@@ -1,0 +1,42 @@
+com.example.lab04registronotas.app-core-ktx-1.10.1-0 C:\Users\Nikolai\.gradle\caches\transforms-3\0253e9b6b7364b76a5c25889a6887599\transformed\core-ktx-1.10.1\res
+com.example.lab04registronotas.app-activity-ktx-1.7.2-1 C:\Users\Nikolai\.gradle\caches\transforms-3\04cc4ae27095af013f546f3b3277b819\transformed\activity-ktx-1.7.2\res
+com.example.lab04registronotas.app-lifecycle-runtime-2.6.1-2 C:\Users\Nikolai\.gradle\caches\transforms-3\0a7e31024a74cf7dcf8e3ee2f64ca225\transformed\lifecycle-runtime-2.6.1\res
+com.example.lab04registronotas.app-foundation-layout-1.4.0-3 C:\Users\Nikolai\.gradle\caches\transforms-3\0c50edcdffdc6a878c780521c18bb22c\transformed\foundation-layout-1.4.0\res
+com.example.lab04registronotas.app-core-runtime-2.2.0-4 C:\Users\Nikolai\.gradle\caches\transforms-3\0fec267a8ef1e9e7f564d57bdb10fb48\transformed\core-runtime-2.2.0\res
+com.example.lab04registronotas.app-foundation-1.4.0-5 C:\Users\Nikolai\.gradle\caches\transforms-3\133334451961223fd35a8413fee52420\transformed\foundation-1.4.0\res
+com.example.lab04registronotas.app-ui-tooling-preview-1.4.0-6 C:\Users\Nikolai\.gradle\caches\transforms-3\18ef085cd61c20b88a7fa7f37b29c512\transformed\ui-tooling-preview-1.4.0\res
+com.example.lab04registronotas.app-lifecycle-livedata-core-2.6.1-7 C:\Users\Nikolai\.gradle\caches\transforms-3\1ec1ade5038d355d6047de2b57514a5d\transformed\lifecycle-livedata-core-2.6.1\res
+com.example.lab04registronotas.app-profileinstaller-1.3.0-8 C:\Users\Nikolai\.gradle\caches\transforms-3\4579c174a86f328a9e2ab39c5c094107\transformed\profileinstaller-1.3.0\res
+com.example.lab04registronotas.app-savedstate-ktx-1.2.1-9 C:\Users\Nikolai\.gradle\caches\transforms-3\4c822df1b30fe72c9fed9bac56f562e4\transformed\savedstate-ktx-1.2.1\res
+com.example.lab04registronotas.app-runtime-saveable-1.4.0-10 C:\Users\Nikolai\.gradle\caches\transforms-3\508adafd5d019a031e63541f42f100f0\transformed\runtime-saveable-1.4.0\res
+com.example.lab04registronotas.app-animation-1.4.0-11 C:\Users\Nikolai\.gradle\caches\transforms-3\519ac8aeff68fb6d5fc002c548c04ce9\transformed\animation-1.4.0\res
+com.example.lab04registronotas.app-lifecycle-viewmodel-savedstate-2.6.1-12 C:\Users\Nikolai\.gradle\caches\transforms-3\53ddf2f7c2b6d3842620aec9a22c2ca1\transformed\lifecycle-viewmodel-savedstate-2.6.1\res
+com.example.lab04registronotas.app-ui-1.4.0-13 C:\Users\Nikolai\.gradle\caches\transforms-3\541076d6cd1f83b27fece97efb02bebc\transformed\ui-1.4.0\res
+com.example.lab04registronotas.app-lifecycle-runtime-ktx-2.6.1-14 C:\Users\Nikolai\.gradle\caches\transforms-3\60fa297892a8b67333d1131856c8a626\transformed\lifecycle-runtime-ktx-2.6.1\res
+com.example.lab04registronotas.app-material-ripple-1.4.0-15 C:\Users\Nikolai\.gradle\caches\transforms-3\63468a87b8f1d69040ec714eafc4de8a\transformed\material-ripple-1.4.0\res
+com.example.lab04registronotas.app-runtime-1.4.0-16 C:\Users\Nikolai\.gradle\caches\transforms-3\84b096d27fcb0559d719c4385f20b6d7\transformed\runtime-1.4.0\res
+com.example.lab04registronotas.app-material3-1.0.0-17 C:\Users\Nikolai\.gradle\caches\transforms-3\8a234c5c47ed06f1f49162d733bea436\transformed\material3-1.0.0\res
+com.example.lab04registronotas.app-material-icons-core-1.4.0-18 C:\Users\Nikolai\.gradle\caches\transforms-3\8bab3f62bf61eb8972e50b57fd6d9122\transformed\material-icons-core-1.4.0\res
+com.example.lab04registronotas.app-core-1.10.1-19 C:\Users\Nikolai\.gradle\caches\transforms-3\8e804bda4d4510a7ff91e4d3de9ed5b7\transformed\core-1.10.1\res
+com.example.lab04registronotas.app-lifecycle-viewmodel-ktx-2.6.1-20 C:\Users\Nikolai\.gradle\caches\transforms-3\8fe86c6db694f4e29ba56c5f937b8225\transformed\lifecycle-viewmodel-ktx-2.6.1\res
+com.example.lab04registronotas.app-ui-text-1.4.0-21 C:\Users\Nikolai\.gradle\caches\transforms-3\999179494009c59569cc4c2d8f57dc17\transformed\ui-text-1.4.0\res
+com.example.lab04registronotas.app-ui-geometry-1.4.0-22 C:\Users\Nikolai\.gradle\caches\transforms-3\ad5ecda98a5d5f0714d88e23681f3868\transformed\ui-geometry-1.4.0\res
+com.example.lab04registronotas.app-lifecycle-process-2.6.1-23 C:\Users\Nikolai\.gradle\caches\transforms-3\c1e92ffb6933ab1a325d275d7955891e\transformed\lifecycle-process-2.6.1\res
+com.example.lab04registronotas.app-activity-compose-1.7.2-24 C:\Users\Nikolai\.gradle\caches\transforms-3\c2b628f2f5150fb23f1f25d1aa5e725e\transformed\activity-compose-1.7.2\res
+com.example.lab04registronotas.app-ui-graphics-1.4.0-25 C:\Users\Nikolai\.gradle\caches\transforms-3\ca851d2210a915c2fdcf2aaa409060f7\transformed\ui-graphics-1.4.0\res
+com.example.lab04registronotas.app-ui-util-1.4.0-26 C:\Users\Nikolai\.gradle\caches\transforms-3\d24b62c1d5732eceeb39e156f4c724ab\transformed\ui-util-1.4.0\res
+com.example.lab04registronotas.app-startup-runtime-1.1.1-27 C:\Users\Nikolai\.gradle\caches\transforms-3\d2c45d081587860559c0649aedbbebc1\transformed\startup-runtime-1.1.1\res
+com.example.lab04registronotas.app-ui-unit-1.4.0-28 C:\Users\Nikolai\.gradle\caches\transforms-3\d707d035b3834acfda568c0dbef5c77c\transformed\ui-unit-1.4.0\res
+com.example.lab04registronotas.app-customview-poolingcontainer-1.0.0-29 C:\Users\Nikolai\.gradle\caches\transforms-3\da17b2b1d8130abb01663439713ce481\transformed\customview-poolingcontainer-1.0.0\res
+com.example.lab04registronotas.app-emoji2-1.3.0-30 C:\Users\Nikolai\.gradle\caches\transforms-3\da4eaac06f34bc930a49c75cc18d14d4\transformed\emoji2-1.3.0\res
+com.example.lab04registronotas.app-annotation-experimental-1.3.0-31 C:\Users\Nikolai\.gradle\caches\transforms-3\db94fc011f54bf45e8de731f3b3e41e5\transformed\annotation-experimental-1.3.0\res
+com.example.lab04registronotas.app-savedstate-1.2.1-32 C:\Users\Nikolai\.gradle\caches\transforms-3\dc41ad97c587365458fa4dc3a4ba52fa\transformed\savedstate-1.2.1\res
+com.example.lab04registronotas.app-animation-core-1.4.0-33 C:\Users\Nikolai\.gradle\caches\transforms-3\e06c871eae1ee1be3e279bf86ee9d3c6\transformed\animation-core-1.4.0\res
+com.example.lab04registronotas.app-lifecycle-viewmodel-2.6.1-34 C:\Users\Nikolai\.gradle\caches\transforms-3\f7413bf37dda3af7922925e31273ed09\transformed\lifecycle-viewmodel-2.6.1\res
+com.example.lab04registronotas.app-activity-1.7.2-35 C:\Users\Nikolai\.gradle\caches\transforms-3\f76c59319fbfe2411eae80a97505c58e\transformed\activity-1.7.2\res
+com.example.lab04registronotas.app-resValues-36 C:\Users\Nikolai\StudioProjects\Programaci-n_moviles_Suarez1\SEMANA 04\app\build\generated\res\resValues\debug
+com.example.lab04registronotas.app-packageDebugResources-37 C:\Users\Nikolai\StudioProjects\Programaci-n_moviles_Suarez1\SEMANA 04\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.lab04registronotas.app-packageDebugResources-38 C:\Users\Nikolai\StudioProjects\Programaci-n_moviles_Suarez1\SEMANA 04\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.lab04registronotas.app-merged_res-39 C:\Users\Nikolai\StudioProjects\Programaci-n_moviles_Suarez1\SEMANA 04\app\build\intermediates\merged_res\debug
+com.example.lab04registronotas.app-debug-40 C:\Users\Nikolai\StudioProjects\Programaci-n_moviles_Suarez1\SEMANA 04\app\src\debug\res
+com.example.lab04registronotas.app-main-41 C:\Users\Nikolai\StudioProjects\Programaci-n_moviles_Suarez1\SEMANA 04\app\src\main\res

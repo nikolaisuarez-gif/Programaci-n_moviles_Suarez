@@ -1,0 +1,42 @@
+com.example.lab04registronotas.app-jetified-startup-runtime-1.1.1-0 C:\Users\Nikolai\.gradle\caches\transforms-3\041365350a7764fff8e7ff9513fc5238\transformed\jetified-startup-runtime-1.1.1\res
+com.example.lab04registronotas.app-lifecycle-runtime-2.6.1-1 C:\Users\Nikolai\.gradle\caches\transforms-3\0a7e31024a74cf7dcf8e3ee2f64ca225\transformed\lifecycle-runtime-2.6.1\res
+com.example.lab04registronotas.app-core-runtime-2.2.0-2 C:\Users\Nikolai\.gradle\caches\transforms-3\0fec267a8ef1e9e7f564d57bdb10fb48\transformed\core-runtime-2.2.0\res
+com.example.lab04registronotas.app-jetified-ui-text-1.4.0-3 C:\Users\Nikolai\.gradle\caches\transforms-3\12a407b1028be5847611dfe693b84bb3\transformed\jetified-ui-text-1.4.0\res
+com.example.lab04registronotas.app-jetified-lifecycle-viewmodel-ktx-2.6.1-4 C:\Users\Nikolai\.gradle\caches\transforms-3\139f86291f87e3f7f3c37bf62338e303\transformed\jetified-lifecycle-viewmodel-ktx-2.6.1\res
+com.example.lab04registronotas.app-jetified-material-icons-core-1.4.0-5 C:\Users\Nikolai\.gradle\caches\transforms-3\1bccaeaca403e6437f2b79a2c468a5fe\transformed\jetified-material-icons-core-1.4.0\res
+com.example.lab04registronotas.app-jetified-activity-ktx-1.7.2-6 C:\Users\Nikolai\.gradle\caches\transforms-3\1dc31c9183a3d91c99ebaae491249a9f\transformed\jetified-activity-ktx-1.7.2\res
+com.example.lab04registronotas.app-lifecycle-livedata-core-2.6.1-7 C:\Users\Nikolai\.gradle\caches\transforms-3\1ec1ade5038d355d6047de2b57514a5d\transformed\lifecycle-livedata-core-2.6.1\res
+com.example.lab04registronotas.app-jetified-activity-1.7.2-8 C:\Users\Nikolai\.gradle\caches\transforms-3\22c3bd3b00d9502b8186548798371126\transformed\jetified-activity-1.7.2\res
+com.example.lab04registronotas.app-jetified-ui-util-1.4.0-9 C:\Users\Nikolai\.gradle\caches\transforms-3\288778d8ebb044790c442e948b4b0836\transformed\jetified-ui-util-1.4.0\res
+com.example.lab04registronotas.app-jetified-customview-poolingcontainer-1.0.0-10 C:\Users\Nikolai\.gradle\caches\transforms-3\2b0445d3f2997aafa5643c67a14ec464\transformed\jetified-customview-poolingcontainer-1.0.0\res
+com.example.lab04registronotas.app-jetified-lifecycle-process-2.6.1-11 C:\Users\Nikolai\.gradle\caches\transforms-3\2ebbfb363f11203f71348d27d42a1957\transformed\jetified-lifecycle-process-2.6.1\res
+com.example.lab04registronotas.app-jetified-material3-1.0.0-12 C:\Users\Nikolai\.gradle\caches\transforms-3\33b166539b7be546b776680c2282621f\transformed\jetified-material3-1.0.0\res
+com.example.lab04registronotas.app-jetified-ui-unit-1.4.0-13 C:\Users\Nikolai\.gradle\caches\transforms-3\3989ceb149da8897e045110565ed1232\transformed\jetified-ui-unit-1.4.0\res
+com.example.lab04registronotas.app-jetified-foundation-1.4.0-14 C:\Users\Nikolai\.gradle\caches\transforms-3\52fb75815272e1152782c7ec27c91494\transformed\jetified-foundation-1.4.0\res
+com.example.lab04registronotas.app-jetified-animation-1.4.0-15 C:\Users\Nikolai\.gradle\caches\transforms-3\543bd07be13e25a3e77209250fced7b7\transformed\jetified-animation-1.4.0\res
+com.example.lab04registronotas.app-jetified-lifecycle-viewmodel-savedstate-2.6.1-16 C:\Users\Nikolai\.gradle\caches\transforms-3\6650ddadbb281cfaf809bd3e2b125819\transformed\jetified-lifecycle-viewmodel-savedstate-2.6.1\res
+com.example.lab04registronotas.app-jetified-savedstate-1.2.1-17 C:\Users\Nikolai\.gradle\caches\transforms-3\6ca84ca910c1506c86108bfbe31c1aca\transformed\jetified-savedstate-1.2.1\res
+com.example.lab04registronotas.app-jetified-core-ktx-1.10.1-18 C:\Users\Nikolai\.gradle\caches\transforms-3\6f229db55fca58a621f6d2cf8e533e2f\transformed\jetified-core-ktx-1.10.1\res
+com.example.lab04registronotas.app-jetified-ui-geometry-1.4.0-19 C:\Users\Nikolai\.gradle\caches\transforms-3\7c25e1d21ed3d90a96f1dafc75ef1777\transformed\jetified-ui-geometry-1.4.0\res
+com.example.lab04registronotas.app-jetified-ui-graphics-1.4.0-20 C:\Users\Nikolai\.gradle\caches\transforms-3\896aa9e322e762950365700e11c723ba\transformed\jetified-ui-graphics-1.4.0\res
+com.example.lab04registronotas.app-jetified-material-ripple-1.4.0-21 C:\Users\Nikolai\.gradle\caches\transforms-3\8971fdfda6685c5ff39d7f7266e3c282\transformed\jetified-material-ripple-1.4.0\res
+com.example.lab04registronotas.app-jetified-runtime-1.4.0-22 C:\Users\Nikolai\.gradle\caches\transforms-3\8b2253ae024ed0a6f2a30dc7b69efbc0\transformed\jetified-runtime-1.4.0\res
+com.example.lab04registronotas.app-jetified-savedstate-ktx-1.2.1-23 C:\Users\Nikolai\.gradle\caches\transforms-3\8bf61f2c5e8c49647a6af3536f98ace5\transformed\jetified-savedstate-ktx-1.2.1\res
+com.example.lab04registronotas.app-jetified-ui-tooling-preview-1.4.0-24 C:\Users\Nikolai\.gradle\caches\transforms-3\8d42a650fd9147a6ec308111509effa4\transformed\jetified-ui-tooling-preview-1.4.0\res
+com.example.lab04registronotas.app-core-1.10.1-25 C:\Users\Nikolai\.gradle\caches\transforms-3\8e804bda4d4510a7ff91e4d3de9ed5b7\transformed\core-1.10.1\res
+com.example.lab04registronotas.app-jetified-ui-1.4.0-26 C:\Users\Nikolai\.gradle\caches\transforms-3\a136b61f7943f12bad1cda038df21bbb\transformed\jetified-ui-1.4.0\res
+com.example.lab04registronotas.app-jetified-foundation-layout-1.4.0-27 C:\Users\Nikolai\.gradle\caches\transforms-3\a84d9e193e4b1ee64b5eb7668c4361a4\transformed\jetified-foundation-layout-1.4.0\res
+com.example.lab04registronotas.app-jetified-profileinstaller-1.3.0-28 C:\Users\Nikolai\.gradle\caches\transforms-3\c6e4267733683c1eccac8fd8791b78e1\transformed\jetified-profileinstaller-1.3.0\res
+com.example.lab04registronotas.app-jetified-activity-compose-1.7.2-29 C:\Users\Nikolai\.gradle\caches\transforms-3\c70824f5fe56f96cb426e5ea24480ca9\transformed\jetified-activity-compose-1.7.2\res
+com.example.lab04registronotas.app-jetified-lifecycle-runtime-ktx-2.6.1-30 C:\Users\Nikolai\.gradle\caches\transforms-3\e1b268102d10a5d21747c6e1e1f87ab7\transformed\jetified-lifecycle-runtime-ktx-2.6.1\res
+com.example.lab04registronotas.app-jetified-runtime-saveable-1.4.0-31 C:\Users\Nikolai\.gradle\caches\transforms-3\e921f37d0ec6a1c450848ae6b34236f9\transformed\jetified-runtime-saveable-1.4.0\res
+com.example.lab04registronotas.app-jetified-emoji2-1.3.0-32 C:\Users\Nikolai\.gradle\caches\transforms-3\eaeaefc697cb842dc4f165404492be0e\transformed\jetified-emoji2-1.3.0\res
+com.example.lab04registronotas.app-lifecycle-viewmodel-2.6.1-33 C:\Users\Nikolai\.gradle\caches\transforms-3\f7413bf37dda3af7922925e31273ed09\transformed\lifecycle-viewmodel-2.6.1\res
+com.example.lab04registronotas.app-jetified-animation-core-1.4.0-34 C:\Users\Nikolai\.gradle\caches\transforms-3\fcb6cf1e5f603558c1991ebc9ce21350\transformed\jetified-animation-core-1.4.0\res
+com.example.lab04registronotas.app-jetified-annotation-experimental-1.3.0-35 C:\Users\Nikolai\.gradle\caches\transforms-3\fd62d855b325428aa3f0284f8781de53\transformed\jetified-annotation-experimental-1.3.0\res
+com.example.lab04registronotas.app-resValues-36 C:\Users\Nikolai\StudioProjects\Programaci-n_moviles_Suarez1\SEMANA 04\app\build\generated\res\resValues\release
+com.example.lab04registronotas.app-packageReleaseResources-37 C:\Users\Nikolai\StudioProjects\Programaci-n_moviles_Suarez1\SEMANA 04\app\build\intermediates\incremental\release\packageReleaseResources\merged.dir
+com.example.lab04registronotas.app-packageReleaseResources-38 C:\Users\Nikolai\StudioProjects\Programaci-n_moviles_Suarez1\SEMANA 04\app\build\intermediates\incremental\release\packageReleaseResources\stripped.dir
+com.example.lab04registronotas.app-merged_res-39 C:\Users\Nikolai\StudioProjects\Programaci-n_moviles_Suarez1\SEMANA 04\app\build\intermediates\merged_res\release
+com.example.lab04registronotas.app-main-40 C:\Users\Nikolai\StudioProjects\Programaci-n_moviles_Suarez1\SEMANA 04\app\src\main\res
+com.example.lab04registronotas.app-release-41 C:\Users\Nikolai\StudioProjects\Programaci-n_moviles_Suarez1\SEMANA 04\app\src\release\res

@@ -16,6 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+import androidx.compose.ui.tooling.preview.Preview
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -214,5 +216,13 @@ fun CursoSlider(label: String, value: Float, onValueChange: (Float) -> Unit) {
             valueRange = 0f..20f,
             steps = 19
         )
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun RegistroNotasAppPreview() {
+    MaterialTheme {
+        RegistroNotasApp()
     }
 }
