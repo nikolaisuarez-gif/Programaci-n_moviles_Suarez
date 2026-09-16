@@ -68,20 +68,30 @@ fun TemperatureDisplay() {
         temperatura < 10 -> Color.Blue
         else -> Color.Black
     }
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
-            text = "Temperatura: $temperatura°C",
-            color = color,
-            style = MaterialTheme.typography.headlineSmall
-        )
-        Row {
-            Button(onClick = { temperatura++ }) { Text("Subir") }
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = { temperatura-- }) { Text("Bajar") }
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedButton(onClick = { temperatura = 20 }) {
-            Text("Resetear")
+    Card(
+        modifier = Modifier.padding(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.LightGray.copy(alpha = 0.2f))
+    ) {
+        Column(
+            modifier = Modifier.padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Temperatura: $temperatura°C",
+                color = color,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Row {
+                Button(onClick = { temperatura++ }) { Text("Subir") }
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(onClick = { temperatura-- }) { Text("Bajar") }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedButton(onClick = { temperatura = 20 }) {
+                Text("Resetear")
+            }
         }
     }
 }
