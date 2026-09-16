@@ -5,12 +5,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -33,10 +36,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ContadorRoto() {
-    var contador = 0 // Esto se resetea a 0 en cada recomposición
+    var contador = 0
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text("Contador (Roto): $contador")
-        Button(onClick = { contador++ }) { // No causa recomposición
+        Button(onClick = { contador++ }) {
             Text("Incrementar")
         }
     }
@@ -96,10 +99,6 @@ fun TemperatureDisplay() {
     }
 }
 
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.ui.text.style.TextDecoration
-
 data class Tarea(
     val id: Int,
     val nombre: String,
@@ -129,13 +128,41 @@ fun ItemTarea(
                 )
             }
             IconButton(onClick = onEliminar) {
-                Text("🗑️") // Usamos un emoji para simplificar sin VectorAssets
+                Text("🗑️")
             }
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PantallaTareas() {
+    var textoTarea by remember { mutableStateOf("") }
+    var contadorId by remember { mutableStateOf(1) }
+    val listaTareas = remember { mutableStateListOf<Tarea>() }
+
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Text("Lista de tareas", style = MaterialTheme.typography.headlineMedium)
+        Spacer(modifier = Modifier.height(16.dp))
+        OutlinedTextField(
+            value = textoTarea,
+            onValueChange = { textoTarea = it },
+            label = { Text("Ingrese una tarea") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(
+            onClick = {
+                if (textoTarea.isNotBlank()) {
+                    listaTareas.add(Tarea(id = contadorId, nombre = textoTarea))
+                    contadorId++
+                    textoTarea = ""
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Agregar tarea")
+        }
     }
 }
 
@@ -147,15 +174,13 @@ fun LaboratorioScreen() {
     ) {
         Text("Laboratorio Semana 05", style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = Modifier.height(16.dp))
-        // Comentamos lo anterior para ver la tarea final
-        // TemperatureDisplay()
         PantallaTareas()
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewContadores() {
+fun PreviewLaboratorio() {
     MaterialTheme {
         LaboratorioScreen()
     }
