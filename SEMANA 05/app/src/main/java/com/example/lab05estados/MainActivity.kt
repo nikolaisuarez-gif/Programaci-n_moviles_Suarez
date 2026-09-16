@@ -70,6 +70,10 @@ fun TemperatureDisplay() {
             Spacer(modifier = Modifier.width(8.dp))
             Button(onClick = { temperatura-- }) { Text("Bajar") }
         }
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedButton(onClick = { temperatura = 20 }) {
+            Text("Resetear")
+        }
     }
 }
 
