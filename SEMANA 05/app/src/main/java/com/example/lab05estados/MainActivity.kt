@@ -163,6 +163,18 @@ fun PantallaTareas() {
         ) {
             Text("Agregar tarea")
         }
+        Spacer(modifier = Modifier.height(16.dp))
+        Text("Total de tareas: ${listaTareas.size}", style = MaterialTheme.typography.titleMedium)
+        Spacer(modifier = Modifier.height(8.dp))
+        LazyColumn {
+            items(listaTareas, key = { it.id }) { tarea ->
+                ItemTarea(
+                    tarea = tarea,
+                    onEliminar = { },
+                    onCambiarEstado = { }
+                )
+            }
+        }
     }
 }
 
