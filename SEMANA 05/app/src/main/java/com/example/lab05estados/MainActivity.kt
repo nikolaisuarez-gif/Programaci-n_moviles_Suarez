@@ -41,6 +41,24 @@ fun ContadorRoto() {
 }
 
 @Composable
+fun ContadorConRemember() {
+    var contador by remember { mutableStateOf(0) }
+    Column(
+        modifier = Modifier.padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Contador (Remember): $contador",
+            style = MaterialTheme.typography.headlineMedium
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(onClick = { contador++ }) {
+            Text("Incrementar")
+        }
+    }
+}
+
+@Composable
 fun LaboratorioScreen() {
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -49,5 +67,7 @@ fun LaboratorioScreen() {
         Text("Laboratorio Semana 05", style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = Modifier.height(16.dp))
         ContadorRoto()
+        Divider(modifier = Modifier.padding(vertical = 16.dp))
+        ContadorConRemember()
     }
 }
