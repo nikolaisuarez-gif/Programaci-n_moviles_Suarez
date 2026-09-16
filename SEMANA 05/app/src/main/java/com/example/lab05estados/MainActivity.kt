@@ -107,7 +107,33 @@ data class Tarea(
 )
 
 @Composable
-fun PantallaTareas() {
+fun ItemTarea(
+    tarea: Tarea,
+    onEliminar: () -> Unit,
+    onCambiarEstado: (Boolean) -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
+                Checkbox(checked = tarea.completada, onCheckedChange = onCambiarEstado)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = tarea.nombre,
+                    textDecoration = if (tarea.completada) TextDecoration.LineThrough else TextDecoration.None
+                )
+            }
+            IconButton(onClick = onEliminar) {
+                Text("🗑️") // Usamos un emoji para simplificar sin VectorAssets
+            }
+        }
+    }
+}
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Text("Lista de tareas", style = MaterialTheme.typography.headlineMedium)
     }
