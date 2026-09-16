@@ -65,6 +65,11 @@ fun TemperatureDisplay() {
     var temperatura by remember { mutableStateOf(20) }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text("Temperatura: $temperatura°C")
+        Row {
+            Button(onClick = { temperatura++ }) { Text("Subir") }
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(onClick = { temperatura-- }) { Text("Bajar") }
+        }
     }
 }
 
