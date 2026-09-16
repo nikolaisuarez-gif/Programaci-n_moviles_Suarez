@@ -1,6 +1,7 @@
 package com.suarez.lab04nikolai
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -80,5 +81,12 @@ fun PantallaCarrito() {
             text = "Productos: ${productos.size}",
             style = MaterialTheme.typography.titleMedium
         )
+
+        // --- INICIO ETAPA 3: LazyColumn ---
+        LazyColumn {
+            items(productos.size) { index ->
+                Text(text = productos[index].nombre)
+            }
+        }
     }
 }
