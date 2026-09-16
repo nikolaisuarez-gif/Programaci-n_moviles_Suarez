@@ -31,10 +31,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ContadorRoto() {
-    var contador = 0
+    var contador = 0 // Esto se resetea a 0 en cada recomposición
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text("Contador (Roto): $contador")
-        Button(onClick = { contador++ }) {
+        Button(onClick = { contador++ }) { // No causa recomposición porque no es un estado
             Text("Incrementar")
         }
     }
