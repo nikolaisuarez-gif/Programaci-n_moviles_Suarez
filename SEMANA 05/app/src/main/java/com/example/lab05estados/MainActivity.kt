@@ -30,6 +30,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+fun ContadorRoto() {
+    var contador = 0
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text("Contador (Roto): $contador")
+        Button(onClick = { contador++ }) {
+            Text("Incrementar")
+        }
+    }
+}
+
+@Composable
 fun LaboratorioScreen() {
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -37,6 +48,6 @@ fun LaboratorioScreen() {
     ) {
         Text("Laboratorio Semana 05", style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = Modifier.height(16.dp))
-        // Aquí iremos añadiendo los componentes del lab
+        ContadorRoto()
     }
 }
