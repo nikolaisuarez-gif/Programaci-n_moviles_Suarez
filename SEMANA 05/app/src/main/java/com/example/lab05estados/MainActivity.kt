@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +24,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // Contenedor principal para ir probando los laboratorios
                     LaboratorioScreen()
                 }
             }
@@ -36,7 +36,7 @@ fun ContadorRoto() {
     var contador = 0 // Esto se resetea a 0 en cada recomposición
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text("Contador (Roto): $contador")
-        Button(onClick = { contador++ }) { // No causa recomposición porque no es un estado
+        Button(onClick = { contador++ }) { // No causa recomposición
             Text("Incrementar")
         }
     }
@@ -71,5 +71,13 @@ fun LaboratorioScreen() {
         ContadorRoto()
         Divider(modifier = Modifier.padding(vertical = 16.dp))
         ContadorConRemember()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewContadores() {
+    MaterialTheme {
+        LaboratorioScreen()
     }
 }
