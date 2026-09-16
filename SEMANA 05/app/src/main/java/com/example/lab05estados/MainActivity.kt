@@ -63,8 +63,17 @@ fun ContadorConRemember() {
 @Composable
 fun TemperatureDisplay() {
     var temperatura by remember { mutableStateOf(20) }
+    val color = when {
+        temperatura > 30 -> Color.Red
+        temperatura < 10 -> Color.Blue
+        else -> Color.Black
+    }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text("Temperatura: $temperatura°C")
+        Text(
+            text = "Temperatura: $temperatura°C",
+            color = color,
+            style = MaterialTheme.typography.headlineSmall
+        )
         Row {
             Button(onClick = { temperatura++ }) { Text("Subir") }
             Spacer(modifier = Modifier.width(8.dp))
