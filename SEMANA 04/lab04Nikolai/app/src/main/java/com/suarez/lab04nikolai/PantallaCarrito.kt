@@ -2,6 +2,7 @@ package com.suarez.lab04nikolai
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -9,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun PantallaCarrito() {
@@ -64,7 +66,7 @@ fun PantallaCarrito() {
                 val cantidadNum = cantidad.toIntOrNull() ?: 0
 
                 if (nombre.isNotBlank() && precioNum > 0 && cantidadNum > 0) {
-                    productos.add(Producto(nombre, precioNum, cantidadNum))
+                    productos.add(Producto(nombre = nombre, precio = precioNum, cantidad = cantidadNum))
                     // Limpiar los campos
                     nombre = ""
                     precio = ""
@@ -76,16 +78,62 @@ fun PantallaCarrito() {
             Text("AGREGAR")
         }
 
-        // Mostrar cantidad de productos (para verificar que funciona)
+
         Text(
             text = "Productos: ${productos.size}",
             style = MaterialTheme.typography.titleMedium
         )
 
-        // --- INICIO ETAPA 3: LazyColumn ---
-        LazyColumn {
-            items(productos.size) { index ->
-                Text(text = productos[index].nombre)
+        //
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            items(productos) { producto ->
+                TarjetaProducto(
+                    producto = producto,
+                    onEliminar = { productos.remove(producto) }
+                )
+            }
+        }
+    }
+}
+
+
+@Composable
+fun TarjetaProducto(producto: Producto, onEliminar: () -> Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = producto.nombre,
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
+                )
+                Text(
+                    text = "S/ ${producto.precio} x ${producto.cantidad}",
+                    style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
+                )
+            }
+            // Importe calculado (precio × cantidad)
+            val importe = producto.precio * producto.cantidad
+            Text(
+                text = "S/ ${String.format("%.2f", importe)}",
+                style = MaterialTheme.typography.titleMedium
+            )
+            // Botón eliminar como texto en vez de Icon
+            TextButton(onClick = onEliminar) {
+                Text("Eliminar", color = Color.Red)
             }
         }
     }
