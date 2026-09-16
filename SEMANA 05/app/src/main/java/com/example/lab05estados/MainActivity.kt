@@ -96,6 +96,23 @@ fun TemperatureDisplay() {
     }
 }
 
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.text.style.TextDecoration
+
+data class Tarea(
+    val id: Int,
+    val nombre: String,
+    val completada: Boolean = false
+)
+
+@Composable
+fun PantallaTareas() {
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Text("Lista de tareas", style = MaterialTheme.typography.headlineMedium)
+    }
+}
+
 @Composable
 fun LaboratorioScreen() {
     Column(
@@ -104,11 +121,9 @@ fun LaboratorioScreen() {
     ) {
         Text("Laboratorio Semana 05", style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = Modifier.height(16.dp))
-        // Comentamos contadores para ver mejor la tarea 1
-        // ContadorRoto()
-        // Divider(modifier = Modifier.padding(vertical = 16.dp))
-        // ContadorConRemember()
-        TemperatureDisplay()
+        // Comentamos lo anterior para ver la tarea final
+        // TemperatureDisplay()
+        PantallaTareas()
     }
 }
 
