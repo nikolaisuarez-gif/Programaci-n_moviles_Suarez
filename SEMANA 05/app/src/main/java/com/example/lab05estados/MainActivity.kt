@@ -170,8 +170,13 @@ fun PantallaTareas() {
             items(listaTareas, key = { it.id }) { tarea ->
                 ItemTarea(
                     tarea = tarea,
-                    onEliminar = { },
-                    onCambiarEstado = { }
+                    onEliminar = { listaTareas.remove(tarea) },
+                    onCambiarEstado = { completada ->
+                        val index = listaTareas.indexOf(tarea)
+                        if (index != -1) {
+                            listaTareas[index] = listaTareas[index].copy(completada = completada)
+                        }
+                    }
                 )
             }
         }
