@@ -61,6 +61,14 @@ fun ContadorConRemember() {
 }
 
 @Composable
+fun TemperatureDisplay() {
+    var temperatura by remember { mutableStateOf(20) }
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text("Temperatura: $temperatura°C")
+    }
+}
+
+@Composable
 fun LaboratorioScreen() {
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -68,9 +76,11 @@ fun LaboratorioScreen() {
     ) {
         Text("Laboratorio Semana 05", style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = Modifier.height(16.dp))
-        ContadorRoto()
-        Divider(modifier = Modifier.padding(vertical = 16.dp))
-        ContadorConRemember()
+        // Comentamos contadores para ver mejor la tarea 1
+        // ContadorRoto()
+        // Divider(modifier = Modifier.padding(vertical = 16.dp))
+        // ContadorConRemember()
+        TemperatureDisplay()
     }
 }
 
