@@ -1,6 +1,36 @@
 Estudiante Nikolai Suarez Curso Programacion de Moviles Seccion 4to A
 Descripcion General del Proyecto Este proyecto corresponde al desarrollo de una aplicacion movil enfocada en la navegacion entre pantallas utilizando Jetpack Compose, elaborada de manera tradicional sin asistencia de inteligencia artificial. El objetivo principal fue comprender los fundamentos del enrutamiento de pantallas, la gestion de estados locales y la estructura de navegacion basica en Android.
 Trabajo Realizado Se configuro el entorno de Jetpack Compose integrando la dependencia de navegacion. Se disenaron las pantallas principales que incluyen la pantalla de inicio, la pantalla de detalle, la lista de elementos y la vista de perfil de usuario. Asimismo, se implemento el grafo de navegacion central en AppNavigation y el contrato de rutas con Screen, permitiendo la transicion fluida entre las diferentes vistas mediante botones y eventos de usuario.
+Pront solicitado por el profesor
+Actúa como Principal Android Engineer Kotlin + Jetpack Compose. Harás una APP NUEVA en RAMA NUEVA sin tocar mi app original.
+
+ORDEN 0 - GIT + APP AISLADA (OBLIGATORIO PRIMERO):
+1. Crea nueva rama desde main: git checkout main && git pull && git checkout -b feat/lab05-polished-nikolai-no-mix
+2. Crea APP NUEVA aislada: Copia completa la carpeta "SEMANA 05" a "SEMANA 05_POLISHED_NIKOLAI" en la raíz del repo. Todo el trabajo polished lo harás SOLO dentro de "SEMANA 05_POLISHED_NIKOLAI/app/src/...". PROHIBIDO tocar "SEMANA 05/app" original. Así mi app del profe queda intacta y la nueva no se mezcla. Verifica con git status que solo hay cambios en la carpeta nueva.
+
+IDENTIDAD: NIKOLAI SUAREZ (estudiante) | DOCENTE: JUAN LEÓN
+
+APP ORIGINAL: Kotlin 100% (Empty Activity, Kotlin DSL, Min SDK 24) + Jetpack Compose + navigation-compose:2.7.7 con NavHost+rememberNavController+sealed class Screen. La nueva app es un clon exacto pero con UI polished.
+
+OBJETIVO: En la APP NUEVA "SEMANA 05_POLISHED_NIKOLAI", reemplaza las 4 pantallas para que queden PIXEL PERFECT idénticas a las 3 capturas adjuntas, manteniendo navegación intacta y funcional en emulador con ./gradlew assembleDebug.
+
+ESPECIFICACIÓN PIXEL PERFECT (COPIA FIEL):
+
+ESTILO: Degradados #6750A4→#9575CD / #B39DDB→#F3E5F5, lila #F3E5F5/#EDE7F6, Cards blancas 16dp elev 4dp, Cards #F5F5F5 12dp, textos #1A1A1A/Gray/morado #6750A4 #7C4DFF, solo Icons.Filled.
+
+HOME - "Bienvenido, Juan León": Fondo degradado #B39DDB→#F3E5F5, "Bienvenido," 22sp Bold blanco, "Juan León" 22sp Bold blanco, "¿Qué deseas gestionar hoy?" 12sp blanco 80%, 2 Cards blancas 16dp: "Directorio de Alumnos/Ver y gestionar" con icon Groups #6750A4 y "Mi Perfil Académico/Datos personales" con icon Person, trailing ›.
+
+LIST - "Directorio de Alumnos": TopAppBar #F3E5F5 "Directorio de Alumnos" 15sp Bold + back popBackStack(), 5 alumnos exactos (Juan León/Ing Sistemas, María Garcia/Arquitectura, Carlos Perez/Medicina, Ana Lopez/Derecho, Luis Ramirez/Administración) en LazyColumn Cards #F5F5F5 12dp con avatar Circle 36dp Person Gray y flecha ›, click -> Detail.createRoute.
+
+DETAIL - "Expediente Académico": TopAppBar + back, Header 140dp degradado #6750A4→#9575CD con avatar Circle 80dp blanco, nombre 16sp Bold + carrera 11sp #7C4DFF, Card #F5F5F5 con ID 2024-0001 Badge, correo Email, Facultad School, Biografía. Recibe itemId:Int tipado.
+
+PROFILE - "Configuración de Perfil": Header 120dp degradado con avatar 64dp + "Juan León Suiyon" blanco, secciones "INFORMACIÓN PERSONAL"/"ACADÉMICO" 10sp #6750A4 Bold, Cards #F5F5F5 8dp para Nombre, Correo juan.leon@tecsup.edu.pe, Tel +51 987 654 321, Carrera Ing Software con icons, botón "Cerrar Sesión" #FFEBEE texto #B71C1C.
+
+PORTADA EXTRA: "Portal Académico" Card blanca con OutlinedTextFields Correo/Contraseña y botón #6750A4 "INICIAR SESIÓN".
+
+RESTRICCIONES: Solo Kotlin Compose Material3, no .md, no XML Java, no tocar SEMANA 05 original, no romper Screen.kt routes ni NavHost, usa solo Icons.Filled.
+
+ENTREGABLE: En "SEMANA 05_POLISHED_NIKOLAI/app/src/main/java/.../screens/" dame los 5 .kt completos con @Preview listos para compilar. Al final haz git add, commit "feat(polished): app nueva SEMANA 05_POLISHED_NIKOLAI polished idéntica capturas - Nikolai Suarez" y push a feat/lab05-polished-nikolai-no-mix. Adjunto las 3 capturas, replícalas al 100%.
 Conclusiones
 1.
 La implementacion manual de la navegacion en Jetpack Compose permite entender a profundidad como funcionan los controladores de navegacion y el paso de argumentos pantallas sin depender de herramientas externas.
