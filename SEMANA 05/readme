@@ -1,0 +1,11 @@
+Estudiante Nikolai Suarez Curso Programacion de Moviles Seccion 4to A
+Descripcion General del Proyecto Este proyecto corresponde al desarrollo de una aplicacion movil enfocada en la navegacion entre pantallas utilizando Jetpack Compose, elaborada de manera tradicional sin asistencia de inteligencia artificial. El objetivo principal fue comprender los fundamentos del enrutamiento de pantallas, la gestion de estados locales y la estructura de navegacion basica en Android.
+Trabajo Realizado Se configuro el entorno de Jetpack Compose integrando la dependencia de navegacion. Se disenaron las pantallas principales que incluyen la pantalla de inicio, la pantalla de detalle, la lista de elementos y la vista de perfil de usuario. Asimismo, se implemento el grafo de navegacion central en AppNavigation y el contrato de rutas con Screen, permitiendo la transicion fluida entre las diferentes vistas mediante botones y eventos de usuario.
+Conclusiones
+1.
+La implementacion manual de la navegacion en Jetpack Compose permite entender a profundidad como funcionan los controladores de navegacion y el paso de argumentos pantallas sin depender de herramientas externas.
+2.
+El uso de arquitecturas basadas en componentes composables facilita la reutilizacion de codigo y mantiene una estructura limpia y modular en proyectos moviles pequenos.
+3.
+Este ejercicio fortalece las bases conceptuales de desarrollo nativo en Android, permitiendo identificar la importancia de una correcta gestion del ciclo de vida y la jerarquia de componentes visuales.
+
