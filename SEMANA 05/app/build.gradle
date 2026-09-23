@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.lab05estados'
+    namespace 'com.example.semana05_navegacion'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.lab05estados"
+        applicationId "com.example.semana05_navegacion"
         minSdk 24
         targetSdk 33
         versionCode 1
