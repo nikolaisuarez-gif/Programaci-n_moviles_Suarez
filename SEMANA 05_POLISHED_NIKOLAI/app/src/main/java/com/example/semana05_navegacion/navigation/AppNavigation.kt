@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.example.semana05_navegacion.screens.DetailScreen
 import com.example.semana05_navegacion.screens.HomeScreen
 import com.example.semana05_navegacion.screens.ListScreen
+import com.example.semana05_navegacion.screens.LoginScreen
 import com.example.semana05_navegacion.screens.ProfileScreen
 
 @Composable
@@ -17,8 +18,11 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Login.route
     ) {
+        composable(Screen.Login.route) {
+            LoginScreen(navController)
+        }
         composable(Screen.Home.route) {
             HomeScreen(navController)
         }
@@ -33,11 +37,11 @@ fun AppNavigation() {
             arguments = listOf(
                 navArgument(name = "itemId") {
                     type = NavType.IntType
-                    defaultValue = 0
+                    defaultValue = 1
                 }
             )
         ) { backStackEntry ->
-            val itemId = backStackEntry.arguments?.getInt("itemId") ?: 0
+            val itemId = backStackEntry.arguments?.getInt("itemId") ?: 1
             DetailScreen(navController, itemId)
         }
     }
