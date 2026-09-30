@@ -74,11 +74,30 @@ fun ProductCard(title: String, onCardClick: () -> Unit) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            IconButton(onClick = { expanded = !expanded }) {
-                Icon(
-                    imageVector = Icons.Default.MoreVert,
-                    contentDescription = "Opciones"
-                )
+            Box {
+                IconButton(onClick = { expanded = true }) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = "Opciones"
+                    )
+                }
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Favoritos") },
+                        onClick = { expanded = false }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Compartir") },
+                        onClick = { expanded = false }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Reportar") },
+                        onClick = { expanded = false }
+                    )
+                }
             }
         }
     }
