@@ -33,6 +33,9 @@ fun HomeScreen(navController: NavController) {
                     selected = false,
                     onClick = {
                         scope.launch { drawerState.close() }
+                        navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Home.route) { inclusive = true }
+                        }
                     }
                 )
                 NavigationDrawerItem(
@@ -41,6 +44,7 @@ fun HomeScreen(navController: NavController) {
                     selected = false,
                     onClick = {
                         scope.launch { drawerState.close() }
+                        navController.navigate(Screen.List.route)
                     }
                 )
                 NavigationDrawerItem(
@@ -49,6 +53,7 @@ fun HomeScreen(navController: NavController) {
                     selected = false,
                     onClick = {
                         scope.launch { drawerState.close() }
+                        navController.navigate(Screen.List.route)
                     }
                 )
                 NavigationDrawerItem(
@@ -57,6 +62,7 @@ fun HomeScreen(navController: NavController) {
                     selected = false,
                     onClick = {
                         scope.launch { drawerState.close() }
+                        navController.navigate(Screen.Profile.route)
                     }
                 )
             }
