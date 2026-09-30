@@ -1,20 +1,57 @@
 package com.example.semana05_navegacion.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.RadioButtonUnchecked
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.ShoppingBag
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,140 +66,258 @@ fun HomeScreen(navController: NavController) {
     val scope = rememberCoroutineScope()
     var selectedItem by remember { mutableStateOf("home") }
 
+    val products = listOf(
+        Triple("Audifonos", "S/ 89.00", 1),
+        Triple("Smartwatch", "S/ 199.00", 2),
+        Triple("Funda celular", "S/ 25.00", 3)
+    )
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                // Encabezado del Drawer con Avatar y datos básicos del usuario
+                // Header Maria Rojas
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.primaryContainer)
-                        .padding(24.dp)
+                        .padding(24.dp),
                 ) {
-                    Column {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(
                             modifier = Modifier
-                                .size(64.dp)
+                                .size(56.dp)
                                 .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primary),
-                            contentAlignment = Alignment.Center
+                                .background(MaterialTheme.colorScheme.primaryContainer),
+                            contentAlignment = Alignment.Center,
                         ) {
                             Text(
                                 text = "NS",
-                                color = Color.White,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold
+                                color = MaterialTheme.colorScheme.primary,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold,
                             )
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Text(
-                            text = "Nikolai Suarez",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                        Text(
-                            text = "nikolai.suarez@tecsup.edu.pe",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
-                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Column {
+                            Text(
+                                text = "Nikolai Suarez",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                            )
+                            Text(
+                                text = "nikolaiarrobatecsup",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
                     }
                 }
 
-                HorizontalDivider()
-                Spacer(modifier = Modifier.height(12.dp))
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-                // Ítems del NavigationDrawer con resaltado visual del ítem activo
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
+                    icon = { Icon(Icons.Default.RadioButtonUnchecked, contentDescription = "Inicio") },
                     label = { Text("Inicio") },
                     selected = selectedItem == "home",
                     onClick = {
                         selectedItem = "home"
                         scope.launch { drawerState.close() }
-                        navController.navigate(Screen.Home.route) {
-                            popUpTo(Screen.Home.route) { inclusive = true }
-                        }
                     },
-                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                 )
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Mis pedidos") },
+                    icon = { Icon(Icons.Default.RadioButtonUnchecked, contentDescription = "Mis pedidos") },
                     label = { Text("Mis pedidos") },
                     selected = selectedItem == "pedidos",
                     onClick = {
                         selectedItem = "pedidos"
                         scope.launch { drawerState.close() }
-                        navController.navigate(Screen.List.route)
+                        navController.navigate(Screen.List.route) { launchSingleTop = true }
                     },
-                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                 )
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Favorite, contentDescription = "Favoritos") },
+                    icon = { Icon(Icons.Default.RadioButtonUnchecked, contentDescription = "Favoritos") },
                     label = { Text("Favoritos") },
                     selected = selectedItem == "favoritos",
                     onClick = {
                         selectedItem = "favoritos"
                         scope.launch { drawerState.close() }
-                        navController.navigate(Screen.List.route)
+                        navController.navigate(Screen.List.route) { launchSingleTop = true }
                     },
-                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                 )
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Perfil") },
+                    icon = { Icon(Icons.Default.RadioButtonUnchecked, contentDescription = "Perfil") },
                     label = { Text("Perfil") },
                     selected = selectedItem == "perfil",
                     onClick = {
                         selectedItem = "perfil"
                         scope.launch { drawerState.close() }
-                        navController.navigate(Screen.Profile.route)
+                        navController.navigate(Screen.Profile.route) { launchSingleTop = true }
                     },
-                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
+                )
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.RadioButtonUnchecked, contentDescription = "Cerrar sesion") },
+                    label = { Text("Cerrar sesion") },
+                    selected = selectedItem == "logout",
+                    onClick = {
+                        selectedItem = "logout"
+                        scope.launch { drawerState.close() }
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                 )
             }
-        }
+        },
     ) {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("TECSUP Store") },
+                    title = {
+                        Column {
+                            Text(
+                                text = "TECSUP Store",
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                            )
+                            Text(
+                                text = "Mas vendidos",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
+                            )
+                        }
+                    },
                     navigationIcon = {
                         IconButton(onClick = { scope.launch { drawerState.open() } }) {
                             Icon(
                                 imageVector = Icons.Default.Menu,
-                                contentDescription = "Menú Principal"
+                                contentDescription = "Menú Principal",
                             )
                         }
-                    }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                        navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+                    ),
                 )
-            }
+            },
         ) { padding ->
-            Column(
+            LazyColumn(
+                contentPadding = padding,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(padding)
-                    .padding(24.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                Text(
-                    text = "Pantalla TECSUP Store",
-                    style = MaterialTheme.typography.headlineMedium
-                )
-                Spacer(modifier = Modifier.height(32.dp))
-                Button(
-                    onClick = { navController.navigate(Screen.List.route) },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Ver catálogo de productos")
+                items(products.size) { index ->
+                    val (title, price, id) = products[index]
+                    StoreProductCard(
+                        title = title,
+                        price = price,
+                        onCardClick = { navController.navigate(Screen.Detail.createRoute(id)) }
+                    )
                 }
-                Spacer(modifier = Modifier.height(12.dp))
-                OutlinedButton(
-                    onClick = { navController.navigate(Screen.Profile.route) },
-                    modifier = Modifier.fillMaxWidth()
+            }
+        }
+    }
+}
+
+@Composable
+fun StoreProductCard(title: String, price: String, onCardClick: () -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onCardClick() },
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.weight(1f)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(MaterialTheme.colorScheme.primaryContainer),
+                    contentAlignment = Alignment.Center,
                 ) {
-                    Text("Mi perfil")
+                    Icon(
+                        imageVector = Icons.Default.ShoppingBag,
+                        contentDescription = title,
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+                Column {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = price,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+            Box {
+                IconButton(onClick = { expanded = true }) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = "Opciones",
+                    )
+                }
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Favoritos") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Favorite,
+                                contentDescription = "Favoritos",
+                            )
+                        },
+                        onClick = { expanded = false },
+                    )
+                    HorizontalDivider()
+                    DropdownMenuItem(
+                        text = { Text("Compartir") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Share,
+                                contentDescription = "Compartir",
+                            )
+                        },
+                        onClick = { expanded = false },
+                    )
+                    HorizontalDivider()
+                    DropdownMenuItem(
+                        text = { Text("Reportar") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Warning,
+                                contentDescription = "Reportar",
+                            )
+                        },
+                        onClick = { expanded = false },
+                    )
                 }
             }
         }
