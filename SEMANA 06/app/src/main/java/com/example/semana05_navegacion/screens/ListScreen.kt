@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -87,14 +90,34 @@ fun ProductCard(title: String, onCardClick: () -> Unit) {
                 ) {
                     DropdownMenuItem(
                         text = { Text("Favoritos") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Favorite,
+                                contentDescription = "Favoritos"
+                            )
+                        },
                         onClick = { expanded = false }
                     )
+                    HorizontalDivider()
                     DropdownMenuItem(
                         text = { Text("Compartir") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Share,
+                                contentDescription = "Compartir"
+                            )
+                        },
                         onClick = { expanded = false }
                     )
+                    HorizontalDivider()
                     DropdownMenuItem(
                         text = { Text("Reportar") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Warning,
+                                contentDescription = "Reportar"
+                            )
+                        },
                         onClick = { expanded = false }
                     )
                 }
