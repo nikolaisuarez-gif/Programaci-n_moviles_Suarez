@@ -17,13 +17,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.RadioButtonUnchecked
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.ShoppingBag
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.Badge
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -65,6 +68,7 @@ fun HomeScreen(navController: NavController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var selectedItem by remember { mutableStateOf("home") }
+    var favoriteIds by remember { mutableStateOf(setOf<Int>()) }
 
     val products = listOf(
         Triple("Audifonos", "S/ 89.00", 1),
@@ -76,7 +80,7 @@ fun HomeScreen(navController: NavController) {
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                // Header Maria Rojas
+                // Header Nikolai Suarez
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -117,7 +121,7 @@ fun HomeScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.RadioButtonUnchecked, contentDescription = "Inicio") },
+                    icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
                     label = { Text("Inicio") },
                     selected = selectedItem == "home",
                     onClick = {
@@ -127,7 +131,7 @@ fun HomeScreen(navController: NavController) {
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                 )
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.RadioButtonUnchecked, contentDescription = "Mis pedidos") },
+                    icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Mis pedidos") },
                     label = { Text("Mis pedidos") },
                     selected = selectedItem == "pedidos",
                     onClick = {
@@ -138,8 +142,15 @@ fun HomeScreen(navController: NavController) {
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                 )
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.RadioButtonUnchecked, contentDescription = "Favoritos") },
+                    icon = { Icon(Icons.Default.Favorite, contentDescription = "Favoritos") },
                     label = { Text("Favoritos") },
+                    badge = {
+                        if (favoriteIds.isNotEmpty()) {
+                            Badge {
+                                Text("${favoriteIds.size}")
+                            }
+                        }
+                    },
                     selected = selectedItem == "favoritos",
                     onClick = {
                         selectedItem = "favoritos"
@@ -149,7 +160,7 @@ fun HomeScreen(navController: NavController) {
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                 )
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.RadioButtonUnchecked, contentDescription = "Perfil") },
+                    icon = { Icon(Icons.Default.Person, contentDescription = "Perfil") },
                     label = { Text("Perfil") },
                     selected = selectedItem == "perfil",
                     onClick = {
@@ -160,7 +171,7 @@ fun HomeScreen(navController: NavController) {
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                 )
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.RadioButtonUnchecked, contentDescription = "Cerrar sesion") },
+                    icon = { Icon(Icons.AutoMirrored.Filled.ExitToApp, contentDescription = "Cerrar sesion") },
                     label = { Text("Cerrar sesion") },
                     selected = selectedItem == "logout",
                     onClick = {
@@ -217,6 +228,14 @@ fun HomeScreen(navController: NavController) {
                     StoreProductCard(
                         title = title,
                         price = price,
+                        isFavorite = id in favoriteIds,
+                        onToggleFavorite = {
+                            favoriteIds = if (id in favoriteIds) {
+                                favoriteIds - id
+                            } else {
+                                favoriteIds + id
+                            }
+                        },
                         onCardClick = { navController.navigate(Screen.Detail.createRoute(id)) }
                     )
                 }
@@ -226,7 +245,13 @@ fun HomeScreen(navController: NavController) {
 }
 
 @Composable
-fun StoreProductCard(title: String, price: String, onCardClick: () -> Unit) {
+fun StoreProductCard(
+    title: String,
+    price: String,
+    isFavorite: Boolean = false,
+    onToggleFavorite: () -> Unit = {},
+    onCardClick: () -> Unit = {}
+) {
     var expanded by remember { mutableStateOf(false) }
 
     Card(
@@ -255,7 +280,7 @@ fun StoreProductCard(title: String, price: String, onCardClick: () -> Unit) {
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        imageVector = Icons.Default.ShoppingBag,
+                        imageVector = Icons.Default.ShoppingCart,
                         contentDescription = title,
                         tint = MaterialTheme.colorScheme.primary,
                     )
@@ -287,14 +312,20 @@ fun StoreProductCard(title: String, price: String, onCardClick: () -> Unit) {
                     onDismissRequest = { expanded = false },
                 ) {
                     DropdownMenuItem(
-                        text = { Text("Favoritos") },
+                        text = {
+                            Text(if (isFavorite) "Quitar de Favoritos" else "Favoritos")
+                        },
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Default.Favorite,
                                 contentDescription = "Favoritos",
+                                tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                             )
                         },
-                        onClick = { expanded = false },
+                        onClick = {
+                            onToggleFavorite()
+                            expanded = false
+                        },
                     )
                     HorizontalDivider()
                     DropdownMenuItem(
