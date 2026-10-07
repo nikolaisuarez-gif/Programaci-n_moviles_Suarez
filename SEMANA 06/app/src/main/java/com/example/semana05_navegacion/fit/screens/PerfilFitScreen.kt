@@ -24,7 +24,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PerfilFitScreen() {
+fun PerfilFitScreen(
+    usuarioNombre: String = "Nikolai Suarez"
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -40,7 +42,7 @@ fun PerfilFitScreen() {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "DR",
+                text = "NS",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = VerdeFit
@@ -49,7 +51,7 @@ fun PerfilFitScreen() {
 
         Spacer(Modifier.height(12.dp))
 
-        Text(text = "Diego Ramos", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+        Text(text = usuarioNombre, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
         Text(text = "Plan Premium", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
         Spacer(Modifier.height(28.dp))

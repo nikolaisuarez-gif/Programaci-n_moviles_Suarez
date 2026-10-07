@@ -1,7 +1,6 @@
 package com.example.semana05_navegacion.fit.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -60,6 +59,7 @@ val VerdeFondoChip = Color(0xFFE0F2F1)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InicioFitScreen(
+    usuarioNombre: String = "Nikolai Suarez",
     clases: List<ClaseGym> = listaClasesFitFake,
     reservas: List<ReservaGym> = emptyList(),
     onClaseClick: (Int) -> Unit,
@@ -78,7 +78,7 @@ fun InicioFitScreen(
                 title = {
                     Column {
                         Text("TECSUP Fit", fontWeight = FontWeight.Bold, color = Color.White)
-                        Text("Hola, Diego", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.8f))
+                        Text("Hola, Nikolai", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.8f))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = VerdeFit)
@@ -183,7 +183,7 @@ fun InicioFitScreen(
                 }
                 3 -> {
                     // Pestaña PERFIL
-                    PerfilFitScreen()
+                    PerfilFitScreen(usuarioNombre = usuarioNombre)
                 }
             }
         }

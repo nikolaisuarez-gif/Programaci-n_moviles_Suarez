@@ -68,6 +68,7 @@ val MoradoFondoChip = Color(0xFFEDE7F6)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InicioClinicaScreen(
+    usuarioNombre: String = "Nikolai Suarez",
     medicos: List<Medico> = listaMedicosFake,
     destinoDrawerActual: String = "inicio",
     onNavegarDrawer: (String) -> Unit,
@@ -85,7 +86,7 @@ fun InicioClinicaScreen(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                // Header del Drawer: Avatar "JP", Juan Pérez, Paciente
+                // Header del Drawer: Avatar "NS", Nikolai Suarez, Paciente
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -99,14 +100,14 @@ fun InicioClinicaScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "JP",
+                            text = "NS",
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
                             color = MoradoClinica
                         )
                     }
                     Spacer(Modifier.height(12.dp))
-                    Text(text = "Juan Pérez", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                    Text(text = usuarioNombre, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                     Text(text = "Paciente", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
 
@@ -146,7 +147,7 @@ fun InicioClinicaScreen(
                     title = {
                         Column {
                             Text("Clínica Salud+", fontWeight = FontWeight.Bold, color = Color.White)
-                            Text("Hola, Juan", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.8f))
+                            Text("Hola, Nikolai", style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.8f))
                         }
                     },
                     navigationIcon = {
