@@ -34,6 +34,7 @@ import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -53,6 +54,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.tecsup.mibodega.ui.cliente.modelo.Pedido
 import com.tecsup.mibodega.ui.cliente.modelo.Producto
 import com.tecsup.mibodega.ui.cliente.modelo.listaCategorias
 import com.tecsup.mibodega.ui.cliente.modelo.listaProductosFake
@@ -69,6 +71,7 @@ import com.tecsup.mibodega.ui.theme.VerdeBodega
 @Composable
 fun InicioScreen(
     productos: List<Producto> = listaProductosFake,
+    pedidos: List<Pedido> = emptyList(),
     cantidadCarrito: Int,
     onVerCarrito: () -> Unit,
     onProductoClick: (Producto) -> Unit,
@@ -184,7 +187,7 @@ fun InicioScreen(
                 }
                 2 -> {
                     // Pestaña PEDIDOS
-                    VistaPedidos()
+                    VistaPedidos(pedidos = pedidos)
                 }
                 3 -> {
                     // Pestaña PERFIL
@@ -300,7 +303,7 @@ private fun VistaCategorias(
 }
 
 @Composable
-private fun VistaPedidos() {
+private fun VistaPedidos(pedidos: List<Pedido>) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -313,23 +316,62 @@ private fun VistaPedidos() {
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(text = "Pedido #1024", fontWeight = FontWeight.Bold)
-                    Text(text = "En proceso", color = VerdeBodega, fontWeight = FontWeight.Bold)
+        if (pedidos.isEmpty()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Aún no has realizado pedidos.\nAgrega productos al carrito para realizar tu primera compra.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                )
+            }
+        } else {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(bottom = 16.dp)
+            ) {
+                items(pedidos) { pedido ->
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+                    ) {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(text = "Pedido ${pedido.numero}", fontWeight = FontWeight.Bold)
+                                Text(text = pedido.estado, color = VerdeBodega, fontWeight = FontWeight.Bold)
+                            }
+                            Spacer(Modifier.height(6.dp))
+                            Text(text = "Fecha: ${pedido.fecha}", style = MaterialTheme.typography.bodySmall)
+                            
+                            pedido.items.forEach { item ->
+                                Text(
+                                    text = "• ${item.cantidad}x ${item.producto.nombre}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                            
+                            HorizontalDivider(modifier = Modifier.padding(vertical = 6.dp))
+                            
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(text = "Método: ${pedido.metodoPago}", style = MaterialTheme.typography.bodySmall)
+                                Text(text = "Total: S/ %.2f".format(pedido.total), fontWeight = FontWeight.Bold, color = VerdeBodega)
+                            }
+                        }
+                    }
                 }
-                Spacer(Modifier.height(6.dp))
-                Text(text = "Fecha: 07 de Octubre, 2026", style = MaterialTheme.typography.bodySmall)
-                Text(text = "Total: S/ 25.90", fontWeight = FontWeight.SemiBold, color = VerdeBodega)
-                Text(text = "Dirección: Av. Los Olivos 123", style = MaterialTheme.typography.bodySmall)
             }
         }
     }

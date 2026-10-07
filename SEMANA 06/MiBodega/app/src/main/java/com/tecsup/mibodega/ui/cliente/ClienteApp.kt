@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.tecsup.mibodega.ui.cliente.modelo.ItemCarrito
+import com.tecsup.mibodega.ui.cliente.modelo.Pedido
 import com.tecsup.mibodega.ui.cliente.modelo.Producto
 import com.tecsup.mibodega.ui.cliente.modelo.listaProductosFake
 import com.tecsup.mibodega.ui.cliente.screens.bienvenida.BienvenidaScreen
@@ -23,8 +24,7 @@ import com.tecsup.mibodega.ui.cliente.screens.registro.RegistroScreen
 
 /**
  * "Director de orquesta" de la app cliente:
- * - Tiene el NavHost con las 7 rutas de cada pantalla.
- * - Sostiene el estado del carrito (List<ItemCarrito>).
+ * - Sostiene el estado del carrito y la lista de pedidos reales realizados.
  */
 private object Rutas {
     const val BIENVENIDA = "bienvenida"
@@ -42,8 +42,9 @@ private object Rutas {
 fun ClienteApp() {
     val navController = rememberNavController()
 
-    // El carrito vive en la cima
     var carrito by remember { mutableStateOf<List<ItemCarrito>>(emptyList()) }
+    var listaPedidos by remember { mutableStateOf<List<Pedido>>(emptyList()) }
+    var ultimoPedido by remember { mutableStateOf<Pedido?>(null) }
 
     NavHost(
         navController = navController,
@@ -70,6 +71,7 @@ fun ClienteApp() {
 
         composable(Rutas.INICIO) {
             InicioScreen(
+                pedidos = listaPedidos,
                 cantidadCarrito = carrito.sumOf { it.cantidad },
                 onVerCarrito = { navController.navigate(Rutas.CARRITO) },
                 onProductoClick = { producto ->
@@ -126,9 +128,26 @@ fun ClienteApp() {
         }
 
         composable(Rutas.ENTREGA) {
+            val subtotal = carrito.sumOf { it.producto.precio * it.cantidad }
+            val delivery = 4.00
+
             DatosEntregaScreen(
+                subtotal = subtotal,
+                delivery = delivery,
                 onVolver = { navController.popBackStack() },
-                onConfirmarPedido = {
+                onConfirmarPedido = { _, _, direccion, referencia, metodoPago ->
+                    val nuevoPedido = Pedido(
+                        numero = "#${1024 + listaPedidos.size}",
+                        items = carrito,
+                        subtotal = subtotal,
+                        delivery = delivery,
+                        total = subtotal + delivery,
+                        direccion = "$direccion ($referencia)",
+                        metodoPago = metodoPago
+                    )
+                    ultimoPedido = nuevoPedido
+                    listaPedidos = listOf(nuevoPedido) + listaPedidos
+                    carrito = emptyList() // vacía el carrito
                     navController.navigate(Rutas.CONFIRMACION)
                 }
             )
@@ -136,8 +155,8 @@ fun ClienteApp() {
 
         composable(Rutas.CONFIRMACION) {
             ConfirmacionScreen(
+                pedido = ultimoPedido,
                 onVolverInicio = {
-                    carrito = emptyList() // limpia el carrito tras la compra exitosa
                     navController.navigate(Rutas.INICIO) {
                         popUpTo(Rutas.INICIO) { inclusive = true }
                     }

@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -42,8 +42,10 @@ import com.tecsup.mibodega.ui.theme.VerdeBodega
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatosEntregaScreen(
+    subtotal: Double = 0.0,
+    delivery: Double = 4.00,
     onVolver: () -> Unit,
-    onConfirmarPedido: () -> Unit
+    onConfirmarPedido: (nombre: String, telefono: String, direccion: String, referencia: String, metodoPago: String) -> Unit
 ) {
     var nombre by remember { mutableStateOf("Juan Pérez") }
     var telefono by remember { mutableStateOf("987 654 321") }
@@ -52,6 +54,8 @@ fun DatosEntregaScreen(
 
     val metodosPago = listOf("Efectivo al entregar", "Yape", "Plin", "Tarjeta de Crédito / Débito")
     var metodoPagoSeleccionado by remember { mutableStateOf(metodosPago[0]) }
+
+    val totalCalculado = subtotal + delivery
 
     Column(
         modifier = Modifier
@@ -62,7 +66,7 @@ fun DatosEntregaScreen(
             title = { Text("Datos de entrega", fontWeight = FontWeight.Bold) },
             navigationIcon = {
                 IconButton(onClick = onVolver) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver")
                 }
             }
         )
@@ -137,11 +141,23 @@ fun DatosEntregaScreen(
                 }
             }
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("Total a pagar:", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Text("S/ %.2f".format(totalCalculado), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = VerdeBodega)
+            }
+
+            Spacer(Modifier.height(20.dp))
 
             BotonPrimario(
                 texto = "Confirmar pedido",
-                onClick = onConfirmarPedido
+                onClick = {
+                    onConfirmarPedido(nombre, telefono, direccion, referencia, metodoPagoSeleccionado)
+                }
             )
 
             Spacer(Modifier.height(16.dp))
