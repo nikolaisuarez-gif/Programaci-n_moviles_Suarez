@@ -3,6 +3,9 @@ package com.tecsup.cafecampus.data.local.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Entidad Usuario para la tabla "usuarios"
+ */
 @Entity(tableName = "usuarios")
 data class Usuario(
     @PrimaryKey(autoGenerate = true)
