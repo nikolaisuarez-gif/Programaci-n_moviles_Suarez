@@ -3,48 +3,135 @@ package com.tecsup.cafecampus.ui.cliente
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tecsup.cafecampus.ui.components.AppTopBar
 import com.tecsup.cafecampus.ui.components.ProductoCard
 import com.tecsup.cafecampus.viewmodel.MenuViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuScreen(
     vm: MenuViewModel,
-    onProductoClick: (Int) -> Unit
+    nombreUsuario: String = "Juan",
+    onProductoClick: (Int) -> Unit,
+    onCarritoClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val productos by vm.productos.collectAsState()
+    val busqueda by vm.busqueda.collectAsState()
+    val catSeleccionada by vm.categoriaSeleccionada.collectAsState()
+    val carrito by vm.carrito.collectAsState()
+
+    val categorias = listOf("Todo", "Desayunos", "Almuerzos", "Bebidas")
+    val totalItems = carrito.sumOf { it.cantidad }
 
     Scaffold(
-        topBar = { AppTopBar(title = "Café Campus") }
+        topBar = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 12.dp)
+            ) {
+                Column {
+                    Text(
+                        text = "¡Hola, $nombreUsuario!",
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "¿Qué se te antoja hoy?",
+                        fontSize = 14.sp,
+                        color = MaterialTheme.colorScheme.outline
+                    )
+                }
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                IconButton(onClick = onCarritoClick) {
+                    BadgedBox(
+                        badge = {
+                            if (totalItems > 0) {
+                                Badge { Text("$totalItems") }
+                            }
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ShoppingCart,
+                            contentDescription = "Carrito",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+            }
+        }
     ) { paddingValues ->
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp)
+                .padding(horizontal = 20.dp)
         ) {
-            Text(
-                text = "Menú del día",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 12.dp)
+            OutlinedTextField(
+                value = busqueda,
+                onValueChange = { vm.onBusquedaChange(it) },
+                placeholder = { Text("Buscar en el menú...") },
+                leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = null) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
             )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(categorias) { cat ->
+                    FilterChip(
+                        selected = catSeleccionada == cat,
+                        onClick = { vm.seleccionarCategoria(cat) },
+                        label = { Text(cat) }
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "Populares hoy",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
@@ -55,7 +142,8 @@ fun MenuScreen(
                 items(productos, key = { it.id }) { p ->
                     ProductoCard(
                         producto = p,
-                        onClick = { onProductoClick(p.id) }
+                        onClick = { onProductoClick(p.id) },
+                        onAgregarClick = { vm.agregarAlCarrito(p, 1) }
                     )
                 }
             }
