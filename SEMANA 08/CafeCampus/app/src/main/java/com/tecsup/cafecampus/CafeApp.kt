@@ -18,7 +18,11 @@ class CafeApp : Application() {
     override fun onCreate() {
         super.onCreate()
         database = CafeDatabase.getDatabase(this)
-        repository = CafeRepositoryRoom(database.productoDao())
+        repository = CafeRepositoryRoom(
+            database.productoDao(),
+            database.usuarioDao(),
+            database.pedidoDao()
+        )
 
         CoroutineScope(Dispatchers.IO).launch {
             DatosIniciales.sembrar(database)
