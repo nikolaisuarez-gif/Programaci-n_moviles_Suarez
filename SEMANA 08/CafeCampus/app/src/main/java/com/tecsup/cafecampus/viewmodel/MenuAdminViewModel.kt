@@ -24,7 +24,7 @@ class MenuAdminViewModel(private val repo: CafeRepository) : ViewModel() {
         if (cat == "Todo") lista else lista.filter { it.categoria.equals(cat, ignoreCase = true) }
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubsubscribed(5000),
+        started = SharingStarted.WhileSubscribed(5000),
         initialValue = emptyList()
     )
 

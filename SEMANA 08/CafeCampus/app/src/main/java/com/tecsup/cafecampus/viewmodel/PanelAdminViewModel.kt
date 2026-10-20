@@ -25,35 +25,35 @@ class PanelAdminViewModel(private val repo: CafeRepository) : ViewModel() {
     val ventasHoy: StateFlow<Double> = repo.observarVentasHoy(inicioDia)
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubsubscribed(5000),
+            started = SharingStarted.WhileSubscribed(5000),
             initialValue = 0.0
         )
 
     val recibidosCount: StateFlow<Int> = repo.observarCantidadPorEstado(EstadoPedido.RECIBIDO)
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubsubscribed(5000),
+            started = SharingStarted.WhileSubscribed(5000),
             initialValue = 0
         )
 
     val preparandoCount: StateFlow<Int> = repo.observarCantidadPorEstado(EstadoPedido.PREPARANDO)
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubsubscribed(5000),
+            started = SharingStarted.WhileSubscribed(5000),
             initialValue = 0
         )
 
     val listoCount: StateFlow<Int> = repo.observarCantidadPorEstado(EstadoPedido.LISTO)
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubsubscribed(5000),
+            started = SharingStarted.WhileSubscribed(5000),
             initialValue = 0
         )
 
     val pedidosRecientes: StateFlow<List<PedidoConDetalle>> = repo.observarPedidosPorEstado(EstadoPedido.RECIBIDO)
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubsubscribed(5000),
+            started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
 }

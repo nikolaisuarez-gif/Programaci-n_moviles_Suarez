@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
     private val menuAdminViewModel: MenuAdminViewModel by viewModels { factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate()
+        super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             val modoOscuro by app.preferenciasStore.modoOscuro.collectAsState(initial = false)

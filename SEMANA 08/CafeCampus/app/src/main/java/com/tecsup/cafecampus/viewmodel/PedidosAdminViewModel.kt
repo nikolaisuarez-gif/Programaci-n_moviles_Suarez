@@ -24,7 +24,7 @@ class PedidosAdminViewModel(private val repo: CafeRepository) : ViewModel() {
         .flatMapLatest { repo.observarPedidosPorEstado(it) }
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubsubscribed(5000),
+            started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
 
