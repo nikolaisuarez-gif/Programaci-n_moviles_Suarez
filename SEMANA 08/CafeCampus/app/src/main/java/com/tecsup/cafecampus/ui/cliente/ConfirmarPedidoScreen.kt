@@ -163,7 +163,7 @@ fun ConfirmarPedidoScreen(
                                     .fillMaxWidth()
                                     .padding(vertical = 6.dp)
                             ) {
-                                ProductoIcono(icono = item.producto.icono, size = 40.dp)
+                                ProductoIcono(icono = item.producto.icono, nombre = item.producto.nombre, size = 40.dp)
 
                                 Spacer(modifier = Modifier.width(10.dp))
 

@@ -81,7 +81,7 @@ fun FormularioProductoScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    ProductoIcono(icono = icono, size = 60.dp)
+                    ProductoIcono(icono = icono, nombre = nombre, size = 60.dp)
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(text = "Toca para elegir icono", fontSize = 12.sp, color = MaterialTheme.colorScheme.outline)
                 }

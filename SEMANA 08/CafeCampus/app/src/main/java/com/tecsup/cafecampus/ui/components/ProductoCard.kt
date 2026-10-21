@@ -47,8 +47,12 @@ fun ProductoCard(
         ) {
             ProductoIcono(
                 icono = producto.icono,
-                size = 56.dp,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                nombre = producto.nombre,
+                size = 110.dp,
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(110.dp)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -92,5 +96,25 @@ fun ProductoCard(
                 }
             }
         }
+    }
+}
+
+@androidx.compose.ui.tooling.preview.Preview
+@Composable
+fun ProductoCardPreview() {
+    com.tecsup.cafecampus.ui.theme.CafeTheme {
+        ProductoCard(
+            producto = Producto(
+                id = 1,
+                nombre = "Chicha morada",
+                descripcion = "Chicha casera con piña y canela",
+                categoria = "Bebidas",
+                precio = 3.5,
+                disponible = true,
+                icono = "chicha_morada"
+            ),
+            onClick = {},
+            onAgregarClick = {}
+        )
     }
 }

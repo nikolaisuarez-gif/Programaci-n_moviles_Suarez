@@ -125,7 +125,7 @@ fun MenuAdminScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier.padding(12.dp)
                             ) {
-                                ProductoIcono(icono = p.icono, size = 48.dp)
+                                ProductoIcono(icono = p.icono, nombre = p.nombre, size = 48.dp)
 
                                 Spacer(modifier = Modifier.padding(horizontal = 6.dp))
 

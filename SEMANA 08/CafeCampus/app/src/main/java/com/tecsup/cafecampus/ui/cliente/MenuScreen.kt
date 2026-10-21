@@ -167,3 +167,33 @@ fun MenuScreen(
         }
     }
 }
+
+@androidx.compose.ui.tooling.preview.Preview(showBackground = true)
+@Composable
+fun MenuGridPreview() {
+    val sampleProductos = listOf(
+        com.tecsup.cafecampus.data.local.entity.Producto(id = 1, nombre = "Café americano", descripcion = "", categoria = "Bebidas", precio = 4.0, icono = "cafe_americano"),
+        com.tecsup.cafecampus.data.local.entity.Producto(id = 2, nombre = "Sándwich de pollo", descripcion = "", categoria = "Desayunos", precio = 9.0, icono = "sandwich_pollo"),
+        com.tecsup.cafecampus.data.local.entity.Producto(id = 3, nombre = "Menú del día", descripcion = "", categoria = "Almuerzos", precio = 12.0, icono = "menu_dia"),
+        com.tecsup.cafecampus.data.local.entity.Producto(id = 4, nombre = "Jugo de naranja", descripcion = "", categoria = "Bebidas", precio = 5.0, icono = "jugo_naranja"),
+        com.tecsup.cafecampus.data.local.entity.Producto(id = 5, nombre = "Empanada de carne", descripcion = "", categoria = "Desayunos", precio = 4.5, icono = "empanada_carne"),
+        com.tecsup.cafecampus.data.local.entity.Producto(id = 6, nombre = "Chicha morada", descripcion = "", categoria = "Bebidas", precio = 3.5, icono = "chicha_morada")
+    )
+
+    com.tecsup.cafecampus.ui.theme.CafeTheme(darkTheme = true) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.padding(16.dp)
+        ) {
+            items(sampleProductos) { p ->
+                ProductoCard(
+                    producto = p,
+                    onClick = {},
+                    onAgregarClick = {}
+                )
+            }
+        }
+    }
+}

@@ -81,12 +81,18 @@ fun DetalleProductoScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(180.dp)
+                    .height(200.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)),
+                    .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)),
                 contentAlignment = Alignment.Center
             ) {
-                ProductoIcono(icono = producto.icono, size = 100.dp)
+                ProductoIcono(
+                    icono = producto.icono,
+                    nombre = producto.nombre,
+                    size = 200.dp,
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.fillMaxSize()
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
