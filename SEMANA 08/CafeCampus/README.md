@@ -4,98 +4,28 @@ Laboratorio de Programación en Móviles - Semana 08
 Alumno: Nikolai Suarez
 Tecsup
 
-## Descripción
-Proyecto de aplicación móvil CafeCampus desarrollado con Kotlin, Jetpack Compose, Room Database, ViewModel y DataStore Preferences. La aplicación gestiona los pedidos de la cafetería para dos tipos de usuario: Estudiante (Cliente) y Administrador.
+## Descripción General del Proyecto
 
-## Estructura del proyecto
+CafeCampus es una aplicación móvil desarrollada con Kotlin, Jetpack Compose, Room Database, ViewModel y DataStore Preferences. La aplicación gestiona los pedidos de la cafetería del campus para dos tipos de usuario, Estudiante y Administrador.
 
-com.tecsup.cafecampus
-├── MainActivity.kt
-├── CafeApp.kt
-├── data
-│   ├── local
-│   │   ├── entity
-│   │   │   ├── Producto.kt
-│   │   │   ├── Usuario.kt
-│   │   │   ├── Pedido.kt
-│   │   │   └── DetallePedido.kt
-│   │   ├── dao
-│   │   │   ├── ProductoDao.kt
-│   │   │   ├── UsuarioDao.kt
-│   │   │   └── PedidoDao.kt
-│   │   ├── relation
-│   │   │   └── PedidoConDetalle.kt
-│   │   ├── CafeDatabase.kt
-│   │   └── DatosIniciales.kt
-│   ├── repository
-│   │   ├── CafeRepository.kt
-│   │   └── CafeRepositoryRoom.kt
-│   └── prefs
-│       └── PreferenciasStore.kt
-├── model
-│   ├── Rol.kt
-│   ├── EstadoPedido.kt
-│   └── ItemCarrito.kt
-├── viewmodel
-│   ├── CafeViewModelFactory.kt
-│   ├── MenuViewModel.kt
-│   ├── SesionViewModel.kt
-│   ├── PedidosClienteViewModel.kt
-│   ├── PanelAdminViewModel.kt
-│   ├── PedidosAdminViewModel.kt
-│   └── MenuAdminViewModel.kt
-└── ui
-    ├── theme
-    │   ├── Color.kt
-    │   ├── Type.kt
-    │   └── Theme.kt
-    ├── components
-    │   ├── AppTopBar.kt
-    │   ├── CafeButton.kt
-    │   ├── CafeTextField.kt
-    │   ├── EstadoChip.kt
-    │   ├── ProductoCard.kt
-    │   ├── ProductoIcono.kt
-    │   ├── PedidoCard.kt
-    │   └── StepperEstado.kt
-    ├── navigation
-    │   ├── Rutas.kt
-    │   └── NavCafe.kt
-    ├── cliente
-    │   ├── SplashScreen.kt
-    │   ├── LoginScreen.kt
-    │   ├── MenuScreen.kt
-    │   ├── DetalleProductoScreen.kt
-    │   ├── ConfirmarPedidoScreen.kt
-    │   ├── SeguimientoScreen.kt
-    │   └── MisPedidosScreen.kt
-    └── admin
-        ├── PanelScreen.kt
-        ├── PedidosAdminScreen.kt
-        ├── DetallePedidoAdminScreen.kt
-        ├── MenuAdminScreen.kt
-        ├── FormularioProductoScreen.kt
-        └── AjustesScreen.kt
+## Preguntas Técnicas y Arquitectura
 
-## Base de datos
+### ¿Por qué el Repository es una interface?
 
-1. usuarios: id, nombre, correo, clave, rol
-2. productos: id, nombre, descripcion, categoria, precio, disponible, icono
-3. pedidos: id, clientId, estado, horaRecojo, pago, nota, total, fecha
-4. detalle_pedido: id, pedidoId, productoId, nombreProducto, cantidad, precioUnitario
+El repositorio se define como una interfaz para aplicar el principio de inversión de dependencias y desacoplar la lógica de negocio de la fuente de datos real. Al usar una interfaz como CafeRepository, las vistas y los ViewModels interactúan únicamente con los métodos definidos en el contrato sin preocuparse por cómo ni dónde se guarda la información. Esto permite realizar pruebas unitarias utilizando simuladores de datos sin tocar la base de datos real, y también nos da la flexibilidad de cambiar la tecnología de almacenamiento en el futuro sin modificar la interfaz de usuario.
 
-## Historial de commits
+### ¿Por qué crearPedido es suspend y observarPedidosCliente es Flow?
 
-1. chore: importa proyecto base CafeCampus
-2. feat(data): agrega entidades Usuario, Pedido y DetallePedido
-3. feat(data): agrega DAOs y relacion PedidoConDetalle
-4. feat(data): registra entidades y siembra datos iniciales en CafeDatabase
-5. feat(data): implementa CafeRepositoryRoom con todas las operaciones
-6. feat(data): agrega PreferenciasStore con DataStore
-7. feat(viewmodel): agrega SesionViewModel y login con selector de rol
-8. feat(ui): agrega detalle de producto y carrito en MenuViewModel
-9. feat(ui): agrega confirmar pedido, seguimiento y mis pedidos
-10. feat(admin): agrega panel de control y gestion de pedidos por estado
-11. feat(admin): agrega detalle de pedido, gestion de menu y formulario
-12. feat(admin): agrega ajustes con DataStore y cambio de perfil
-13. docs: agrega README con estructura y capturas
+La función crearPedido es suspendida porque representa una operación puntual de una sola ejecución. Cuando el usuario confirma su compra, la tarea se ejecuta de forma asíncrona en segundo plano para no congelar la pantalla y termina en cuanto el pedido queda registrado en la base de datos. Por otro lado, observarPedidosCliente devuelve un Flow debido a que los pedidos cambian de estado constantemente, como cuando pasan de pendiente a en preparación o listo. El Flow establece un canal de transmisión continua de datos que notifica automáticamente a la pantalla cada vez que hay una actualización en la base de datos en tiempo real.
+
+### ¿Qué pasaría si dos perfiles usaran bases de datos distintas?
+
+Si el perfil de estudiante y el perfil de administrador utilizaran bases de datos independientes, la aplicación perdería la sincronización por completo. Cuando un alumno realizara un pedido en su base de datos local, el administrador nunca podría ver la solicitud en su panel porque su base de datos estaría aislada. De igual manera, si el administrador modificara un precio o agregara un producto en su pantalla, dichos cambios no se reflejarían en el menú del estudiante. Ambos perfiles necesitan compartir la misma fuente de datos para que los pedidos y el inventario permanezcan perfectamente coordinados.
+
+### ¿Qué debería cambiar si mañana los datos viven en un servidor?
+
+Gracias al uso de la interfaz CafeRepository, la capa de presentación y la interfaz de usuario no tendrían que sufrir ningún cambio. Lo único que tendríamos que modificar es la implementación del repositorio. Se crearía una nueva clase que se conecte a las APIs REST del servidor utilizando librerías como Retrofit o Ktor. La base de datos local Room podría mantenerse como una capa de caché para soporte fuera de línea, o bien reemplazarse por llamadas directas al servidor. Toda la lógica de las pantallas y los ViewModels seguiría funcionando exactamente igual porque seguirían consumiendo la misma interfaz.
+
+## Estructura del Sistema y Base de Datos
+
+La aplicación organiza sus datos locales a través de cuatro entidades principales en Room. La tabla usuarios almacena identificador, nombre, correo, clave y rol. La tabla productos guarda la información del menú con identificador, nombre, descripción, categoría, precio, disponibilidad e ícono. La tabla pedidos registra cada orden con su estado actual, hora de recojo, método de pago, notas adicionales, total y fecha. Finalmente, la tabla detalle pedido vincula los productos individuales con cada pedido realizado.
