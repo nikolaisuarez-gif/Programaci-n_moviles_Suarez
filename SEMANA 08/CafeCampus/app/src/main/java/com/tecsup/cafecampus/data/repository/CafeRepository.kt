@@ -35,4 +35,5 @@ interface CafeRepository {
     // Panel
     fun observarVentasHoy(inicioDia: Long): Flow<Double>
     fun observarCantidadPorEstado(estado: EstadoPedido): Flow<Int>
+    fun observarPedidosHoy(inicioDia: Long): Flow<List<com.tecsup.cafecampus.data.local.entity.Pedido>>
 }

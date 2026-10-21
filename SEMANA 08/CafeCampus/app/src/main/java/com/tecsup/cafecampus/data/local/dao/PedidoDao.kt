@@ -38,4 +38,7 @@ interface PedidoDao {
 
     @Query("SELECT COUNT(*) FROM pedidos WHERE estado = :estado")
     fun observarCantidadPorEstado(estado: String): Flow<Int>
+
+    @Query("SELECT * FROM pedidos WHERE fecha >= :inicioDia AND estado != 'CANCELADO'")
+    fun observarPedidosHoy(inicioDia: Long): Flow<List<Pedido>>
 }

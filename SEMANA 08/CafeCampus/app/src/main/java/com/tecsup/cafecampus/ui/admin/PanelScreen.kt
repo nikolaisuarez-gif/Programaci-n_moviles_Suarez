@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecsup.cafecampus.ui.theme.AdminPrimary
@@ -49,6 +50,7 @@ fun PanelScreen(
     val preparandoCount by vm.preparandoCount.collectAsState()
     val listoCount by vm.listoCount.collectAsState()
     val pedidosRecientes by vm.pedidosRecientes.collectAsState()
+    val pedidosPorHora by vm.pedidosPorHora.collectAsState()
 
     Scaffold { paddingValues ->
         Column(
@@ -130,31 +132,48 @@ fun PanelScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Chart simulado de barra
+            // Gráfico real de pedidos por hora
+            val maxPedidos = maxOf(1, pedidosPorHora.maxOfOrNull { it.second } ?: 1)
+
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.Bottom,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(120.dp)
+                    .height(135.dp)
                     .background(
                         color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
                         shape = RoundedCornerShape(12.dp)
                     )
-                    .padding(16.dp)
+                    .padding(horizontal = 10.dp, vertical = 12.dp)
             ) {
-                val horas = listOf("9h" to 40.dp, "10h" to 70.dp, "11h" to 100.dp, "12h" to 60.dp, "13h" to 80.dp)
-                horas.forEach { (h, alto) ->
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                pedidosPorHora.forEach { (h, conteo) ->
+                    val altoCalculado = if (conteo > 0) {
+                        ((conteo.toFloat() / maxPedidos) * 65).dp.coerceAtLeast(10.dp)
+                    } else {
+                        4.dp
+                    }
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Bottom
+                    ) {
+                        Text(
+                            text = if (conteo > 0) "$conteo" else "",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = AdminPrimary
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
                         Box(
                             modifier = Modifier
-                                .width(20.dp)
-                                .height(alto)
+                                .width(18.dp)
+                                .height(altoCalculado)
                                 .clip(RoundedCornerShape(4.dp))
-                                .background(AdminPrimary)
+                                .background(if (conteo > 0) AdminPrimary else MaterialTheme.colorScheme.outlineVariant)
                         )
                         Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = h, fontSize = 10.sp)
+                        Text(text = h, fontSize = 10.sp, color = MaterialTheme.colorScheme.outline)
                     }
                 }
             }
