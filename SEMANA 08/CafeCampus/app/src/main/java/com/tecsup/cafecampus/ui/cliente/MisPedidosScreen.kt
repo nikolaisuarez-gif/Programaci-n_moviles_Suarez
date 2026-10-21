@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,7 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.tecsup.cafecampus.data.local.relation.PedidoConDetalle
 import com.tecsup.cafecampus.model.EstadoPedido
 import com.tecsup.cafecampus.ui.components.AppTopBar
 import com.tecsup.cafecampus.ui.components.PedidoCard
@@ -33,7 +32,8 @@ import com.tecsup.cafecampus.viewmodel.PedidosClienteViewModel
 fun MisPedidosScreen(
     clienteId: Int,
     vm: PedidosClienteViewModel,
-    onPedidoClick: (Int) -> Unit
+    onPedidoClick: (Int) -> Unit,
+    onRepetirPedido: ((PedidoConDetalle) -> Unit)? = null
 ) {
     val pedidos by vm.observarPedidosCliente(clienteId).collectAsState(initial = emptyList())
     var tabSeleccionado by remember { mutableIntStateOf(0) }
@@ -84,7 +84,10 @@ fun MisPedidosScreen(
                     items(pedidosFiltrados, key = { it.pedido.id }) { item ->
                         PedidoCard(
                             pedidoConDetalle = item,
-                            onClick = { onPedidoClick(item.pedido.id) }
+                            onClick = { onPedidoClick(item.pedido.id) },
+                            onRepetirClick = if (onRepetirPedido != null) {
+                                { onRepetirPedido(item) }
+                            } else null
                         )
                     }
                 }

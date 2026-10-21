@@ -77,6 +77,22 @@ class MenuViewModel(private val repo: CafeRepository) : ViewModel() {
         _carrito.value = emptyList()
     }
 
+    fun repetirPedido(detalles: List<com.tecsup.cafecampus.data.local.entity.DetallePedido>) {
+        val productosExistentes = productos.value
+        detalles.forEach { detalle ->
+            val producto = productosExistentes.find { it.id == detalle.productoId }
+                ?: Producto(
+                    id = detalle.productoId,
+                    nombre = detalle.nombreProducto,
+                    precio = detalle.precioUnitario,
+                    categoria = "General",
+                    descripcion = "",
+                    icono = "plato"
+                )
+            agregarAlCarrito(producto, detalle.cantidad)
+        }
+    }
+
     val totalCarrito: Double
         get() = _carrito.value.sumOf { it.producto.precio * it.cantidad }
 

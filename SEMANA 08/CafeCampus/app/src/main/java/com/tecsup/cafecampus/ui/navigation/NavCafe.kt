@@ -254,7 +254,11 @@ fun NavCafe(
                 MisPedidosScreen(
                     clienteId = usuarioActivo?.id ?: 1,
                     vm = pedidosClienteViewModel,
-                    onPedidoClick = { id -> navController.navigate(Rutas.ClienteSeguimiento.crearRuta(id)) }
+                    onPedidoClick = { id -> navController.navigate(Rutas.ClienteSeguimiento.crearRuta(id)) },
+                    onRepetirPedido = { item ->
+                        menuViewModel.repetirPedido(item.detalles)
+                        navController.navigate(Rutas.ClienteConfirmarPedido.ruta)
+                    }
                 )
             }
 
