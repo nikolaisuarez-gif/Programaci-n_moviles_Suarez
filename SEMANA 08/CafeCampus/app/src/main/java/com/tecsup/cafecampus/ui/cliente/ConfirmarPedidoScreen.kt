@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
@@ -24,6 +26,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,6 +56,7 @@ fun ConfirmarPedidoScreen(
     val carrito by menuVm.carrito.collectAsState()
     val horaRecojo by pedidosVm.horaRecojo.collectAsState()
     val pago by pedidosVm.pago.collectAsState()
+    val nota by pedidosVm.nota.collectAsState()
     val context = LocalContext.current
 
     val horasDisponibles = listOf("Ahora", "11:30", "12:00", "12:30")
@@ -77,6 +81,43 @@ fun ConfirmarPedidoScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(20.dp)
         ) {
+            // Card de Alerta de Tiempo Estimado de Recojo
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(14.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Info,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                        modifier = Modifier.size(28.dp)
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Column {
+                        Text(
+                            text = "Tiempo estimado de recojo",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = if (horaRecojo == "Ahora") "Tu pedido estará listo en aprox. 15 a 20 min." else "Tu pedido estará listo a las $horaRecojo h.",
+                            fontSize = 13.sp,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f)
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Resumen de Productos
             Card(
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 modifier = Modifier.fillMaxWidth()
@@ -188,6 +229,7 @@ fun ConfirmarPedidoScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            // Hora de recojo
             Text(text = "Hora de recojo", fontWeight = FontWeight.Bold, fontSize = 16.sp)
             Row(modifier = Modifier.padding(vertical = 8.dp)) {
                 horasDisponibles.forEach { h ->
@@ -202,6 +244,7 @@ fun ConfirmarPedidoScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Forma de pago
             Text(text = "Forma de pago", fontWeight = FontWeight.Bold, fontSize = 16.sp)
             Row(modifier = Modifier.padding(vertical = 8.dp)) {
                 metodosPago.forEach { (clave, label) ->
@@ -213,6 +256,29 @@ fun ConfirmarPedidoScreen(
                     )
                 }
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Descripción / Notas del pedido
+            Text(text = "Descripción o especificaciones del pedido", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Indica detalles específicos para tu preparación (ej: con mucha azúcar, sin hielo, término medio, etc.):",
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.outline
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedTextField(
+                value = nota,
+                onValueChange = { pedidosVm.setNota(it) },
+                placeholder = { Text("Ej: Con mucha azúcar, bien caliente, sin azúcar, etc.") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
+                maxLines = 3,
+                shape = RoundedCornerShape(10.dp)
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -256,6 +322,7 @@ fun ConfirmarPedidoScreen(
                     } else {
                         pedidosVm.crearPedido(clienteId, carrito) { pedidoId ->
                             menuVm.limpiarCarrito()
+                            pedidosVm.setNota("")
                             onPedidoConfirmado(pedidoId)
                         }
                     }

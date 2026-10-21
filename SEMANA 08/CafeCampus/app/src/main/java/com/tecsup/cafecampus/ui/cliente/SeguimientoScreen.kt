@@ -1,6 +1,5 @@
 package com.tecsup.cafecampus.ui.cliente
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -88,7 +87,7 @@ fun SeguimientoScreen(
                             fontSize = 14.sp
                         )
                         Text(
-                            text = "Tiempo estimado: 15 min",
+                            text = "Tiempo estimado: 15 - 20 min",
                             color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
                             fontSize = 12.sp
                         )
@@ -110,6 +109,30 @@ fun SeguimientoScreen(
             StepperEstado(estadoActual = estado)
 
             Spacer(modifier = Modifier.weight(1f))
+
+            if (pedido.nota.isNotEmpty()) {
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f)),
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Text(
+                            text = "Indicaciones del pedido:",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = pedido.nota,
+                            fontSize = 13.sp,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+            }
 
             Card(
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
