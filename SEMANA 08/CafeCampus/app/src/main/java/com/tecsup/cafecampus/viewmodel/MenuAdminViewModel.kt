@@ -17,16 +17,28 @@ class MenuAdminViewModel(private val repo: CafeRepository) : ViewModel() {
     private val _categoriaFiltro = MutableStateFlow("Todo")
     val categoriaFiltro: StateFlow<String> = _categoriaFiltro.asStateFlow()
 
+    private val _busqueda = MutableStateFlow("")
+    val busqueda: StateFlow<String> = _busqueda.asStateFlow()
+
     val productos: StateFlow<List<Producto>> = combine(
         repo.observarProductos(),
-        _categoriaFiltro
-    ) { lista, cat ->
-        if (cat == "Todo") lista else lista.filter { it.categoria.equals(cat, ignoreCase = true) }
+        _categoriaFiltro,
+        _busqueda
+    ) { lista, cat, query ->
+        lista.filter { p ->
+            val coincideCat = cat == "Todo" || p.categoria.equals(cat, ignoreCase = true)
+            val coincideQuery = query.isEmpty() || p.nombre.contains(query, ignoreCase = true) || p.descripcion.contains(query, ignoreCase = true)
+            coincideCat && coincideQuery
+        }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = emptyList()
     )
+
+    fun onBusquedaChange(nueva: String) {
+        _busqueda.value = nueva
+    }
 
     fun seleccionarCategoria(cat: String) {
         _categoriaFiltro.value = cat

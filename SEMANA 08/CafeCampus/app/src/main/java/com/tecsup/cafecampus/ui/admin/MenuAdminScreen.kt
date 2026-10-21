@@ -15,8 +15,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
@@ -24,6 +26,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -48,6 +51,7 @@ fun MenuAdminScreen(
 ) {
     val productos by vm.productos.collectAsState()
     val catFiltro by vm.categoriaFiltro.collectAsState()
+    val busqueda by vm.busqueda.collectAsState()
 
     val categorias = listOf("Todo", "Desayunos", "Almuerzos", "Bebidas")
 
@@ -69,6 +73,24 @@ fun MenuAdminScreen(
                 .padding(paddingValues)
                 .padding(horizontal = 20.dp)
         ) {
+            OutlinedTextField(
+                value = busqueda,
+                onValueChange = { vm.onBusquedaChange(it) },
+                placeholder = { Text("Buscar producto en el menú...") },
+                leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = null) },
+                trailingIcon = {
+                    if (busqueda.isNotEmpty()) {
+                        IconButton(onClick = { vm.onBusquedaChange("") }) {
+                            Icon(imageVector = Icons.Default.Close, contentDescription = "Limpiar búsqueda")
+                        }
+                    }
+                },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(categorias) { cat ->
                     FilterChip(
@@ -81,45 +103,54 @@ fun MenuAdminScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            LazyColumn(
-                contentPadding = PaddingValues(bottom = 80.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                items(productos, key = { it.id }) { p ->
-                    Card(
-                        shape = RoundedCornerShape(12.dp),
-                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(12.dp)
+            if (productos.isEmpty()) {
+                Text(
+                    text = if (busqueda.isNotEmpty()) "No se encontraron productos para '$busqueda'" else "No hay productos en esta categoría",
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+            } else {
+                LazyColumn(
+                    contentPadding = PaddingValues(bottom = 80.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    items(productos, key = { it.id }) { p ->
+                        Card(
+                            shape = RoundedCornerShape(12.dp),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            ProductoIcono(icono = p.icono, size = 48.dp)
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.padding(12.dp)
+                            ) {
+                                ProductoIcono(icono = p.icono, size = 48.dp)
 
-                            Spacer(modifier = Modifier.padding(horizontal = 6.dp))
+                                Spacer(modifier = Modifier.padding(horizontal = 6.dp))
 
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(text = p.nombre, fontWeight = FontWeight.Bold, fontSize = 15.sp)
-                                Text(text = "S/ %.2f".format(p.precio), color = MaterialTheme.colorScheme.primary, fontSize = 13.sp)
-                                Text(
-                                    text = if (p.disponible) "Disponible" else "Agotado",
-                                    fontSize = 11.sp,
-                                    color = if (p.disponible) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.error
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(text = p.nombre, fontWeight = FontWeight.Bold, fontSize = 15.sp)
+                                    Text(text = "S/ %.2f".format(p.precio), color = MaterialTheme.colorScheme.primary, fontSize = 13.sp)
+                                    Text(
+                                        text = if (p.disponible) "Disponible" else "Agotado",
+                                        fontSize = 11.sp,
+                                        color = if (p.disponible) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.error
+                                    )
+                                }
+
+                                Switch(
+                                    checked = p.disponible,
+                                    onCheckedChange = { vm.cambiarDisponibilidad(p.id, it) }
                                 )
-                            }
 
-                            Switch(
-                                checked = p.disponible,
-                                onCheckedChange = { vm.cambiarDisponibilidad(p.id, it) }
-                            )
+                                IconButton(onClick = { onEditarProductoClick(p.id) }) {
+                                    Icon(imageVector = Icons.Default.Edit, contentDescription = "Editar", tint = MaterialTheme.colorScheme.outline)
+                                }
 
-                            IconButton(onClick = { onEditarProductoClick(p.id) }) {
-                                Icon(imageVector = Icons.Default.Edit, contentDescription = "Editar", tint = MaterialTheme.colorScheme.outline)
-                            }
-
-                            IconButton(onClick = { vm.eliminarProducto(p) }) {
-                                Icon(imageVector = Icons.Default.Delete, contentDescription = "Eliminar", tint = MaterialTheme.colorScheme.error)
+                                IconButton(onClick = { vm.eliminarProducto(p) }) {
+                                    Icon(imageVector = Icons.Default.Delete, contentDescription = "Eliminar", tint = MaterialTheme.colorScheme.error)
+                                }
                             }
                         }
                     }

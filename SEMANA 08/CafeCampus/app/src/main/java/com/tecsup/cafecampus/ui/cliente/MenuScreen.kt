@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Badge
@@ -105,6 +106,13 @@ fun MenuScreen(
                 onValueChange = { vm.onBusquedaChange(it) },
                 placeholder = { Text("Buscar en el menú...") },
                 leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = null) },
+                trailingIcon = {
+                    if (busqueda.isNotEmpty()) {
+                        IconButton(onClick = { vm.onBusquedaChange("") }) {
+                            Icon(imageVector = Icons.Default.Close, contentDescription = "Limpiar búsqueda")
+                        }
+                    }
+                },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -126,25 +134,34 @@ fun MenuScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Populares hoy",
+                text = if (busqueda.isNotEmpty()) "Resultados de búsqueda" else "Populares hoy",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(bottom = 16.dp)
-            ) {
-                items(productos, key = { it.id }) { p ->
-                    ProductoCard(
-                        producto = p,
-                        onClick = { onProductoClick(p.id) },
-                        onAgregarClick = { vm.agregarAlCarrito(p, 1) }
-                    )
+            if (productos.isEmpty()) {
+                Text(
+                    text = if (busqueda.isNotEmpty()) "No se encontraron productos que coincidan con '$busqueda'" else "No hay productos disponibles",
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.padding(top = 12.dp)
+                )
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(bottom = 16.dp)
+                ) {
+                    items(productos, key = { it.id }) { p ->
+                        ProductoCard(
+                            producto = p,
+                            onClick = { onProductoClick(p.id) },
+                            onAgregarClick = { vm.agregarAlCarrito(p, 1) }
+                        )
+                    }
                 }
             }
         }
