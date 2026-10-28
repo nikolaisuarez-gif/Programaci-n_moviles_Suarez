@@ -27,13 +27,18 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -254,6 +259,97 @@ fun ConfirmarPedidoScreen(
                         label = { Text(label) },
                         modifier = Modifier.padding(end = 8.dp)
                     )
+                }
+            }
+
+            if (pago == "YAPE") {
+                var numeroYape by remember { mutableStateOf("987654321") }
+                val yapeUrl = "https://qr.yape.pe/pay?phone=$numeroYape&amount=%.2f&note=Pedido%%20CafeCampus".format(total)
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF6B127C)),
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Text(
+                            text = "💜 Pago con Yape / Plin",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
+                            color = Color.White
+                        )
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        Text(
+                            text = "Monto exacto a pagar: S/ %.2f".format(total),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp,
+                            color = Color(0xFFFFD700)
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Card(
+                            colors = CardDefaults.cardColors(containerColor = Color.White),
+                            shape = RoundedCornerShape(12.dp),
+                            modifier = Modifier.padding(8.dp)
+                        ) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+                                com.tecsup.cafecampus.ui.components.QrCodeImage(
+                                    contenido = yapeUrl,
+                                    modifier = Modifier.size(180.dp)
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = "Escanea el QR con tu app de Yape",
+                                    fontSize = 12.sp,
+                                    color = Color.Black,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Text(
+                            text = "Número Yape: $numeroYape",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.White
+                        )
+                        Text(
+                            text = "Titular: CafeCampus",
+                            fontSize = 12.sp,
+                            color = Color.White.copy(alpha = 0.8f)
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        OutlinedTextField(
+                            value = numeroYape,
+                            onValueChange = { if (it.length <= 9) numeroYape = it },
+                            label = { Text("Número de destino Yape", color = Color.White.copy(alpha = 0.8f)) },
+                            singleLine = true,
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedTextColor = Color.White,
+                                unfocusedTextColor = Color.White,
+                                focusedBorderColor = Color.White,
+                                unfocusedBorderColor = Color.White.copy(alpha = 0.6f)
+                            ),
+                            modifier = Modifier.fillMaxWidth(0.9f)
+                        )
+                    }
                 }
             }
 
