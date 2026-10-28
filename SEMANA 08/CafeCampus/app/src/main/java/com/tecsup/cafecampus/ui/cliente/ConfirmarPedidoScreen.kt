@@ -29,6 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -67,9 +68,14 @@ fun ConfirmarPedidoScreen(
     val horasDisponibles = listOf("Ahora", "11:30", "12:00", "12:30")
     val metodosPago = listOf("CAJA" to "Pagar en caja", "YAPE" to "Yape / Plin")
 
+    var incluirBolsa by remember { mutableStateOf(false) }
+    var numeroYape by remember { mutableStateOf("923026303") }
+
     val subtotal = menuVm.totalCarrito
+    val costoBolsa = if (incluirBolsa) 0.40 else 0.00
+    val recargoYape = if (pago == "YAPE") 0.50 else 0.00
     val servicio = 0.0
-    val total = subtotal + servicio
+    val total = subtotal + costoBolsa + recargoYape + servicio
 
     Scaffold(
         topBar = {
@@ -263,7 +269,6 @@ fun ConfirmarPedidoScreen(
             }
 
             if (pago == "YAPE") {
-                var numeroYape by remember { mutableStateOf("987654321") }
                 val yapeUrl = "https://qr.yape.pe/pay?phone=$numeroYape&amount=%.2f&note=Pedido%%20CafeCampus".format(total)
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -324,8 +329,8 @@ fun ConfirmarPedidoScreen(
 
                         Text(
                             text = "Número Yape: $numeroYape",
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold,
                             color = Color.White
                         )
                         Text(
@@ -350,6 +355,29 @@ fun ConfirmarPedidoScreen(
                             modifier = Modifier.fillMaxWidth(0.9f)
                         )
                     }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Opción de Bolsa para llevar
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)),
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp)
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text("¿Deseas bolsa para llevar?", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        Text("Se agregarán S/ 0.40 al total de tu pedido", fontSize = 12.sp, color = MaterialTheme.colorScheme.outline)
+                    }
+                    Switch(
+                        checked = incluirBolsa,
+                        onCheckedChange = { incluirBolsa = it }
+                    )
                 }
             }
 
@@ -388,15 +416,25 @@ fun ConfirmarPedidoScreen(
                     Spacer(modifier = Modifier.weight(1f))
                     Text("S/ %.2f".format(subtotal))
                 }
-                Spacer(modifier = Modifier.height(4.dp))
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    Text("Servicio", color = MaterialTheme.colorScheme.outline)
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text("S/ %.2f".format(servicio))
+                if (incluirBolsa) {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        Text("Bolsa para llevar (+S/ 0.40)", color = MaterialTheme.colorScheme.outline)
+                        Spacer(modifier = Modifier.weight(1f))
+                        Text("S/ 0.40")
+                    }
+                }
+                if (pago == "YAPE") {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        Text("Recargo Yape / Plin (+S/ 0.50)", color = MaterialTheme.colorScheme.outline)
+                        Spacer(modifier = Modifier.weight(1f))
+                        Text("S/ 0.50")
+                    }
                 }
                 HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
                 Row(modifier = Modifier.fillMaxWidth()) {
-                    Text("Total", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    Text("Total a pagar", fontWeight = FontWeight.Bold, fontSize = 18.sp)
                     Spacer(modifier = Modifier.weight(1f))
                     Text(
                         text = "S/ %.2f".format(total),
