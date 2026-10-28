@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface CafeRepository {
     // Usuarios
     suspend fun login(correo: String, clave: String): Usuario?
+    suspend fun registrarCliente(nombre: String, correo: String, clave: String): Usuario?
     suspend fun obtenerUsuarioPorId(id: Int): Usuario?
 
     // Productos (ejemplo resuelto)

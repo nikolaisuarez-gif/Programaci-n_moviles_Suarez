@@ -37,6 +37,7 @@ import com.tecsup.cafecampus.ui.cliente.DetalleProductoScreen
 import com.tecsup.cafecampus.ui.cliente.LoginScreen
 import com.tecsup.cafecampus.ui.cliente.MenuScreen
 import com.tecsup.cafecampus.ui.cliente.MisPedidosScreen
+import com.tecsup.cafecampus.ui.cliente.RegistroScreen
 import com.tecsup.cafecampus.ui.cliente.SeguimientoScreen
 import com.tecsup.cafecampus.ui.cliente.SplashScreen
 import com.tecsup.cafecampus.viewmodel.MenuAdminViewModel
@@ -197,6 +198,23 @@ fun NavCafe(
                                 popUpTo(Rutas.Splash.ruta) { inclusive = true }
                             }
                         }
+                    },
+                    onIrARegistroClick = {
+                        navController.navigate(Rutas.Registro.ruta)
+                    }
+                )
+            }
+
+            composable(Rutas.Registro.ruta) {
+                RegistroScreen(
+                    vm = sesionViewModel,
+                    onRegistroExitoso = {
+                        navController.navigate(Rutas.ClienteMenu.ruta) {
+                            popUpTo(Rutas.Splash.ruta) { inclusive = true }
+                        }
+                    },
+                    onIrALoginClick = {
+                        navController.popBackStack()
                     }
                 )
             }

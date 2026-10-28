@@ -2,6 +2,7 @@ package com.tecsup.cafecampus.data.prefs
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
@@ -14,6 +15,7 @@ class PreferenciasStore(private val context: Context) {
         val MODO_OSCURO = booleanPreferencesKey("modo_oscuro")
         val NOTIFICACIONES = booleanPreferencesKey("notificaciones")
         val RECIBIR_PEDIDOS = booleanPreferencesKey("recibir_pedidos")
+        val FOTO_PERFIL = stringPreferencesKey("foto_perfil")
     }
 
     val modoOscuro: Flow<Boolean> = context.dataStore.data.map { prefs ->
@@ -26,6 +28,10 @@ class PreferenciasStore(private val context: Context) {
 
     val recibirPedidos: Flow<Boolean> = context.dataStore.data.map { prefs ->
         prefs[RECIBIR_PEDIDOS] ?: true
+    }
+
+    val fotoPerfil: Flow<String?> = context.dataStore.data.map { prefs ->
+        prefs[FOTO_PERFIL]
     }
 
     suspend fun guardarModoOscuro(valor: Boolean) {
@@ -43,6 +49,12 @@ class PreferenciasStore(private val context: Context) {
     suspend fun guardarRecibirPedidos(valor: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[RECIBIR_PEDIDOS] = valor
+        }
+    }
+
+    suspend fun guardarFotoPerfil(uriString: String) {
+        context.dataStore.edit { prefs ->
+            prefs[FOTO_PERFIL] = uriString
         }
     }
 }

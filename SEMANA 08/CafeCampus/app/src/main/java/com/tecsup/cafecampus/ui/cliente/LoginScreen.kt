@@ -40,6 +40,7 @@ import com.tecsup.cafecampus.viewmodel.SesionViewModel
 fun LoginScreen(
     vm: SesionViewModel,
     onLoginExitoso: (Rol) -> Unit,
+    onIrARegistroClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val rolSeleccionado by vm.rolSeleccionado.collectAsState()
@@ -94,7 +95,7 @@ fun LoginScreen(
                     .weight(1f)
                     .height(40.dp)
             ) {
-                Text("Estudiante", fontWeight = FontWeight.SemiBold)
+                Text("Cliente", fontWeight = FontWeight.SemiBold)
             }
 
             Button(
@@ -171,7 +172,7 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        TextButton(onClick = { }) {
+        TextButton(onClick = onIrARegistroClick) {
             Text(
                 text = "¿No tienes cuenta? Regístrate",
                 color = MaterialTheme.colorScheme.primary,

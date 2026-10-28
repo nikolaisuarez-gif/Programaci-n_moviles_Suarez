@@ -3,6 +3,7 @@ package com.tecsup.cafecampus.ui.navigation
 sealed class Rutas(val ruta: String) {
     object Splash : Rutas("splash")
     object Login : Rutas("login")
+    object Registro : Rutas("registro")
 
     // Cliente
     object ClienteMenu : Rutas("cliente_menu")

@@ -23,6 +23,19 @@ class CafeRepositoryRoom(
         return usuarioDao.login(correo, clave)
     }
 
+    override suspend fun registrarCliente(nombre: String, correo: String, clave: String): Usuario? {
+        val existente = usuarioDao.buscarPorCorreo(correo.trim())
+        if (existente != null) return null
+        val nuevo = Usuario(
+            nombre = nombre.trim(),
+            correo = correo.trim(),
+            clave = clave.trim(),
+            rol = com.tecsup.cafecampus.model.Rol.CLIENTE.name
+        )
+        val id = usuarioDao.insertar(nuevo)
+        return nuevo.copy(id = id.toInt())
+    }
+
     override suspend fun obtenerUsuarioPorId(id: Int): Usuario? {
         return usuarioDao.obtenerPorId(id)
     }
