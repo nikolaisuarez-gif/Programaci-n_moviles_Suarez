@@ -94,7 +94,27 @@ class MenuViewModel(private val repo: CafeRepository) : ViewModel() {
     }
 
     val totalCarrito: Double
-        get() = _carrito.value.sumOf { it.producto.precio * it.cantidad }
+        get() {
+            val items = _carrito.value
+            var baseTotal = items.sumOf { it.producto.precio * it.cantidad }
+
+            // Aplica la promo si se compran juntos Chicha Morada y Empanada (S/ 5.50 el par en vez de S/ 8.00)
+            val cantidadChicha = items.filter {
+                it.producto.nombre.lowercase().contains("chicha") && !it.producto.nombre.lowercase().contains("combo")
+            }.sumOf { it.cantidad }
+
+            val cantidadEmpanada = items.filter {
+                it.producto.nombre.lowercase().contains("empanada") && !it.producto.nombre.lowercase().contains("combo")
+            }.sumOf { it.cantidad }
+
+            val parejasPromo = minOf(cantidadChicha, cantidadEmpanada)
+            if (parejasPromo > 0) {
+                val descuentoPareja = parejasPromo * 2.50
+                baseTotal -= descuentoPareja
+            }
+
+            return maxOf(0.0, baseTotal)
+        }
 
     val cantidadTotalItems: Int
         get() = _carrito.value.sumOf { it.cantidad }

@@ -9,6 +9,7 @@ object DatosIniciales {
         // Se carga solo la primera vez
         if (db.productoDao().contar() == 0) {
             val productos = listOf(
+                Producto(nombre = "Combo Chicha + Empanada", descripcion = "Chicha morada helada + Empanada de carne horneada en oferta especial (llevando ambos juntos)", categoria = "Promociones", precio = 5.50, disponible = true, icono = "chicha_morada"),
                 Producto(nombre = "Combo Desayuno", descripcion = "Sándwich de pollo + Jugo de naranja en oferta", categoria = "Promociones", precio = 10.0, disponible = true, icono = "sandwich_pollo"),
                 Producto(nombre = "Combo Mañanero", descripcion = "Empanada de carne + Café americano en oferta", categoria = "Promociones", precio = 6.5, disponible = true, icono = "empanada_carne"),
                 Producto(nombre = "Café americano", descripcion = "Café pasado recién hecho 100% peruano", categoria = "Bebidas", precio = 4.0, disponible = true, icono = "cafe_americano"),
