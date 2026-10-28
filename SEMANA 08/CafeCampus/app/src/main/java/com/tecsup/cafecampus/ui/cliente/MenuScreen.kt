@@ -51,7 +51,7 @@ fun MenuScreen(
     val catSeleccionada by vm.categoriaSeleccionada.collectAsState()
     val carrito by vm.carrito.collectAsState()
 
-    val categorias = listOf("Todo", "Desayunos", "Almuerzos", "Bebidas")
+    val categorias = listOf("Todo", "Promociones", "Desayunos", "Almuerzos", "Bebidas")
     val totalItems = carrito.sumOf { it.cantidad }
 
     Scaffold(

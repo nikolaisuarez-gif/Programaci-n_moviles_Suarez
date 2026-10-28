@@ -16,9 +16,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ConfirmationNumber
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.LocalShipping
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
@@ -36,6 +39,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,17 +49,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tecsup.cafecampus.data.prefs.PreferenciasStore
 import com.tecsup.cafecampus.ui.components.AppTopBar
 import com.tecsup.cafecampus.ui.components.CafeButton
 import com.tecsup.cafecampus.ui.components.ProductoIcono
 import com.tecsup.cafecampus.viewmodel.MenuViewModel
 import com.tecsup.cafecampus.viewmodel.PedidosClienteViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun ConfirmarPedidoScreen(
     clienteId: Int,
     menuVm: MenuViewModel,
     pedidosVm: PedidosClienteViewModel,
+    preferenciasStore: PreferenciasStore,
     onBackClick: () -> Unit,
     onPedidoConfirmado: (Long) -> Unit
 ) {
@@ -63,19 +70,37 @@ fun ConfirmarPedidoScreen(
     val horaRecojo by pedidosVm.horaRecojo.collectAsState()
     val pago by pedidosVm.pago.collectAsState()
     val nota by pedidosVm.nota.collectAsState()
+    val cuponUsado by preferenciasStore.cuponProfeApruebemeUsado(clienteId).collectAsState(initial = false)
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     val horasDisponibles = listOf("Ahora", "11:30", "12:00", "12:30")
     val metodosPago = listOf("CAJA" to "Pagar en caja", "YAPE" to "Yape / Plin")
+    val opcionesDelivery = listOf(
+        "RECOJO" to "Recojo en local (S/ 0.00)",
+        "CERCANO" to "Mismo / Distrito vecino (+S/ 3.00)",
+        "LEJANO" to "Distrito no vecino (+S/ 10.00)"
+    )
 
+    var tipoDelivery by remember { mutableStateOf("RECOJO") }
     var incluirBolsa by remember { mutableStateOf(false) }
     var numeroYape by remember { mutableStateOf("923026303") }
 
+    var codigoCuponTexto by remember { mutableStateOf("") }
+    var cuponAplicado by remember { mutableStateOf(false) }
+    var mensajeCupon by remember { mutableStateOf<String?>(null) }
+    var esErrorCupon by remember { mutableStateOf(false) }
+
     val subtotal = menuVm.totalCarrito
+    val descuentoCupon = if (cuponAplicado && !cuponUsado) subtotal * 0.30 else 0.0
     val costoBolsa = if (incluirBolsa) 0.40 else 0.00
+    val costoDelivery = when (tipoDelivery) {
+        "CERCANO" -> 3.00
+        "LEJANO" -> 10.00
+        else -> 0.00
+    }
     val recargoYape = if (pago == "YAPE") 0.50 else 0.00
-    val servicio = 0.0
-    val total = subtotal + costoBolsa + recargoYape + servicio
+    val total = (subtotal - descuentoCupon + costoBolsa + costoDelivery + recargoYape).coerceAtLeast(0.0)
 
     Scaffold(
         topBar = {
@@ -111,7 +136,7 @@ fun ConfirmarPedidoScreen(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(
-                            text = "Tiempo estimado de recojo",
+                            text = if (tipoDelivery == "RECOJO") "Tiempo estimado de recojo" else "Tiempo estimado de entrega",
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp,
                             color = MaterialTheme.colorScheme.onPrimaryContainer
@@ -240,8 +265,26 @@ fun ConfirmarPedidoScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Hora de recojo
-            Text(text = "Hora de recojo", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            // Modalidad de Entrega (Delivery vs Recojo)
+            Text(text = "Modalidad de entrega", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                opcionesDelivery.forEach { (clave, label) ->
+                    FilterChip(
+                        selected = tipoDelivery == clave,
+                        onClick = { tipoDelivery = clave },
+                        label = { Text(label) },
+                        leadingIcon = {
+                            Icon(imageVector = Icons.Default.LocalShipping, contentDescription = null, modifier = Modifier.size(18.dp))
+                        },
+                        modifier = Modifier.padding(bottom = 6.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Hora de recojo o entrega
+            Text(text = "Hora aproximada", fontWeight = FontWeight.Bold, fontSize = 16.sp)
             Row(modifier = Modifier.padding(vertical = 8.dp)) {
                 horasDisponibles.forEach { h ->
                     FilterChip(
@@ -360,6 +403,67 @@ fun ConfirmarPedidoScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Cupón de descuento
+            Text(text = "Cupón de descuento", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            Spacer(modifier = Modifier.height(6.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                OutlinedTextField(
+                    value = codigoCuponTexto,
+                    onValueChange = {
+                        codigoCuponTexto = it
+                        mensajeCupon = null
+                    },
+                    placeholder = { Text("Ej: profe_apruebeme") },
+                    singleLine = true,
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier.weight(1f)
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Button(
+                    onClick = {
+                        val codigoLimpio = codigoCuponTexto.trim().lowercase()
+                        if (codigoLimpio == "profe_apruebeme") {
+                            if (cuponUsado) {
+                                mensajeCupon = "El cupón 'profe_apruebeme' ya fue utilizado en esta cuenta."
+                                esErrorCupon = true
+                                cuponAplicado = false
+                            } else {
+                                cuponAplicado = true
+                                mensajeCupon = "¡Cupón aplicado! 30% de descuento concedido"
+                                esErrorCupon = false
+                            }
+                        } else {
+                            mensajeCupon = "Cupón inválido"
+                            esErrorCupon = true
+                            cuponAplicado = false
+                        }
+                    },
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier.height(56.dp)
+                ) {
+                    Icon(imageVector = Icons.Default.ConfirmationNumber, contentDescription = null)
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("Aplicar")
+                }
+            }
+
+            if (mensajeCupon != null) {
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = mensajeCupon!!,
+                    color = if (esErrorCupon) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             // Opción de Bolsa para llevar
             Card(
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)),
@@ -387,7 +491,7 @@ fun ConfirmarPedidoScreen(
             Text(text = "Descripción o especificaciones del pedido", fontWeight = FontWeight.Bold, fontSize = 16.sp)
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Indica detalles específicos para tu preparación (ej: con mucha azúcar, sin hielo, término medio, etc.):",
+                text = "Indica detalles específicos para tu preparación (ej: sin hielo, dirección para delivery, etc.):",
                 fontSize = 12.sp,
                 color = MaterialTheme.colorScheme.outline
             )
@@ -396,7 +500,7 @@ fun ConfirmarPedidoScreen(
             OutlinedTextField(
                 value = nota,
                 onValueChange = { pedidosVm.setNota(it) },
-                placeholder = { Text("Ej: Con mucha azúcar, bien caliente, sin azúcar, etc.") },
+                placeholder = { Text("Ej: Con mucha azúcar, bien caliente, dirección de envío, etc.") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp),
@@ -416,12 +520,28 @@ fun ConfirmarPedidoScreen(
                     Spacer(modifier = Modifier.weight(1f))
                     Text("S/ %.2f".format(subtotal))
                 }
+                if (descuentoCupon > 0) {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        Text("Descuento Cupón (30%)", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold)
+                        Spacer(modifier = Modifier.weight(1f))
+                        Text("-S/ %.2f".format(descuentoCupon), color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+                    }
+                }
                 if (incluirBolsa) {
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(modifier = Modifier.fillMaxWidth()) {
                         Text("Bolsa para llevar (+S/ 0.40)", color = MaterialTheme.colorScheme.outline)
                         Spacer(modifier = Modifier.weight(1f))
                         Text("S/ 0.40")
+                    }
+                }
+                if (costoDelivery > 0) {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        Text("Costo de Delivery (${if (tipoDelivery == "CERCANO") "Distrito cercano" else "Distrito lejano"})", color = MaterialTheme.colorScheme.outline)
+                        Spacer(modifier = Modifier.weight(1f))
+                        Text("S/ %.2f".format(costoDelivery))
                     }
                 }
                 if (pago == "YAPE") {
@@ -454,6 +574,11 @@ fun ConfirmarPedidoScreen(
                     if (carrito.isEmpty()) {
                         Toast.makeText(context, "No hay productos seleccionados", Toast.LENGTH_SHORT).show()
                     } else {
+                        if (cuponAplicado) {
+                            scope.launch {
+                                preferenciasStore.marcarCuponProfeApruebemeUsado(clienteId)
+                            }
+                        }
                         pedidosVm.crearPedido(clienteId, carrito) { pedidoId ->
                             menuVm.limpiarCarrito()
                             pedidosVm.setNota("")

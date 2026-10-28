@@ -247,6 +247,7 @@ fun NavCafe(
                     clienteId = usuarioActivo?.id ?: 1,
                     menuVm = menuViewModel,
                     pedidosVm = pedidosClienteViewModel,
+                    preferenciasStore = preferenciasStore,
                     onBackClick = { navController.popBackStack() },
                     onPedidoConfirmado = { id ->
                         navController.navigate(Rutas.ClienteSeguimiento.crearRuta(id.toInt())) {

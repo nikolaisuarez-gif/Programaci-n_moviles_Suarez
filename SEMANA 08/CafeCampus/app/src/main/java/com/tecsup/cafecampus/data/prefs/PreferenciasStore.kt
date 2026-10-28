@@ -57,4 +57,16 @@ class PreferenciasStore(private val context: Context) {
             prefs[FOTO_PERFIL] = uriString
         }
     }
+
+    fun cuponProfeApruebemeUsado(userId: Int): Flow<Boolean> = context.dataStore.data.map { prefs ->
+        val key = booleanPreferencesKey("cupon_profe_apruebeme_user_$userId")
+        prefs[key] ?: false
+    }
+
+    suspend fun marcarCuponProfeApruebemeUsado(userId: Int) {
+        val key = booleanPreferencesKey("cupon_profe_apruebeme_user_$userId")
+        context.dataStore.edit { prefs ->
+            prefs[key] = true
+        }
+    }
 }
