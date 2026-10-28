@@ -146,6 +146,9 @@ class SesionViewModel(private val repo: CafeRepository) : ViewModel() {
     }
 
     fun cambiarRolManual(nuevoRol: Rol) {
-        _rolSeleccionado.value = nuevoRol
+        val user = _usuarioActivo.value
+        if (user?.rol == Rol.ADMIN.name || user?.correo == "admin@cafe.test") {
+            _rolSeleccionado.value = nuevoRol
+        }
     }
 }

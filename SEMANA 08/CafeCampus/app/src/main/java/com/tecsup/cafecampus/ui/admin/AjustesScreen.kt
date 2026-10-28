@@ -175,19 +175,23 @@ fun AjustesScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            val esCuentaPrincipalAdmin = usuario?.rol == Rol.ADMIN.name || usuario?.correo == "admin@cafe.test"
 
-            Button(
-                onClick = onCambiarPerfilClick,
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp)
-            ) {
-                Text(
-                    text = "Cambiar de perfil (${if (rolActual == Rol.ADMIN) "Modo Cliente" else "Modo Admin"})",
-                    fontWeight = FontWeight.Bold
-                )
+            if (esCuentaPrincipalAdmin) {
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(
+                    onClick = onCambiarPerfilClick,
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                ) {
+                    Text(
+                        text = "Cambiar de perfil (${if (rolActual == Rol.ADMIN) "Modo Cliente" else "Modo Admin"})",
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(24.dp))

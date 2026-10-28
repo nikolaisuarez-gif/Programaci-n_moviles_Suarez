@@ -338,15 +338,17 @@ fun NavCafe(
                     notificaciones = notificaciones,
                     recibirPedidos = recibirPedidos,
                     onCambiarPerfilClick = {
-                        val nuevoRol = if (rolSeleccionado == Rol.ADMIN) Rol.CLIENTE else Rol.ADMIN
-                        sesionViewModel.cambiarRolManual(nuevoRol)
-                        if (nuevoRol == Rol.ADMIN) {
-                            navController.navigate(Rutas.AdminPanel.ruta) {
-                                popUpTo(0) { inclusive = true }
-                            }
-                        } else {
-                            navController.navigate(Rutas.ClienteMenu.ruta) {
-                                popUpTo(0) { inclusive = true }
+                        if (usuarioActivo?.rol == Rol.ADMIN.name || usuarioActivo?.correo == "admin@cafe.test") {
+                            val nuevoRol = if (rolSeleccionado == Rol.ADMIN) Rol.CLIENTE else Rol.ADMIN
+                            sesionViewModel.cambiarRolManual(nuevoRol)
+                            if (nuevoRol == Rol.ADMIN) {
+                                navController.navigate(Rutas.AdminPanel.ruta) {
+                                    popUpTo(0) { inclusive = true }
+                                }
+                            } else {
+                                navController.navigate(Rutas.ClienteMenu.ruta) {
+                                    popUpTo(0) { inclusive = true }
+                                }
                             }
                         }
                     },
