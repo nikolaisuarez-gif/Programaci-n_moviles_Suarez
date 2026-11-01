@@ -22,11 +22,12 @@ class LocalWebServer(
     fun start() {
         try {
             if (server != null) return
-            server = HttpServer.create(InetSocketAddress(port), 0)
+            // Escucha en 0.0.0.0 para recibir peticiones desde el emulador o red local
+            server = HttpServer.create(InetSocketAddress("0.0.0.0", port), 0)
             server?.createContext("/", DashboardHandler())
             server?.executor = null
             server?.start()
-            println("Local Web Server started on http://localhost:$port")
+            println("Local Web Server started on http://0.0.0.0:$port")
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -45,6 +46,7 @@ class LocalWebServer(
                     val htmlContent = buildDashboardHtml(matches)
                     
                     exchange.responseHeaders.set("Content-Type", "text/html; charset=UTF-8")
+                    exchange.responseHeaders.set("Access-Control-Allow-Origin", "*")
                     val bytes = htmlContent.toByteArray(Charsets.UTF_8)
                     exchange.sendResponseHeaders(200, bytes.size.toLong())
                     val os: OutputStream = exchange.responseBody
@@ -60,7 +62,7 @@ class LocalWebServer(
         }
     }
 
-    private fun buildDashboardHtml(matches: List<Match>): String {
+    fun buildDashboardHtml(matches: List<Match>): String {
         val matchesRows = matches.joinToString("\n") { m ->
             val statusBadge = if (m.status == "LIVE") "<span class='badge live'>🔴 EN VIVO ${m.elapsedMinutes}'</span>" else "<span class='badge ft'>FINALIZADO</span>"
             """
@@ -87,8 +89,15 @@ class LocalWebServer(
                     <span>🏟️ ${m.stadium ?: "Estadio Principal"}</span>
                     <span>⚖️ ${m.referee ?: "Árbitro Oficial"}</span>
                 </div>
+                <div class="stats-grid">
+                    <div class="stat-item">🚩 Corners: <strong>7 - 4</strong></div>
+                    <div class="stat-item">⚠️ Faltas: <strong>11 - 15</strong></div>
+                    <div class="stat-item">🟨 Tarjetas Amarillas: <strong>2 - 4</strong></div>
+                    <div class="stat-item">🎯 Tiros al Arco: <strong>6 - 3</strong></div>
+                    <div class="stat-item">⚽ Posesión: <strong>58% - 42%</strong></div>
+                </div>
                 <div class="ai-box">
-                    <strong>🤖 Análisis IA:</strong> Probabilidad de Victoria: Local 58% | Empate 22% | Visitante 20% | Corners Esp: 11
+                    <strong>🤖 Predicción IA:</strong> Victoria Local 58% | Empate 22% | Visitante 20% | xG Esperado: 2.1 vs 1.2
                 </div>
             </div>
             """.trimIndent()
@@ -202,6 +211,22 @@ class LocalWebServer(
                     border-top: 1px solid #334155;
                     padding-top: 8px;
                 }
+                .stats-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(180px, 1f));
+                    gap: 8px;
+                    margin-top: 12px;
+                    background: #0f172a;
+                    padding: 10px;
+                    border-radius: 8px;
+                    font-size: 12px;
+                }
+                .stat-item {
+                    color: #cbd5e1;
+                }
+                .stat-item strong {
+                    color: #38bdf8;
+                }
                 .ai-box {
                     background: #0f172a;
                     border-left: 4px solid #38bdf8;
@@ -223,13 +248,13 @@ class LocalWebServer(
             <div class="container">
                 <header>
                     <h1>⚽ FOOTBALL AI ANALYST</h1>
-                    <p class="sub">Servidor Web Local Activo en http://localhost:$port | Monitoreo en Tiempo Real</p>
+                    <p class="sub">Panel Web Interactivo en Tiempo Real | Resultados, Corners, Faltas y Predicción de IA</p>
                 </header>
                 <main>
                     $matchesRows
                 </main>
                 <footer>
-                    <p>Football AI Analyst Local Web Dashboard - Tecsup 2026</p>
+                    <p>Football AI Analyst Web Dashboard - Tecsup 2026</p>
                 </footer>
             </div>
         </body>
