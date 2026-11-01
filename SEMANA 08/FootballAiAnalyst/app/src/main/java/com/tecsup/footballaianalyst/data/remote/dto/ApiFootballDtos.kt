@@ -8,6 +8,10 @@ data class ApiFootballResponse<T>(
     @SerializedName("response") val response: List<T>
 )
 
+data class TeamSearchWrapperDto(
+    @SerializedName("team") val team: TeamDto
+)
+
 data class FixtureResponseDto(
     @SerializedName("fixture") val fixture: FixtureDto,
     @SerializedName("league") val league: LeagueDto,

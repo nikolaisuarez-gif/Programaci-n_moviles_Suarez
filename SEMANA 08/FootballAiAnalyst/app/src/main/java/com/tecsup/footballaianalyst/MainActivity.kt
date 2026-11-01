@@ -16,6 +16,8 @@ import com.tecsup.footballaianalyst.ui.theme.FootballAiTheme
 import com.tecsup.footballaianalyst.viewmodel.FootballViewModel
 import com.tecsup.footballaianalyst.viewmodel.MatchDetailViewModel
 import com.tecsup.footballaianalyst.viewmodel.SettingsViewModel
+import com.tecsup.footballaianalyst.viewmodel.TeamCompareViewModel
+import com.tecsup.footballaianalyst.viewmodel.TeamStatsViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -83,12 +85,32 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        val teamStatsVm by viewModels<TeamStatsViewModel> {
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    @Suppress("UNCHECKED_CAST")
+                    return TeamStatsViewModel(repository, app.apiKeyStore) as T
+                }
+            }
+        }
+
+        val teamCompareVm by viewModels<TeamCompareViewModel> {
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    @Suppress("UNCHECKED_CAST")
+                    return TeamCompareViewModel(repository, app.apiKeyStore) as T
+                }
+            }
+        }
+
         setContent {
             FootballAiTheme {
                 NavFootball(
                     footballVm = footballVm,
                     matchDetailVm = matchDetailVm,
-                    settingsVm = settingsVm
+                    settingsVm = settingsVm,
+                    teamStatsVm = teamStatsVm,
+                    teamCompareVm = teamCompareVm
                 )
             }
         }
