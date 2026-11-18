@@ -18,6 +18,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 class MapaViewModel(
@@ -42,6 +44,9 @@ class MapaViewModel(
 
     private val _seleccionado = MutableStateFlow<Int?>(null)
     val seleccionado: StateFlow<Int?> = _seleccionado.asStateFlow()
+    private val _seguimientoActivo = MutableStateFlow(false)
+    val seguimientoActivo: StateFlow<Boolean> = _seguimientoActivo.asStateFlow()
+    private var seguimientoJob: Job? = null
 
     val masCercano: StateFlow<Lugar?> = lugares
         .map { lista -> lista.firstOrNull { it.metros != null }?.lugar }
@@ -73,6 +78,33 @@ class MapaViewModel(
     fun seleccionar(id: Int?) { _seleccionado.value = id }
     fun filtrarCategoria(categoria: String?) { _categoria.value = categoria }
     fun cambiarRadio(metros: Int?) { _radioMetros.value = metros }
+
+    fun iniciarSeguimiento() {
+        if (seguimientoJob?.isActive == true) return
+        seguimientoJob = viewModelScope.launch {
+            _seguimientoActivo.value = true
+            try {
+                ubicacionRepo.seguirUbicacion().collect { posicion ->
+                    actualizarDistancias(posicion)
+                    _estado.value = UbicacionUi.Lista(posicion)
+                }
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: Throwable) {
+                val tipo = (error as? ErrorUbicacion)?.tipo ?: TipoError.OTRO
+                _estado.value = UbicacionUi.Error(error.message ?: "No se pudo seguir la ubicación.", tipo)
+            } finally {
+                _seguimientoActivo.value = false
+                seguimientoJob = null
+            }
+        }
+    }
+
+    fun detenerSeguimiento() {
+        seguimientoJob?.cancel()
+        seguimientoJob = null
+        _seguimientoActivo.value = false
+    }
 
     private fun actualizarDistancias(pos: com.suarez.campusgps.model.Posicion) {
         _todosLosLugares.value = lugaresRepo.obtenerLugares()

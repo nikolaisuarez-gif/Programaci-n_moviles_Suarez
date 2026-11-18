@@ -15,6 +15,7 @@ La asistencia de IA usada en esta entrega fue Codex (OpenAI) dentro del entorno 
 1. Filtro de lugares por categoría (`feat(ia): filtra lugares por categoria`): el ViewModel expone las categorías disponibles y filtra la lista y los marcadores observados por Compose.
 2. Radio de cercanía ajustable (`feat(ia): agrega filtro por radio de cercania`): el ViewModel limita los lugares según distancia; el mapa dibuja el radio alrededor de la posición actual.
 3. Controles nativos de ubicación (`feat(ia): activa controles nativos de ubicacion`): el control de ubicación de Google Maps solo se activa cuando el estado indica que el permiso está concedido y hay una ubicación cargada.
+4. Seguimiento en vivo (`feat(ia): agrega seguimiento de ubicacion en vivo`): el Repository expone ubicaciones como Flow con callbackFlow y el ViewModel permite iniciar y detener las actualizaciones, sin llevar Context a la capa de presentación.
 
 ## Revisión
 

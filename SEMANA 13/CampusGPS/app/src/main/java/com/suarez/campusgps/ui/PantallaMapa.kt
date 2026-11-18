@@ -26,6 +26,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -48,18 +51,36 @@ fun PantallaMapa(vm: MapaViewModel) {
     val masCercano by vm.masCercano.collectAsStateWithLifecycle()
     val categoria by vm.categoria.collectAsStateWithLifecycle()
     val radioMetros by vm.radioMetros.collectAsStateWithLifecycle()
+    val seguimientoActivo by vm.seguimientoActivo.collectAsStateWithLifecycle()
+    var seguimientoPendiente by remember { mutableStateOf(false) }
 
     val permisoLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { resultado ->
-        if (resultado.values.any { it }) vm.buscar() else vm.permisoDenegado()
+        if (resultado.values.any { it }) {
+            if (seguimientoPendiente) vm.iniciarSeguimiento() else vm.buscar()
+        } else {
+            vm.permisoDenegado()
+        }
+        seguimientoPendiente = false
     }
 
     fun alPulsar() {
+        seguimientoPendiente = false
         val fine = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         val coarse = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
         if (fine || coarse) vm.buscar()
         else permisoLauncher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION))
+    }
+
+    fun alPulsarSeguimiento() {
+        val fine = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        val coarse = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        if (fine || coarse) vm.iniciarSeguimiento()
+        else {
+            seguimientoPendiente = true
+            permisoLauncher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION))
+        }
     }
 
     Scaffold(
@@ -116,6 +137,13 @@ fun PantallaMapa(vm: MapaViewModel) {
                     Spacer(Modifier.size(8.dp))
                 }
                 Text("Obtener mi ubicación")
+            }
+
+            OutlinedButton(
+                onClick = { if (seguimientoActivo) vm.detenerSeguimiento() else alPulsarSeguimiento() },
+                modifier = Modifier.padding(top = 2.dp)
+            ) {
+                Text(if (seguimientoActivo) "Detener seguimiento" else "Iniciar seguimiento")
             }
 
             (estado as? UbicacionUi.Lista)?.let { posicion ->
