@@ -1,11 +1,9 @@
 package com.suarez.campusgps
 
 import android.os.Bundle
+import android.graphics.Color as AndroidColor
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.suarez.campusgps.data.UbicacionRepositoryGoogle
 import com.suarez.campusgps.data.LugaresRepositoryLocal
@@ -16,13 +14,15 @@ import com.suarez.campusgps.viewmodel.MapaViewModel
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val factory = MapaViewModel.Factory(UbicacionRepositoryGoogle(applicationContext), LugaresRepositoryLocal())
+        window.statusBarColor = AndroidColor.rgb(25, 118, 185)
+        window.decorView.systemUiVisibility = 0
+        val ubicacionRepository = UbicacionRepositoryGoogle(applicationContext)
+        val lugaresRepository = LugaresRepositoryLocal()
+        val factory = MapaViewModel.Factory(ubicacionRepository, lugaresRepository)
         setContent {
             CampusGpsTheme {
-                Surface(color = MaterialTheme.colorScheme.background) {
-                    val vm: MapaViewModel = viewModel(factory = factory)
-                    PantallaMapa(vm)
-                }
+                val vm: MapaViewModel = viewModel(factory = factory)
+                PantallaMapa(vm)
             }
         }
     }

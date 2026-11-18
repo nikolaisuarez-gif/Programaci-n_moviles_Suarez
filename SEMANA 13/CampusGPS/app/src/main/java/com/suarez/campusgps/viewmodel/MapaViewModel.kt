@@ -3,54 +3,78 @@ package com.suarez.campusgps.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.suarez.campusgps.data.UbicacionRepository
+import com.suarez.campusgps.data.ErrorUbicacion
 import com.suarez.campusgps.data.LugaresRepository
+import com.suarez.campusgps.data.UbicacionRepository
+import com.suarez.campusgps.model.Lugar
 import com.suarez.campusgps.model.LugarConDistancia
-import com.suarez.campusgps.model.Posicion
-import com.suarez.campusgps.util.distanciaMetros
+import com.suarez.campusgps.model.TipoError
 import com.suarez.campusgps.model.UbicacionUi
+import com.suarez.campusgps.util.distanciaMetros
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class MapaViewModel(private val ubicacionRepo: UbicacionRepository, lugaresRepo: LugaresRepository) : ViewModel() {
+class MapaViewModel(
+    private val ubicacionRepo: UbicacionRepository,
+    private val lugaresRepo: LugaresRepository
+) : ViewModel() {
     private val _estado = MutableStateFlow<UbicacionUi>(UbicacionUi.Inicial)
-    val estado = _estado.asStateFlow()
-    private val _lugares = MutableStateFlow(lugaresRepo.obtenerLugares().map { LugarConDistancia(it, null) })
-    val lugares = _lugares.asStateFlow()
-    private val _seleccionado = MutableStateFlow<Int?>(null)
-    val seleccionado = _seleccionado.asStateFlow()
-    val masCercano = _lugares.map { lista -> lista.firstOrNull { it.metros != null }?.lugar }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+    val estado: StateFlow<UbicacionUi> = _estado.asStateFlow()
 
-    fun seleccionar(id: Int?) { _seleccionado.value = id }
+    private val _lugares = MutableStateFlow(lugaresRepo.obtenerLugares().map { LugarConDistancia(it, null) })
+    val lugares: StateFlow<List<LugarConDistancia>> = _lugares.asStateFlow()
+
+    private val _seleccionado = MutableStateFlow<Int?>(null)
+    val seleccionado: StateFlow<Int?> = _seleccionado.asStateFlow()
+
+    val masCercano: StateFlow<Lugar?> = _lugares
+        .map { lista -> lista.firstOrNull { it.metros != null }?.lugar }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     fun buscar() {
         viewModelScope.launch {
             _estado.value = UbicacionUi.Buscando
-            ubicacionRepo.obtenerPosicion().onSuccess {
-                actualizarDistancias(it)
-                _estado.value = UbicacionUi.Lista(it)
-            }
-                .onFailure { _estado.value = UbicacionUi.Error(it.message ?: "No se pudo obtener la ubicación") }
+            ubicacionRepo.obtenerPosicion()
+                .onSuccess { posicion ->
+                    actualizarDistancias(posicion)
+                    _estado.value = UbicacionUi.Lista(posicion)
+                }
+                .onFailure { error ->
+                    val tipo = (error as? ErrorUbicacion)?.tipo ?: TipoError.OTRO
+                    _estado.value = UbicacionUi.Error(
+                        error.message ?: "No se pudo obtener la ubicación.", tipo
+                    )
+                }
         }
     }
 
     fun permisoDenegado() {
-        _estado.value = UbicacionUi.Error("Sin permiso de ubicación no puedo mostrar dónde estás")
+        _estado.value = UbicacionUi.Error(
+            "Sin permiso de ubicación no puedo mostrar dónde estás", TipoError.SIN_PERMISO
+        )
     }
 
-    private fun actualizarDistancias(posicion: Posicion) {
-        _lugares.value = _lugares.value
-            .map { item -> item.copy(metros = distanciaMetros(posicion, item.lugar)) }
+    fun seleccionar(id: Int?) { _seleccionado.value = id }
+
+    private fun actualizarDistancias(pos: com.suarez.campusgps.model.Posicion) {
+        _lugares.value = lugaresRepo.obtenerLugares()
+            .map { LugarConDistancia(it, distanciaMetros(pos, it)) }
             .sortedBy { it.metros }
     }
 
-    class Factory(private val repo: UbicacionRepository, private val lugaresRepo: LugaresRepository) : ViewModelProvider.Factory {
+    class Factory(
+        private val ubicacionRepo: UbicacionRepository,
+        private val lugaresRepo: LugaresRepository
+    ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T = MapaViewModel(repo, lugaresRepo) as T
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (!modelClass.isAssignableFrom(MapaViewModel::class.java)) error("ViewModel desconocido")
+            return MapaViewModel(ubicacionRepo, lugaresRepo) as T
+        }
     }
 }
