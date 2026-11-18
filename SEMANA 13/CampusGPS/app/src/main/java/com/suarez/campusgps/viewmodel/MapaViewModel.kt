@@ -29,10 +29,15 @@ class MapaViewModel(
 
     private val _todosLosLugares = MutableStateFlow(lugaresRepo.obtenerLugares().map { LugarConDistancia(it, null) })
     private val _categoria = MutableStateFlow<String?>(null)
+    private val _radioMetros = MutableStateFlow<Int?>(null)
     val categoria: StateFlow<String?> = _categoria.asStateFlow()
+    val radioMetros: StateFlow<Int?> = _radioMetros.asStateFlow()
     val categorias: List<String> = listOf("Todas") + lugaresRepo.obtenerLugares().map { it.categoria }.distinct().sorted()
-    val lugares: StateFlow<List<LugarConDistancia>> = combine(_todosLosLugares, _categoria) { lista, categoria ->
-        if (categoria == null) lista else lista.filter { it.lugar.categoria == categoria }
+    val lugares: StateFlow<List<LugarConDistancia>> = combine(_todosLosLugares, _categoria, _radioMetros) { lista, categoria, radio ->
+        lista.filter { item ->
+            (categoria == null || item.lugar.categoria == categoria) &&
+                (radio == null || item.metros == null || item.metros <= radio)
+        }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), _todosLosLugares.value)
 
     private val _seleccionado = MutableStateFlow<Int?>(null)
@@ -67,6 +72,7 @@ class MapaViewModel(
 
     fun seleccionar(id: Int?) { _seleccionado.value = id }
     fun filtrarCategoria(categoria: String?) { _categoria.value = categoria }
+    fun cambiarRadio(metros: Int?) { _radioMetros.value = metros }
 
     private fun actualizarDistancias(pos: com.suarez.campusgps.model.Posicion) {
         _todosLosLugares.value = lugaresRepo.obtenerLugares()

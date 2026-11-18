@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.suarez.campusgps.model.LugarConDistancia
@@ -22,12 +23,14 @@ fun MapaUbicacion(
     estado: UbicacionUi,
     lugares: List<LugarConDistancia>,
     seleccionado: Int?,
+    radioMetros: Int?,
     onSeleccionar: (Int?) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val camara = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(CentroLima, 12f)
     }
+    val posicionUsuario = (estado as? UbicacionUi.Lista)?.posicion
 
     LaunchedEffect(estado) {
         if (estado is UbicacionUi.Lista) {
@@ -44,13 +47,22 @@ fun MapaUbicacion(
     }
 
     GoogleMap(modifier = modifier.fillMaxSize(), cameraPositionState = camara) {
-        val posicionUsuario = (estado as? UbicacionUi.Lista)?.posicion
         if (posicionUsuario != null) {
             Marker(
                 state = com.google.maps.android.compose.rememberMarkerState(
                     position = LatLng(posicionUsuario.latitude, posicionUsuario.longitude)
                 ),
                 title = "Estás aquí"
+            )
+        }
+
+        if (posicionUsuario != null && radioMetros != null) {
+            Circle(
+                center = LatLng(posicionUsuario.latitude, posicionUsuario.longitude),
+                radius = radioMetros.toDouble(),
+                fillColor = android.graphics.Color.argb(35, 25, 118, 210),
+                strokeColor = android.graphics.Color.rgb(25, 118, 210),
+                strokeWidth = 2f
             )
         }
 

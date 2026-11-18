@@ -19,6 +19,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -46,6 +47,7 @@ fun PantallaMapa(vm: MapaViewModel) {
     val seleccionado by vm.seleccionado.collectAsStateWithLifecycle()
     val masCercano by vm.masCercano.collectAsStateWithLifecycle()
     val categoria by vm.categoria.collectAsStateWithLifecycle()
+    val radioMetros by vm.radioMetros.collectAsStateWithLifecycle()
 
     val permisoLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -79,6 +81,7 @@ fun PantallaMapa(vm: MapaViewModel) {
                 estado = estado,
                 lugares = lugares,
                 seleccionado = seleccionado,
+                radioMetros = radioMetros,
                 onSeleccionar = vm::seleccionar,
                 modifier = Modifier.weight(1f).fillMaxWidth()
             )
@@ -92,6 +95,18 @@ fun PantallaMapa(vm: MapaViewModel) {
                         label = { Text(opcion) }
                     )
                 }
+            }
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(if (radioMetros == null) "Radio: todos" else "Radio: ${radioMetros} m")
+                Slider(
+                    value = (radioMetros ?: 500).toFloat(),
+                    onValueChange = { vm.cambiarRadio(it.toInt().coerceIn(100, 500)) },
+                    valueRange = 100f..500f,
+                    steps = 3,
+                    modifier = Modifier.weight(1f)
+                )
+                OutlinedButton(onClick = { vm.cambiarRadio(null) }) { Text("Limpiar") }
             }
 
             Spacer(Modifier.height(8.dp))
