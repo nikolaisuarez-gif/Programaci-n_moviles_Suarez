@@ -70,7 +70,9 @@ flowchart LR
 - Punto azul y control nativo de ubicación cuando ya se concedió el permiso.
 - Seguimiento en vivo con acciones para iniciar y detener las actualizaciones.
 - Último lugar seleccionado persistido con DataStore y restaurado al volver a abrir la app.
-- Tema oscuro de Compose y estilo oscuro de Google Maps según el tema del sistema.
+- Botón en la barra superior para cambiar entre tema claro y oscuro; Material 3 y Google Maps cambian juntos.
+- Portada de bienvenida con acceso directo al mapa y control de tema claro/oscuro.
+- Al entrar al mapa, CampusGPS solicita el permiso de ubicación y busca la posición actual para mostrar el punto azul y lugares cercanos.
 
 ## Capturas
 

@@ -13,19 +13,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,7 +45,12 @@ import com.suarez.campusgps.viewmodel.MapaViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PantallaMapa(vm: MapaViewModel) {
+fun PantallaMapa(
+    vm: MapaViewModel,
+    modoOscuro: Boolean,
+    onCambiarTema: () -> Unit,
+    onVolver: () -> Unit
+) {
     val context = LocalContext.current
     val estado by vm.estado.collectAsStateWithLifecycle()
     val lugares by vm.lugares.collectAsStateWithLifecycle()
@@ -84,10 +90,31 @@ fun PantallaMapa(vm: MapaViewModel) {
         }
     }
 
+    LaunchedEffect(Unit) {
+        val fine = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        val coarse = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        if (fine || coarse) vm.buscar()
+        else permisoLauncher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION))
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("CampusGPS", fontWeight = FontWeight.Bold) },
+                actions = {
+                    TextButton(
+                        onClick = onVolver,
+                        colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onPrimary)
+                    ) {
+                        Text("Inicio")
+                    }
+                    TextButton(
+                        onClick = onCambiarTema,
+                        colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onPrimary)
+                    ) {
+                        Text(if (modoOscuro) "Modo claro" else "Modo oscuro")
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
@@ -104,21 +131,24 @@ fun PantallaMapa(vm: MapaViewModel) {
                 lugares = lugares,
                 seleccionado = seleccionado,
                 radioMetros = radioMetros,
+                modoOscuro = modoOscuro,
                 onSeleccionar = vm::seleccionar,
                 modifier = Modifier.weight(1f).fillMaxWidth()
             )
 
-            LazyRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                items(vm.categorias) { opcion ->
-                    val valor = opcion.takeUnless { it == "Todas" }
-                    FilterChip(
-                        selected = categoria == valor,
-                        onClick = { vm.filtrarCategoria(valor) },
-                        label = { Text(opcion) }
-                    )
+            vm.categorias.chunked(3).forEach { filaCategorias ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    filaCategorias.forEach { opcion ->
+                        val valor = opcion.takeUnless { it == "Todas" }
+                        FilterChip(
+                            selected = categoria == valor,
+                            onClick = { vm.filtrarCategoria(valor) },
+                            label = { Text(opcion) }
+                        )
+                    }
                 }
             }
 
