@@ -13,13 +13,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -107,8 +108,11 @@ fun PantallaMapa(vm: MapaViewModel) {
                 modifier = Modifier.weight(1f).fillMaxWidth()
             )
 
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                vm.categorias.forEach { opcion ->
+            LazyRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                items(vm.categorias) { opcion ->
                     val valor = opcion.takeUnless { it == "Todas" }
                     FilterChip(
                         selected = categoria == valor,
@@ -118,16 +122,19 @@ fun PantallaMapa(vm: MapaViewModel) {
                 }
             }
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(if (radioMetros == null) "Radio: todos" else "Radio: ${radioMetros} m")
-                Slider(
-                    value = (radioMetros ?: 500).toFloat(),
-                    onValueChange = { vm.cambiarRadio(it.toInt().coerceIn(100, 500)) },
-                    valueRange = 100f..500f,
-                    steps = 3,
-                    modifier = Modifier.weight(1f)
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                listOf(100, 200, 500).forEach { radio ->
+                    FilterChip(
+                        selected = radioMetros == radio,
+                        onClick = { vm.cambiarRadio(radio) },
+                        label = { Text("${radio} m") }
+                    )
+                }
+                FilterChip(
+                    selected = radioMetros == null,
+                    onClick = { vm.cambiarRadio(null) },
+                    label = { Text("Todos") }
                 )
-                OutlinedButton(onClick = { vm.cambiarRadio(null) }) { Text("Limpiar") }
             }
 
             Spacer(Modifier.height(8.dp))
