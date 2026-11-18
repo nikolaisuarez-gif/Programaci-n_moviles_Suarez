@@ -39,7 +39,7 @@ fun ListaLugares(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = if (marcado) Color(0xFFE4F2FE) else MaterialTheme.colorScheme.surface
+                    containerColor = if (marcado) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surface
                 ),
                 border = if (marcado) CardDefaults.outlinedCardBorder() else null,
                 elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
@@ -52,7 +52,7 @@ fun ListaLugares(
                     Text("●", color = if (item.metros != null && item.lugar.id == lugares.firstOrNull { it.metros != null }?.lugar?.id) Color(0xFF25934B) else MaterialTheme.colorScheme.primary)
                     Column(modifier = Modifier.weight(1f)) {
                         Text(item.lugar.nombre, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyMedium)
-                        Text(item.lugar.categoria, color = Color.Gray, style = MaterialTheme.typography.bodySmall)
+                        Text(item.lugar.categoria, color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                     }
                     Text(item.metros?.let(::formatearDistancia) ?: "Sin calcular", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelMedium)
                 }

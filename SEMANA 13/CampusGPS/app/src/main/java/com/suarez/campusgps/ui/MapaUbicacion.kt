@@ -4,14 +4,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Circle
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.suarez.campusgps.R
 import com.suarez.campusgps.model.LugarConDistancia
 import com.suarez.campusgps.model.UbicacionUi
 
@@ -22,12 +30,21 @@ fun MapaUbicacion(
     estado: UbicacionUi,
     lugares: List<LugarConDistancia>,
     seleccionado: Int?,
+    radioMetros: Int?,
+    modoOscuro: Boolean,
     onSeleccionar: (Int?) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+    val estiloOscuro = remember(context, modoOscuro) {
+        if (modoOscuro) {
+            runCatching { MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style_dark) }.getOrNull()
+        } else null
+    }
     val camara = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(CentroLima, 12f)
     }
+    val posicionUsuario = (estado as? UbicacionUi.Lista)?.posicion
 
     LaunchedEffect(estado) {
         if (estado is UbicacionUi.Lista) {
@@ -43,14 +60,31 @@ fun MapaUbicacion(
         }
     }
 
-    GoogleMap(modifier = modifier.fillMaxSize(), cameraPositionState = camara) {
-        val posicionUsuario = (estado as? UbicacionUi.Lista)?.posicion
+    GoogleMap(
+        modifier = modifier.fillMaxSize(),
+        cameraPositionState = camara,
+        properties = MapProperties(
+            isMyLocationEnabled = estado is UbicacionUi.Lista,
+            mapStyleOptions = estiloOscuro
+        ),
+        uiSettings = MapUiSettings(myLocationButtonEnabled = estado is UbicacionUi.Lista)
+    ) {
         if (posicionUsuario != null) {
             Marker(
                 state = com.google.maps.android.compose.rememberMarkerState(
                     position = LatLng(posicionUsuario.latitude, posicionUsuario.longitude)
                 ),
                 title = "Estás aquí"
+            )
+        }
+
+        if (posicionUsuario != null && radioMetros != null) {
+            Circle(
+                center = LatLng(posicionUsuario.latitude, posicionUsuario.longitude),
+                radius = radioMetros.toDouble(),
+                fillColor = Color(0x232576D2),
+                strokeColor = Color(0xFF1976D2),
+                strokeWidth = 2f
             )
         }
 
