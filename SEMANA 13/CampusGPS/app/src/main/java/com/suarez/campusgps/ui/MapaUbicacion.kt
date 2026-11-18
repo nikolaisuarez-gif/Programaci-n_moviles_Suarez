@@ -1,8 +1,9 @@
-package com.tecsup.campusgps.ui
+package com.suarez.campusgps.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
@@ -11,12 +12,14 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
-import com.tecsup.campusgps.model.UbicacionUi
+import com.suarez.campusgps.model.UbicacionUi
+import com.suarez.campusgps.model.LugarConDistancia
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 
 private val CentroLima = LatLng(-12.0464, -77.0428)
 
 @Composable
-fun MapaUbicacion(estado: UbicacionUi, modifier: Modifier = Modifier) {
+fun MapaUbicacion(estado: UbicacionUi, lugares: List<LugarConDistancia>, modifier: Modifier = Modifier) {
     val camara = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(CentroLima, 12f)
     }
@@ -31,6 +34,17 @@ fun MapaUbicacion(estado: UbicacionUi, modifier: Modifier = Modifier) {
                 state = rememberMarkerState(position = LatLng(posicion.latitude, posicion.longitude)),
                 title = "Estás aquí"
             )
+        }
+        lugares.forEach { item ->
+            val lugar = item.lugar
+            key(lugar.id) {
+                Marker(
+                    state = rememberMarkerState(position = LatLng(lugar.latitude, lugar.longitude)),
+                    title = lugar.nombre,
+                    snippet = lugar.categoria,
+                    icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
+                )
+            }
         }
     }
 }

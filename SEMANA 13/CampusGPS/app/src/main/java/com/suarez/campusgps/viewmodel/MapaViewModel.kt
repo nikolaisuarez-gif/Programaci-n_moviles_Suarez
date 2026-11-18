@@ -4,14 +4,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.suarez.campusgps.data.UbicacionRepository
+import com.suarez.campusgps.data.LugaresRepository
+import com.suarez.campusgps.model.LugarConDistancia
 import com.suarez.campusgps.model.UbicacionUi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class MapaViewModel(private val ubicacionRepo: UbicacionRepository) : ViewModel() {
+class MapaViewModel(private val ubicacionRepo: UbicacionRepository, lugaresRepo: LugaresRepository) : ViewModel() {
     private val _estado = MutableStateFlow<UbicacionUi>(UbicacionUi.Inicial)
     val estado = _estado.asStateFlow()
+    private val _lugares = MutableStateFlow(lugaresRepo.obtenerLugares().map { LugarConDistancia(it, null) })
+    val lugares = _lugares.asStateFlow()
 
     fun buscar() {
         viewModelScope.launch {
@@ -25,8 +29,8 @@ class MapaViewModel(private val ubicacionRepo: UbicacionRepository) : ViewModel(
         _estado.value = UbicacionUi.Error("Sin permiso de ubicación no puedo mostrar dónde estás")
     }
 
-    class Factory(private val repo: UbicacionRepository) : ViewModelProvider.Factory {
+    class Factory(private val repo: UbicacionRepository, private val lugaresRepo: LugaresRepository) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T = MapaViewModel(repo) as T
+        override fun <T : ViewModel> create(modelClass: Class<T>): T = MapaViewModel(repo, lugaresRepo) as T
     }
 }

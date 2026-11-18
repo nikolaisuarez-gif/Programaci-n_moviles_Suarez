@@ -5,8 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.suarez.campusgps.data.UbicacionRepositoryGoogle
+import com.suarez.campusgps.data.LugaresRepositoryLocal
 import com.suarez.campusgps.ui.PantallaMapa
 import com.suarez.campusgps.ui.theme.CampusGpsTheme
 import com.suarez.campusgps.viewmodel.MapaViewModel
@@ -14,7 +16,7 @@ import com.suarez.campusgps.viewmodel.MapaViewModel
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val factory = MapaViewModel.Factory(UbicacionRepositoryGoogle(applicationContext))
+        val factory = MapaViewModel.Factory(UbicacionRepositoryGoogle(applicationContext), LugaresRepositoryLocal())
         setContent {
             CampusGpsTheme {
                 Surface(color = MaterialTheme.colorScheme.background) {
