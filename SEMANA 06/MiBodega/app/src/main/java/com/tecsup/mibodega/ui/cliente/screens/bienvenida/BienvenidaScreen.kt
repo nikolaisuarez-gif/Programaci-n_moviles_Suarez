@@ -1,4 +1,4 @@
-package com.suarez.mibodega.ui.cliente.screens.bienvenida
+package com.tecsup.mibodega.ui.cliente.screens.bienvenida
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,13 +28,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suarez.mibodega.R
-import com.suarez.mibodega.ui.componentes.BotonPrimario
-import com.suarez.mibodega.ui.componentes.BotonSecundario
-import com.suarez.mibodega.ui.theme.AzulEnlace
-import com.suarez.mibodega.ui.theme.BodegaTheme
-import com.suarez.mibodega.ui.theme.FondoClaro
-import com.suarez.mibodega.ui.theme.VerdeBodega
+import com.tecsup.mibodega.R
+import com.tecsup.mibodega.ui.componentes.BotonPrimario
+import com.tecsup.mibodega.ui.componentes.BotonSecundario
+import com.tecsup.mibodega.ui.theme.AzulEnlace
+import com.tecsup.mibodega.ui.theme.BodegaTheme
+import com.tecsup.mibodega.ui.theme.FondoClaro
+import com.tecsup.mibodega.ui.theme.VerdeBodega
 
 /**
  * Pantalla 1: Registro / Login (mockup "Cliente").

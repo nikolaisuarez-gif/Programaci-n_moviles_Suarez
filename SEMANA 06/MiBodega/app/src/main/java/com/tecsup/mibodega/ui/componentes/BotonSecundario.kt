@@ -1,4 +1,4 @@
-package com.suarez.mibodega.ui.componentes
+package com.tecsup.mibodega.ui.componentes
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth

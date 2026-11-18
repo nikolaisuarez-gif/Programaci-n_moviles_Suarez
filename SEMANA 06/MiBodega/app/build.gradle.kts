@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.suarez.mibodega"
+    namespace = "com.tecsup.mibodega"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.suarez.mibodega"
+        applicationId = "com.tecsup.mibodega"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

@@ -1,4 +1,4 @@
-package com.suarez.mibodega.ui.cliente.screens.registro
+package com.tecsup.mibodega.ui.cliente.screens.registro
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,11 +32,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suarez.mibodega.ui.componentes.BotonPrimario
-import com.suarez.mibodega.ui.componentes.CampoTexto
-import com.suarez.mibodega.ui.theme.BodegaTheme
-import com.suarez.mibodega.ui.theme.GrisClaro
-import com.suarez.mibodega.ui.theme.VerdeBodega
+import com.tecsup.mibodega.ui.componentes.BotonPrimario
+import com.tecsup.mibodega.ui.componentes.CampoTexto
+import com.tecsup.mibodega.ui.theme.BodegaTheme
+import com.tecsup.mibodega.ui.theme.GrisClaro
+import com.tecsup.mibodega.ui.theme.VerdeBodega
 
 /**
  * Pantalla 2: Registro de datos (mockup "Cliente").

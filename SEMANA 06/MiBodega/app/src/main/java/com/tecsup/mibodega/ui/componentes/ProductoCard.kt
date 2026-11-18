@@ -1,4 +1,4 @@
-package com.suarez.mibodega.ui.componentes
+package com.tecsup.mibodega.ui.componentes
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -32,9 +32,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.suarez.mibodega.ui.cliente.modelo.Producto
-import com.suarez.mibodega.ui.theme.GrisClaro
-import com.suarez.mibodega.ui.theme.VerdeBodega
+import com.tecsup.mibodega.ui.cliente.modelo.Producto
+import com.tecsup.mibodega.ui.theme.GrisClaro
+import com.tecsup.mibodega.ui.theme.VerdeBodega
 
 /**
  * Tarjeta de producto usada en el grid de Inicio.

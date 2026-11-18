@@ -1,4 +1,4 @@
-package com.suarez.mibodega.ui.cliente.modelo
+package com.tecsup.mibodega.ui.cliente.modelo
 
 data class Producto(
     val id: Int,

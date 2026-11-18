@@ -1,4 +1,4 @@
-package com.suarez.mibodega.ui.cliente.screens.entrega
+package com.tecsup.mibodega.ui.cliente.screens.entrega
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,9 +31,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.suarez.mibodega.ui.componentes.BotonPrimario
-import com.suarez.mibodega.ui.componentes.CampoTexto
-import com.suarez.mibodega.ui.theme.VerdeBodega
+import com.tecsup.mibodega.ui.componentes.BotonPrimario
+import com.tecsup.mibodega.ui.componentes.CampoTexto
+import com.tecsup.mibodega.ui.theme.VerdeBodega
 
 /**
  * Pantalla 6: Dirección y Pago (Datos de Entrega).

@@ -1,4 +1,4 @@
-package com.suarez.mibodega.ui.cliente.screens.carrito
+package com.tecsup.mibodega.ui.cliente.screens.carrito
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,14 +32,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suarez.mibodega.ui.cliente.modelo.ItemCarrito
-import com.suarez.mibodega.ui.cliente.modelo.Producto
-import com.suarez.mibodega.ui.cliente.modelo.listaProductosFake
-import com.suarez.mibodega.ui.componentes.BotonPrimario
-import com.suarez.mibodega.ui.componentes.SelectorCantidad
-import com.suarez.mibodega.ui.theme.BodegaTheme
-import com.suarez.mibodega.ui.theme.GrisClaro
-import com.suarez.mibodega.ui.theme.VerdeBodega
+import com.tecsup.mibodega.ui.cliente.modelo.ItemCarrito
+import com.tecsup.mibodega.ui.cliente.modelo.Producto
+import com.tecsup.mibodega.ui.cliente.modelo.listaProductosFake
+import com.tecsup.mibodega.ui.componentes.BotonPrimario
+import com.tecsup.mibodega.ui.componentes.SelectorCantidad
+import com.tecsup.mibodega.ui.theme.BodegaTheme
+import com.tecsup.mibodega.ui.theme.GrisClaro
+import com.tecsup.mibodega.ui.theme.VerdeBodega
 
 private const val COSTO_DELIVERY = 4.00
 

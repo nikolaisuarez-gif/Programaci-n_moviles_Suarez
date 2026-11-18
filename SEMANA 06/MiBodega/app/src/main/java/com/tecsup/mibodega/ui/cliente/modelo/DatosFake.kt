@@ -1,4 +1,4 @@
-package com.suarez.mibodega.ui.cliente.modelo
+package com.tecsup.mibodega.ui.cliente.modelo
 
 /**
  * Datos de ejemplo (fake) para mostrar la UI sin base de datos.

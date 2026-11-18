@@ -1,4 +1,4 @@
-package com.suarez.mibodega.ui.cliente
+package com.tecsup.mibodega.ui.cliente
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -10,17 +10,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.suarez.mibodega.ui.cliente.modelo.ItemCarrito
-import com.suarez.mibodega.ui.cliente.modelo.Pedido
-import com.suarez.mibodega.ui.cliente.modelo.Producto
-import com.suarez.mibodega.ui.cliente.modelo.listaProductosFake
-import com.suarez.mibodega.ui.cliente.screens.bienvenida.BienvenidaScreen
-import com.suarez.mibodega.ui.cliente.screens.carrito.CarritoScreen
-import com.suarez.mibodega.ui.cliente.screens.confirmacion.ConfirmacionScreen
-import com.suarez.mibodega.ui.cliente.screens.detalle.DetalleProductoScreen
-import com.suarez.mibodega.ui.cliente.screens.entrega.DatosEntregaScreen
-import com.suarez.mibodega.ui.cliente.screens.inicio.InicioScreen
-import com.suarez.mibodega.ui.cliente.screens.registro.RegistroScreen
+import com.tecsup.mibodega.ui.cliente.modelo.ItemCarrito
+import com.tecsup.mibodega.ui.cliente.modelo.Pedido
+import com.tecsup.mibodega.ui.cliente.modelo.Producto
+import com.tecsup.mibodega.ui.cliente.modelo.listaProductosFake
+import com.tecsup.mibodega.ui.cliente.screens.bienvenida.BienvenidaScreen
+import com.tecsup.mibodega.ui.cliente.screens.carrito.CarritoScreen
+import com.tecsup.mibodega.ui.cliente.screens.confirmacion.ConfirmacionScreen
+import com.tecsup.mibodega.ui.cliente.screens.detalle.DetalleProductoScreen
+import com.tecsup.mibodega.ui.cliente.screens.entrega.DatosEntregaScreen
+import com.tecsup.mibodega.ui.cliente.screens.inicio.InicioScreen
+import com.tecsup.mibodega.ui.cliente.screens.registro.RegistroScreen
 
 /**
  * "Director de orquesta" de la app cliente:

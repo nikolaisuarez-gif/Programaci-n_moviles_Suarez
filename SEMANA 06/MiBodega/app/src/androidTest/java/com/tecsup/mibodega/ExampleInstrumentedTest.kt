@@ -1,4 +1,4 @@
-package com.suarez.mibodega
+package com.tecsup.mibodega
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.suarez.mibodega", appContext.packageName)
+        assertEquals("com.tecsup.mibodega", appContext.packageName)
     }
 }

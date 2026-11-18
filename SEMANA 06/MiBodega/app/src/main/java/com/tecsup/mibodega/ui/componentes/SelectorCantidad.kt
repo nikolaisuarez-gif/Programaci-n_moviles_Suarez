@@ -1,4 +1,4 @@
-package com.suarez.mibodega.ui.componentes
+package com.tecsup.mibodega.ui.componentes
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.suarez.mibodega.ui.theme.GrisBorde
-import com.suarez.mibodega.ui.theme.VerdeBodega
+import com.tecsup.mibodega.ui.theme.GrisBorde
+import com.tecsup.mibodega.ui.theme.VerdeBodega
 
 /**
  * El "− cantidad +" reutilizable. Se usa en: Detalle del producto

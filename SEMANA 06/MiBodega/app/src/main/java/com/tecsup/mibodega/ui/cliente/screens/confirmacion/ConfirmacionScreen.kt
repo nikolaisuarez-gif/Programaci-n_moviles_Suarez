@@ -1,4 +1,4 @@
-package com.suarez.mibodega.ui.cliente.screens.confirmacion
+package com.tecsup.mibodega.ui.cliente.screens.confirmacion
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,9 +30,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.suarez.mibodega.ui.cliente.modelo.Pedido
-import com.suarez.mibodega.ui.componentes.BotonPrimario
-import com.suarez.mibodega.ui.theme.VerdeBodega
+import com.tecsup.mibodega.ui.cliente.modelo.Pedido
+import com.tecsup.mibodega.ui.componentes.BotonPrimario
+import com.tecsup.mibodega.ui.theme.VerdeBodega
 
 /**
  * Pantalla 7: Pedido Confirmado.
