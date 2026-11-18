@@ -14,6 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,6 +29,7 @@ import com.tecsup.centrotareas.viewmodel.TareasViewModel
 @Composable
 fun PantallaTareas(viewModel: TareasViewModel) {
     val mensaje by viewModel.mensaje.collectAsState()
+    val progreso by viewModel.progreso.collectAsState()
     var toques by remember { mutableIntStateOf(0) }
     Scaffold(topBar = { TopAppBar(title = { Text("CentroTareas") }) }) { insets ->
         Column(
@@ -41,8 +43,10 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                         Text("Tócame: $toques")
                     }
                     Button(onClick = viewModel::tareaLarga, modifier = Modifier.fillMaxWidth()) {
-                        Text("Tarea larga")
+                        Text("Iniciar")
                     }
+                    LinearProgressIndicator(progress = progreso, modifier = Modifier.fillMaxWidth())
+                    Text("${(progreso * 100).toInt()} %")
                     Text(mensaje)
                 }
             }
