@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
@@ -44,6 +45,7 @@ fun PantallaMapa(vm: MapaViewModel) {
     val lugares by vm.lugares.collectAsStateWithLifecycle()
     val seleccionado by vm.seleccionado.collectAsStateWithLifecycle()
     val masCercano by vm.masCercano.collectAsStateWithLifecycle()
+    val categoria by vm.categoria.collectAsStateWithLifecycle()
 
     val permisoLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -80,6 +82,17 @@ fun PantallaMapa(vm: MapaViewModel) {
                 onSeleccionar = vm::seleccionar,
                 modifier = Modifier.weight(1f).fillMaxWidth()
             )
+
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                vm.categorias.forEach { opcion ->
+                    val valor = opcion.takeUnless { it == "Todas" }
+                    FilterChip(
+                        selected = categoria == valor,
+                        onClick = { vm.filtrarCategoria(valor) },
+                        label = { Text(opcion) }
+                    )
+                }
+            }
 
             Spacer(Modifier.height(8.dp))
             Button(onClick = ::alPulsar, enabled = estado !is UbicacionUi.Buscando) {

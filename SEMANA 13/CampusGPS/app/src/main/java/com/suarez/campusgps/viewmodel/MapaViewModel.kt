@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -26,13 +27,18 @@ class MapaViewModel(
     private val _estado = MutableStateFlow<UbicacionUi>(UbicacionUi.Inicial)
     val estado: StateFlow<UbicacionUi> = _estado.asStateFlow()
 
-    private val _lugares = MutableStateFlow(lugaresRepo.obtenerLugares().map { LugarConDistancia(it, null) })
-    val lugares: StateFlow<List<LugarConDistancia>> = _lugares.asStateFlow()
+    private val _todosLosLugares = MutableStateFlow(lugaresRepo.obtenerLugares().map { LugarConDistancia(it, null) })
+    private val _categoria = MutableStateFlow<String?>(null)
+    val categoria: StateFlow<String?> = _categoria.asStateFlow()
+    val categorias: List<String> = listOf("Todas") + lugaresRepo.obtenerLugares().map { it.categoria }.distinct().sorted()
+    val lugares: StateFlow<List<LugarConDistancia>> = combine(_todosLosLugares, _categoria) { lista, categoria ->
+        if (categoria == null) lista else lista.filter { it.lugar.categoria == categoria }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), _todosLosLugares.value)
 
     private val _seleccionado = MutableStateFlow<Int?>(null)
     val seleccionado: StateFlow<Int?> = _seleccionado.asStateFlow()
 
-    val masCercano: StateFlow<Lugar?> = _lugares
+    val masCercano: StateFlow<Lugar?> = lugares
         .map { lista -> lista.firstOrNull { it.metros != null }?.lugar }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
@@ -60,9 +66,10 @@ class MapaViewModel(
     }
 
     fun seleccionar(id: Int?) { _seleccionado.value = id }
+    fun filtrarCategoria(categoria: String?) { _categoria.value = categoria }
 
     private fun actualizarDistancias(pos: com.suarez.campusgps.model.Posicion) {
-        _lugares.value = lugaresRepo.obtenerLugares()
+        _todosLosLugares.value = lugaresRepo.obtenerLugares()
             .map { LugarConDistancia(it, distanciaMetros(pos, it)) }
             .sortedBy { it.metros }
     }
