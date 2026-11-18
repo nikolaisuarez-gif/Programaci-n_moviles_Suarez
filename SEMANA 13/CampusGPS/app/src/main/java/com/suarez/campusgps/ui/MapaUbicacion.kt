@@ -11,6 +11,8 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Circle
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.suarez.campusgps.model.LugarConDistancia
@@ -46,7 +48,12 @@ fun MapaUbicacion(
         }
     }
 
-    GoogleMap(modifier = modifier.fillMaxSize(), cameraPositionState = camara) {
+    GoogleMap(
+        modifier = modifier.fillMaxSize(),
+        cameraPositionState = camara,
+        properties = MapProperties(isMyLocationEnabled = estado is UbicacionUi.Lista),
+        uiSettings = MapUiSettings(myLocationButtonEnabled = estado is UbicacionUi.Lista)
+    ) {
         if (posicionUsuario != null) {
             Marker(
                 state = com.google.maps.android.compose.rememberMarkerState(
