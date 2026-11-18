@@ -11,6 +11,9 @@ import com.suarez.campusgps.util.distanciaMetros
 import com.suarez.campusgps.model.UbicacionUi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class MapaViewModel(private val ubicacionRepo: UbicacionRepository, lugaresRepo: LugaresRepository) : ViewModel() {
@@ -20,6 +23,8 @@ class MapaViewModel(private val ubicacionRepo: UbicacionRepository, lugaresRepo:
     val lugares = _lugares.asStateFlow()
     private val _seleccionado = MutableStateFlow<Int?>(null)
     val seleccionado = _seleccionado.asStateFlow()
+    val masCercano = _lugares.map { lista -> lista.firstOrNull { it.metros != null }?.lugar }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     fun seleccionar(id: Int?) { _seleccionado.value = id }
 

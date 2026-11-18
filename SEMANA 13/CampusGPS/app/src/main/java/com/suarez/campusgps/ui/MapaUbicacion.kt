@@ -45,6 +45,7 @@ fun MapaUbicacion(
                 title = "Estás aquí"
             )
         }
+        val masCercanoId = lugares.firstOrNull { it.metros != null }?.lugar?.id
         lugares.forEach { item ->
             val lugar = item.lugar
             key(lugar.id) {
@@ -52,7 +53,9 @@ fun MapaUbicacion(
                     state = rememberMarkerState(position = LatLng(lugar.latitude, lugar.longitude)),
                     title = lugar.nombre,
                     snippet = lugar.categoria,
-                    icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE),
+                    icon = BitmapDescriptorFactory.defaultMarker(
+                        if (lugar.id == masCercanoId) BitmapDescriptorFactory.HUE_GREEN else BitmapDescriptorFactory.HUE_AZURE
+                    ),
                     onClick = { onSeleccionar(lugar.id); false }
                 )
             }

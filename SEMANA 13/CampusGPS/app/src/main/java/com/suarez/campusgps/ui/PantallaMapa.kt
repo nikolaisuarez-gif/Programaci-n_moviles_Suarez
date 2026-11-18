@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.weight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.suarez.campusgps.model.UbicacionUi
+import com.suarez.campusgps.util.formatearDistancia
 import com.suarez.campusgps.viewmodel.MapaViewModel
 
 @Composable
@@ -29,6 +31,7 @@ fun PantallaMapa(vm: MapaViewModel) {
     val estado by vm.estado.collectAsStateWithLifecycle()
     val lugares by vm.lugares.collectAsStateWithLifecycle()
     val seleccionado by vm.seleccionado.collectAsStateWithLifecycle()
+    val masCercano by vm.masCercano.collectAsStateWithLifecycle()
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
         if (result.values.any { it }) vm.buscar() else vm.permisoDenegado()
     }
@@ -44,6 +47,13 @@ fun PantallaMapa(vm: MapaViewModel) {
         Button(onClick = ::alPulsar, enabled = estado !is UbicacionUi.Buscando) { Text("Obtener mi ubicación") }
         (estado as? UbicacionUi.Lista)?.let { Text("Latitud: ${it.posicion.latitude}\nLongitud: ${it.posicion.longitude}") }
         (estado as? UbicacionUi.Error)?.let { Text(it.mensaje) }
+        OutlinedButton(onClick = { masCercano?.let { vm.seleccionar(it.id) } }, enabled = masCercano != null) {
+            Text("Ir al más cercano")
+        }
+        masCercano?.let { cercano ->
+            val metros = lugares.firstOrNull { it.lugar.id == cercano.id }?.metros
+            Text("Más cercano: ${cercano.nombre} (${metros?.let(::formatearDistancia) ?: "Sin calcular"})")
+        }
         ListaLugares(lugares, seleccionado, vm::seleccionar)
     }
 }
