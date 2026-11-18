@@ -28,6 +28,7 @@ fun PantallaMapa(vm: MapaViewModel) {
     val context = LocalContext.current
     val estado by vm.estado.collectAsStateWithLifecycle()
     val lugares by vm.lugares.collectAsStateWithLifecycle()
+    val seleccionado by vm.seleccionado.collectAsStateWithLifecycle()
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
         if (result.values.any { it }) vm.buscar() else vm.permisoDenegado()
     }
@@ -39,9 +40,10 @@ fun PantallaMapa(vm: MapaViewModel) {
     }
     Column(Modifier.fillMaxSize().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Text("CampusGPS")
-        MapaUbicacion(estado = estado, lugares = lugares, modifier = Modifier.weight(1f).fillMaxWidth())
+        MapaUbicacion(estado = estado, lugares = lugares, seleccionado = seleccionado, onSeleccionar = vm::seleccionar, modifier = Modifier.weight(1f).fillMaxWidth())
         Button(onClick = ::alPulsar, enabled = estado !is UbicacionUi.Buscando) { Text("Obtener mi ubicación") }
         (estado as? UbicacionUi.Lista)?.let { Text("Latitud: ${it.posicion.latitude}\nLongitud: ${it.posicion.longitude}") }
         (estado as? UbicacionUi.Error)?.let { Text(it.mensaje) }
+        ListaLugares(lugares, seleccionado, vm::seleccionar)
     }
 }

@@ -19,7 +19,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 private val CentroLima = LatLng(-12.0464, -77.0428)
 
 @Composable
-fun MapaUbicacion(estado: UbicacionUi, lugares: List<LugarConDistancia>, modifier: Modifier = Modifier) {
+fun MapaUbicacion(
+    estado: UbicacionUi,
+    lugares: List<LugarConDistancia>,
+    seleccionado: Int?,
+    onSeleccionar: (Int?) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val camara = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(CentroLima, 12f)
     }
@@ -27,6 +33,10 @@ fun MapaUbicacion(estado: UbicacionUi, lugares: List<LugarConDistancia>, modifie
         if (estado is UbicacionUi.Lista) {
             camara.animate(CameraUpdateFactory.newLatLngZoom(LatLng(estado.posicion.latitude, estado.posicion.longitude), 16f))
         }
+    }
+    LaunchedEffect(seleccionado) {
+        val lugar = lugares.firstOrNull { it.lugar.id == seleccionado }?.lugar
+        if (lugar != null) camara.animate(CameraUpdateFactory.newLatLngZoom(LatLng(lugar.latitude, lugar.longitude), 17f))
     }
     GoogleMap(modifier = modifier.fillMaxSize(), cameraPositionState = camara) {
         (estado as? UbicacionUi.Lista)?.posicion?.let { posicion ->
@@ -42,7 +52,8 @@ fun MapaUbicacion(estado: UbicacionUi, lugares: List<LugarConDistancia>, modifie
                     state = rememberMarkerState(position = LatLng(lugar.latitude, lugar.longitude)),
                     title = lugar.nombre,
                     snippet = lugar.categoria,
-                    icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
+                    icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE),
+                    onClick = { onSeleccionar(lugar.id); false }
                 )
             }
         }

@@ -18,6 +18,10 @@ class MapaViewModel(private val ubicacionRepo: UbicacionRepository, lugaresRepo:
     val estado = _estado.asStateFlow()
     private val _lugares = MutableStateFlow(lugaresRepo.obtenerLugares().map { LugarConDistancia(it, null) })
     val lugares = _lugares.asStateFlow()
+    private val _seleccionado = MutableStateFlow<Int?>(null)
+    val seleccionado = _seleccionado.asStateFlow()
+
+    fun seleccionar(id: Int?) { _seleccionado.value = id }
 
     fun buscar() {
         viewModelScope.launch {
