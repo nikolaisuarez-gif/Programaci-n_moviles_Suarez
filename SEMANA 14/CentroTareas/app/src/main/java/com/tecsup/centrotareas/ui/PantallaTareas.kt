@@ -1,5 +1,6 @@
 package com.tecsup.centrotareas.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -23,6 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,6 +32,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -55,7 +58,18 @@ fun PantallaTareas(viewModel: TareasViewModel) {
     var toques by remember { mutableIntStateOf(0) }
     var limitePrimos by remember { mutableStateOf("500000") }
 
-    Scaffold(topBar = { TopAppBar(title = { Text("CentroTareas") }) }) { insets ->
+    Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
+        topBar = {
+            TopAppBar(
+                title = { Text("CentroTareas", style = MaterialTheme.typography.titleMedium) },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                )
+            )
+        }
+    ) { insets ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -65,25 +79,23 @@ fun PantallaTareas(viewModel: TareasViewModel) {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Tarjeta(titulo = "Tarea con progreso") {
-                Button(onClick = { toques++ }, modifier = Modifier.fillMaxWidth()) {
-                    Text("Tócame: $toques")
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                    Button(onClick = { toques++ }) { Text("Tócame: $toques") }
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.Center
                 ) {
                     Button(
                         onClick = viewModel::tareaLarga,
-                        enabled = !corriendo,
-                        modifier = Modifier.weight(1f)
+                        enabled = !corriendo
                     ) { Text("Iniciar") }
                     OutlinedButton(
                         onClick = viewModel::cancelar,
-                        enabled = corriendo,
-                        modifier = Modifier.weight(1f)
+                        enabled = corriendo
                     ) { Text("Cancelar") }
                 }
-                LinearProgressIndicator(progress = progreso, modifier = Modifier.fillMaxWidth())
+                LinearProgressIndicator(progress = { progreso }, modifier = Modifier.fillMaxWidth())
                 Text("${(progreso * 100).toInt()} %", modifier = Modifier.align(Alignment.CenterHorizontally))
                 Text(mensaje, modifier = Modifier.align(Alignment.CenterHorizontally))
             }
@@ -101,23 +113,21 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.Center
                 ) {
                     Button(
                         onClick = { limitePrimos.toIntOrNull()?.let(viewModel::contar) },
-                        enabled = primos != PrimosUi.Calculando && (limitePrimos.toIntOrNull() ?: 0) >= 2,
-                        modifier = Modifier.weight(1f)
+                        enabled = primos != PrimosUi.Calculando && (limitePrimos.toIntOrNull() ?: 0) >= 2
                     ) { Text("Contar") }
                     OutlinedButton(
                         onClick = viewModel::cancelarPrimos,
-                        enabled = primos == PrimosUi.Calculando,
-                        modifier = Modifier.weight(1f)
+                        enabled = primos == PrimosUi.Calculando
                     ) { Text("Cancelar") }
                 }
                 when (val estado = primos) {
                     PrimosUi.Inicial -> Unit
                     PrimosUi.Calculando -> Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        LinearProgressIndicator(progress = progresoPrimos, modifier = Modifier.fillMaxWidth())
+                        LinearProgressIndicator(progress = { progresoPrimos }, modifier = Modifier.fillMaxWidth())
                         Text("Contando: ${(progresoPrimos * 100).toInt()} %")
                     }
                     PrimosUi.Cancelado -> Text("Cálculo cancelado.", color = MaterialTheme.colorScheme.error)
@@ -139,17 +149,15 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.Center
                 ) {
                     OutlinedButton(
                         onClick = viewModel::cargarUnaPorUna,
-                        enabled = carga != CargaUi.Cargando,
-                        modifier = Modifier.weight(1f)
+                        enabled = carga != CargaUi.Cargando
                     ) { Text("Una por una") }
                     Button(
                         onClick = viewModel::cargarALaVez,
-                        enabled = carga != CargaUi.Cargando,
-                        modifier = Modifier.weight(1f)
+                        enabled = carga != CargaUi.Cargando
                     ) { Text("A la vez") }
                 }
                 when (val estado = carga) {
@@ -197,7 +205,12 @@ fun PantallaTareas(viewModel: TareasViewModel) {
 
 @Composable
 private fun Tarjeta(titulo: String, contenido: @Composable ColumnScope.() -> Unit) {
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(10.dp),
+        border = BorderStroke(1.dp, Color(0xFFD6E3F0)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+    ) {
         Column(
             modifier = Modifier.padding(12.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
