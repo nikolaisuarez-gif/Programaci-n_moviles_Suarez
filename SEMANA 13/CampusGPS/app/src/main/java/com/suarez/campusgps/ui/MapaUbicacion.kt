@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
@@ -67,8 +68,8 @@ fun MapaUbicacion(
             Circle(
                 center = LatLng(posicionUsuario.latitude, posicionUsuario.longitude),
                 radius = radioMetros.toDouble(),
-                fillColor = android.graphics.Color.argb(35, 25, 118, 210),
-                strokeColor = android.graphics.Color.rgb(25, 118, 210),
+                fillColor = Color(0x232576D2),
+                strokeColor = Color(0xFF1976D2),
                 strokeWidth = 2f
             )
         }
