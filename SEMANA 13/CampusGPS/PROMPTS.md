@@ -1,23 +1,19 @@
 # Registro de prompts — mejora IA
 
-La asistencia de IA usada en esta entrega fue Codex (OpenAI) dentro del entorno de desarrollo. No se atribuyen respuestas ni código a Gemini.
+La asistencia de IA usada en esta entrega fue Codex (OpenAI) dentro del entorno de desarrollo. Las propuestas se revisaron y adaptaron al código existente; no se atribuyen respuestas ni código a Gemini.
 
-## Prompt de implementación
+| Prompt que escribí | Qué propuso la IA | Qué adapté o descarté | Por qué |
+| --- | --- | --- | --- |
+| Agrega un filtro por categoría para el mapa y la lista sin romper MVVM. | Mantener la categoría seleccionada en el ViewModel y exponer una lista derivada con `combine`. | El Composable solo muestra chips y consume el flujo de lugares filtrado. | La View no consulta repositorios ni filtra los datos por su cuenta. |
+| Agrega un radio de cercanía de 100, 200 o 500 metros alrededor de mi ubicación. | Filtrar por distancia en el ViewModel y dibujar un `Circle` en el mapa. | El control ofrece incrementos de 100 m entre 100 y 500 m y un botón para limpiar el filtro. | El estado del filtro y la selección de lugares permanecen en el ViewModel. |
+| Activa el punto azul y el botón nativo de ubicación solo cuando haya permiso. | Configurar `isMyLocationEnabled` y `myLocationButtonEnabled` con el estado de ubicación. | Se habilitan cuando el estado es `Lista`, que solo se alcanza tras validar permiso y recibir posición. | Evita activar el control antes de que exista una ubicación autorizada. |
+| Agrega seguimiento en vivo con un botón Iniciar/Detener. | Exponer actualizaciones del Repository como `Flow` usando `callbackFlow` y `requestLocationUpdates`. | El Repository valida Play Services, permiso y GPS; `awaitClose` cancela las actualizaciones y el ViewModel gestiona el trabajo. | El Context y el cliente de Google quedan fuera del ViewModel y se libera el callback al detener o cerrar el flujo. |
+| Guarda el último lugar seleccionado y recupéralo al abrir CampusGPS. | Persistir el identificador con DataStore y observarlo desde el ViewModel. | Se añadió `PreferenciasRepository` y una implementación DataStore; la restauración acepta solo IDs existentes. | Mantiene las preferencias detrás de una interfaz y permite al ViewModel seguir sin Context. |
+| Aplica modo oscuro al mapa cuando el tema de la app sea oscuro. | Seguir el tema del sistema y entregar `MapStyleOptions` al mapa solo en modo oscuro. | Se añadió un esquema oscuro de Material 3 y un estilo JSON local para Google Maps. | La app y el mapa cambian juntos sin una dependencia de red ni estado duplicado. |
 
-> Actúa como un desarrollador Android Senior experto en Kotlin, Jetpack Compose y arquitectura MVVM. Revisa CampusGPS y agrega mejoras de la fase con IA dentro de `SEMANA 13/CampusGPS`, manteniendo la estructura del profesor, el paquete `com.suarez.campusgps` y cambios separados en commits claros.
+## Revisión de arquitectura
 
-## Solicitud concreta del estudiante
-
-> En la carpeta de semana 13, lo que vaya en mejora con IA lo pones allí. Recuerda commits y push a este repo.
-
-## Cambios elaborados con asistencia
-
-1. Filtro de lugares por categoría (`feat(ia): filtra lugares por categoria`): el ViewModel expone las categorías disponibles y filtra la lista y los marcadores observados por Compose.
-2. Radio de cercanía ajustable (`feat(ia): agrega filtro por radio de cercania`): el ViewModel limita los lugares según distancia; el mapa dibuja el radio alrededor de la posición actual.
-3. Controles nativos de ubicación (`feat(ia): activa controles nativos de ubicacion`): el control de ubicación de Google Maps solo se activa cuando el estado indica que el permiso está concedido y hay una ubicación cargada.
-4. Seguimiento en vivo (`feat(ia): agrega seguimiento de ubicacion en vivo`): el Repository expone ubicaciones como Flow con callbackFlow y el ViewModel permite iniciar y detener las actualizaciones, sin llevar Context a la capa de presentación.
-5. Último lugar visitado (`feat(ia): guarda ultimo lugar con DataStore`): una interfaz de preferencias y su implementación DataStore guardan la selección; el ViewModel la restaura al iniciar sin depender de Android Context.
-
-## Revisión
-
-Se compila el proyecto con Gradle para detectar incompatibilidades de Kotlin/Compose. Las propuestas se adaptaron al código existente y se registraron en commits separados. La clave de Google Maps debe estar autorizada para `com.suarez.campusgps` para que el mapa cargue mosaicos.
+- Los filtros, el seguimiento y el último lugar se controlan desde el ViewModel.
+- Los accesos a ubicación y DataStore viven en implementaciones de Repository.
+- Las pantallas Compose dibujan el estado recibido; no calculan distancias ni acceden a repositorios.
+- La clave de Google Maps se mantiene en `local.properties` y nunca se incluye en prompts.

@@ -4,18 +4,23 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.graphics.Color
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.suarez.campusgps.R
 import com.suarez.campusgps.model.LugarConDistancia
 import com.suarez.campusgps.model.UbicacionUi
 
@@ -30,6 +35,13 @@ fun MapaUbicacion(
     onSeleccionar: (Int?) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+    val esTemaOscuro = isSystemInDarkTheme()
+    val estiloOscuro = remember(context, esTemaOscuro) {
+        if (esTemaOscuro) {
+            runCatching { MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style_dark) }.getOrNull()
+        } else null
+    }
     val camara = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(CentroLima, 12f)
     }
@@ -52,7 +64,10 @@ fun MapaUbicacion(
     GoogleMap(
         modifier = modifier.fillMaxSize(),
         cameraPositionState = camara,
-        properties = MapProperties(isMyLocationEnabled = estado is UbicacionUi.Lista),
+        properties = MapProperties(
+            isMyLocationEnabled = estado is UbicacionUi.Lista,
+            mapStyleOptions = estiloOscuro
+        ),
         uiSettings = MapUiSettings(myLocationButtonEnabled = estado is UbicacionUi.Lista)
     ) {
         if (posicionUsuario != null) {
