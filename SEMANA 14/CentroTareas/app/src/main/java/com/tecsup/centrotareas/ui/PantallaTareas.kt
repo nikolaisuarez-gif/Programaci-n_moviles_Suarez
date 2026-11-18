@@ -13,6 +13,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,6 +41,7 @@ fun PantallaTareas(viewModel: TareasViewModel) {
     val corriendo by viewModel.corriendo.collectAsState()
     val primos by viewModel.primos.collectAsState()
     val carga by viewModel.carga.collectAsState()
+    val simularError by viewModel.simularError.collectAsState()
     var toques by remember { mutableIntStateOf(0) }
     var limitePrimos by remember { androidx.compose.runtime.mutableStateOf("100000") }
     Scaffold(topBar = { TopAppBar(title = { Text("CentroTareas") }) }) { insets ->
@@ -112,6 +114,17 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                     Text("Dos cargas", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleMedium)
                     androidx.compose.foundation.layout.Row(
                         modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+                    ) {
+                        Text("Simular error", modifier = Modifier.weight(1f))
+                        Switch(
+                            checked = simularError,
+                            onCheckedChange = viewModel::cambiarSimularError
+                        )
+                    }
+                    androidx.compose.foundation.layout.Row(
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Button(
@@ -137,7 +150,14 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                                 Text("Pedidos: ${estado.pedidos}")
                             }
                         }
-                        is com.tecsup.centrotareas.model.CargaUi.Error -> Text(estado.mensaje, color = MaterialTheme.colorScheme.error)
+                        is com.tecsup.centrotareas.model.CargaUi.Error -> Card(
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
+                        ) {
+                            Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                Text(estado.mensaje, color = MaterialTheme.colorScheme.error)
+                                Button(onClick = viewModel::cargarALaVez) { Text("Reintentar") }
+                            }
+                        }
                     }
                 }
             }

@@ -86,7 +86,13 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
 
     private val _carga = MutableStateFlow<CargaUi>(CargaUi.Inicial)
     val carga: StateFlow<CargaUi> = _carga.asStateFlow()
+    private val _simularError = MutableStateFlow(false)
+    val simularError: StateFlow<Boolean> = _simularError.asStateFlow()
     private var trabajoCarga: Job? = null
+
+    fun cambiarSimularError(valor: Boolean) {
+        _simularError.value = valor
+    }
 
     fun cargarUnaPorUna() = iniciarCarga("Una por una", paralelo = false)
 
@@ -95,24 +101,32 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
     private fun iniciarCarga(modo: String, paralelo: Boolean) {
         if (_carga.value == CargaUi.Cargando) return
         _carga.value = CargaUi.Cargando
+        val simularErrorAhora = _simularError.value
         trabajoCarga = viewModelScope.launch {
             val inicio = System.currentTimeMillis()
-            val (perfil, pedidos) = if (paralelo) {
-                coroutineScope {
-                    val perfilAsync = async { repo.cargarPerfil() }
-                    val pedidosAsync = async { repo.cargarPedidos(simularError = false) }
-                    perfilAsync.await() to pedidosAsync.await()
+            try {
+                val (perfil, pedidos) = if (paralelo) {
+                    coroutineScope {
+                        val perfilAsync = async { repo.cargarPerfil() }
+                        val pedidosAsync = async { repo.cargarPedidos(simularError = simularErrorAhora) }
+                        perfilAsync.await() to pedidosAsync.await()
+                    }
+                } else {
+                    repo.cargarPerfil() to repo.cargarPedidos(simularError = simularErrorAhora)
                 }
-            } else {
-                repo.cargarPerfil() to repo.cargarPedidos(simularError = false)
+                _carga.value = CargaUi.Exito(
+                    modo = modo,
+                    perfil = perfil,
+                    pedidos = pedidos.size,
+                    milisegundos = System.currentTimeMillis() - inicio
+                )
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                _carga.value = CargaUi.Error("No se pudo cargar: ${e.message}")
+            } finally {
+                trabajoCarga = null
             }
-            _carga.value = CargaUi.Exito(
-                modo = modo,
-                perfil = perfil,
-                pedidos = pedidos.size,
-                milisegundos = System.currentTimeMillis() - inicio
-            )
-            trabajoCarga = null
         }
     }
 }
