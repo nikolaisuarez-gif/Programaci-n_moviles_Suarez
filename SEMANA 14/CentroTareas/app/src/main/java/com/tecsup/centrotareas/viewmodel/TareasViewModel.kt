@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,10 +22,18 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
     private val _progreso = MutableStateFlow(0f)
     val progreso: StateFlow<Float> = _progreso.asStateFlow()
 
+    private var trabajo: Job? = null
+    private val _corriendo = MutableStateFlow(false)
+    val corriendo: StateFlow<Boolean> = _corriendo.asStateFlow()
+
     fun tareaLarga() {
-        viewModelScope.launch {
-            _mensaje.value = "Trabajando..."
-            _progreso.value = 0f
+        if (_corriendo.value) return
+
+        _mensaje.value = "Trabajando..."
+        _progreso.value = 0f
+        _corriendo.value = true
+        trabajo = viewModelScope.launch {
+            try {
             Log.d("HILO", "Antes: ${Thread.currentThread().name}")
             withContext(Dispatchers.Default) {
                 Log.d("HILO", "Dentro: ${Thread.currentThread().name}")
@@ -35,7 +44,16 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
             }
             Log.d("HILO", "Después: ${Thread.currentThread().name}")
             _mensaje.value = "Terminó"
+            } finally {
+                _corriendo.value = false
+                trabajo = null
+            }
         }
+    }
+
+    fun cancelar() {
+        trabajo?.cancel()
+        _mensaje.value = "Cancelado"
     }
 
     private val _primos = MutableStateFlow<PrimosUi>(PrimosUi.Inicial)

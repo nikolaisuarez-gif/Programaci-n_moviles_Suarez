@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,6 +31,7 @@ import com.tecsup.centrotareas.viewmodel.TareasViewModel
 fun PantallaTareas(viewModel: TareasViewModel) {
     val mensaje by viewModel.mensaje.collectAsState()
     val progreso by viewModel.progreso.collectAsState()
+    val corriendo by viewModel.corriendo.collectAsState()
     var toques by remember { mutableIntStateOf(0) }
     Scaffold(topBar = { TopAppBar(title = { Text("CentroTareas") }) }) { insets ->
         Column(
@@ -42,8 +44,20 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                     Button(onClick = { toques++ }, modifier = Modifier.fillMaxWidth()) {
                         Text("Tócame: $toques")
                     }
-                    Button(onClick = viewModel::tareaLarga, modifier = Modifier.fillMaxWidth()) {
-                        Text("Iniciar")
+                    androidx.compose.foundation.layout.Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Button(
+                            onClick = viewModel::tareaLarga,
+                            enabled = !corriendo,
+                            modifier = Modifier.weight(1f)
+                        ) { Text("Iniciar") }
+                        OutlinedButton(
+                            onClick = viewModel::cancelar,
+                            enabled = corriendo,
+                            modifier = Modifier.weight(1f)
+                        ) { Text("Cancelar") }
                     }
                     LinearProgressIndicator(progress = progreso, modifier = Modifier.fillMaxWidth())
                     Text("${(progreso * 100).toInt()} %")
