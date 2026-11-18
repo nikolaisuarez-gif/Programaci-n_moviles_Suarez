@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tecsup.centrotareas.data.TareasRepository
 import com.tecsup.centrotareas.model.CargaUi
+import com.tecsup.centrotareas.model.MedicionCarga
 import com.tecsup.centrotareas.model.PrimosUi
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
@@ -86,6 +87,8 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
 
     private val _carga = MutableStateFlow<CargaUi>(CargaUi.Inicial)
     val carga: StateFlow<CargaUi> = _carga.asStateFlow()
+    private val _tiemposCarga = MutableStateFlow<List<MedicionCarga>>(emptyList())
+    val tiemposCarga: StateFlow<List<MedicionCarga>> = _tiemposCarga.asStateFlow()
     private val _simularError = MutableStateFlow(false)
     val simularError: StateFlow<Boolean> = _simularError.asStateFlow()
     private var trabajoCarga: Job? = null
@@ -114,11 +117,16 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
                 } else {
                     repo.cargarPerfil() to repo.cargarPedidos(simularError = simularErrorAhora)
                 }
+                val duracion = System.currentTimeMillis() - inicio
                 _carga.value = CargaUi.Exito(
                     modo = modo,
                     perfil = perfil,
                     pedidos = pedidos.size,
-                    milisegundos = System.currentTimeMillis() - inicio
+                    milisegundos = duracion
+                )
+                _tiemposCarga.value = _tiemposCarga.value + MedicionCarga(
+                    modo = modo,
+                    milisegundos = duracion
                 )
             } catch (e: CancellationException) {
                 throw e

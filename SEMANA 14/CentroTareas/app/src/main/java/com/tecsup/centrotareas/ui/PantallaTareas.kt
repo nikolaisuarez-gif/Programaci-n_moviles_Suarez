@@ -42,6 +42,7 @@ fun PantallaTareas(viewModel: TareasViewModel) {
     val primos by viewModel.primos.collectAsState()
     val progresoPrimos by viewModel.progresoPrimos.collectAsState()
     val carga by viewModel.carga.collectAsState()
+    val tiemposCarga by viewModel.tiemposCarga.collectAsState()
     val simularError by viewModel.simularError.collectAsState()
     var toques by remember { mutableIntStateOf(0) }
     var limitePrimos by remember { androidx.compose.runtime.mutableStateOf("100000") }
@@ -74,6 +75,23 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                     LinearProgressIndicator(progress = progreso, modifier = Modifier.fillMaxWidth())
                     Text("${(progreso * 100).toInt()} %")
                     Text(mensaje)
+                }
+            }
+            if (tiemposCarga.isNotEmpty()) {
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text("Comparación de tiempos", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleMedium)
+                        androidx.compose.foundation.layout.Row(modifier = Modifier.fillMaxWidth()) {
+                            Text("Modo", modifier = Modifier.weight(1f), style = MaterialTheme.typography.labelLarge)
+                            Text("Tiempo (ms)", style = MaterialTheme.typography.labelLarge)
+                        }
+                        tiemposCarga.forEach { medicion ->
+                            androidx.compose.foundation.layout.Row(modifier = Modifier.fillMaxWidth()) {
+                                Text(medicion.modo, modifier = Modifier.weight(1f))
+                                Text(medicion.milisegundos.toString())
+                            }
+                        }
+                    }
                 }
             }
             Card(modifier = Modifier.fillMaxWidth()) {

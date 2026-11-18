@@ -1,5 +1,7 @@
 package com.tecsup.centrotareas.model
 
+data class MedicionCarga(val modo: String, val milisegundos: Long)
+
 sealed interface PrimosUi {
     data object Inicial : PrimosUi
     data object Calculando : PrimosUi
