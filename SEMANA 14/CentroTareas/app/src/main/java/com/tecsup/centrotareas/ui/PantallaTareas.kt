@@ -40,8 +40,8 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                     Button(onClick = { toques++ }, modifier = Modifier.fillMaxWidth()) {
                         Text("Tócame: $toques")
                     }
-                    Button(onClick = viewModel::tareaLargaMala, modifier = Modifier.fillMaxWidth()) {
-                        Text("Tarea larga (MAL)")
+                    Button(onClick = viewModel::tareaLarga, modifier = Modifier.fillMaxWidth()) {
+                        Text("Tarea larga")
                     }
                     Text(mensaje)
                 }
