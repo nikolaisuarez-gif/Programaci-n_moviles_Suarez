@@ -1,12 +1,24 @@
 package com.tecsup.centrotareas.data
 
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
 class TareasRepositoryLocal : TareasRepository {
+    override fun progresoTareaLarga(): Flow<Float> = flow {
+        Log.d("HILO", "Dentro del Repository: ${Thread.currentThread().name}")
+        repeat(100) { indice ->
+            delay(40)
+            emit((indice + 1) / 100f)
+        }
+    }.flowOn(Dispatchers.Default)
+
     override suspend fun cargarPerfil(): String {
         delay(2_000)
         return "Ana Torres (ficticia)"

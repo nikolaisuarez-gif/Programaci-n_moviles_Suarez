@@ -12,11 +12,8 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
     private val _mensaje = MutableStateFlow("Listo")
@@ -37,16 +34,12 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
         _corriendo.value = true
         trabajo = viewModelScope.launch {
             try {
-            Log.d("HILO", "Antes: ${Thread.currentThread().name}")
-            withContext(Dispatchers.Default) {
-                Log.d("HILO", "Dentro: ${Thread.currentThread().name}")
-                repeat(100) { indice ->
-                    delay(40)
-                    _progreso.value = (indice + 1) / 100f
+                Log.d("HILO", "Antes: ${Thread.currentThread().name}")
+                repo.progresoTareaLarga().collect { avance ->
+                    _progreso.value = avance
                 }
-            }
-            Log.d("HILO", "Después: ${Thread.currentThread().name}")
-            _mensaje.value = "Terminó"
+                Log.d("HILO", "Después: ${Thread.currentThread().name}")
+                _mensaje.value = "Terminó"
             } finally {
                 _corriendo.value = false
                 trabajo = null
