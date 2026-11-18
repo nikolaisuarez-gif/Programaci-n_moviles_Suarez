@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.suarez.campusgps.data.UbicacionRepositoryGoogle
 import com.suarez.campusgps.data.LugaresRepositoryLocal
+import com.suarez.campusgps.data.PreferenciasRepositoryDataStore
 import com.suarez.campusgps.ui.PantallaMapa
 import com.suarez.campusgps.ui.theme.CampusGpsTheme
 import com.suarez.campusgps.viewmodel.MapaViewModel
@@ -18,7 +19,8 @@ class MainActivity : ComponentActivity() {
         window.decorView.systemUiVisibility = 0
         val ubicacionRepository = UbicacionRepositoryGoogle(applicationContext)
         val lugaresRepository = LugaresRepositoryLocal()
-        val factory = MapaViewModel.Factory(ubicacionRepository, lugaresRepository)
+        val preferenciasRepository = PreferenciasRepositoryDataStore(applicationContext)
+        val factory = MapaViewModel.Factory(ubicacionRepository, lugaresRepository, preferenciasRepository)
         setContent {
             CampusGpsTheme {
                 val vm: MapaViewModel = viewModel(factory = factory)

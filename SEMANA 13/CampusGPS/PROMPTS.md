@@ -16,6 +16,7 @@ La asistencia de IA usada en esta entrega fue Codex (OpenAI) dentro del entorno 
 2. Radio de cercanía ajustable (`feat(ia): agrega filtro por radio de cercania`): el ViewModel limita los lugares según distancia; el mapa dibuja el radio alrededor de la posición actual.
 3. Controles nativos de ubicación (`feat(ia): activa controles nativos de ubicacion`): el control de ubicación de Google Maps solo se activa cuando el estado indica que el permiso está concedido y hay una ubicación cargada.
 4. Seguimiento en vivo (`feat(ia): agrega seguimiento de ubicacion en vivo`): el Repository expone ubicaciones como Flow con callbackFlow y el ViewModel permite iniciar y detener las actualizaciones, sin llevar Context a la capa de presentación.
+5. Último lugar visitado (`feat(ia): guarda ultimo lugar con DataStore`): una interfaz de preferencias y su implementación DataStore guardan la selección; el ViewModel la restaura al iniciar sin depender de Android Context.
 
 ## Revisión
 

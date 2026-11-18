@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.suarez.campusgps.data.ErrorUbicacion
 import com.suarez.campusgps.data.LugaresRepository
+import com.suarez.campusgps.data.PreferenciasRepository
 import com.suarez.campusgps.data.UbicacionRepository
 import com.suarez.campusgps.model.Lugar
 import com.suarez.campusgps.model.LugarConDistancia
@@ -24,7 +25,8 @@ import kotlinx.coroutines.launch
 
 class MapaViewModel(
     private val ubicacionRepo: UbicacionRepository,
-    private val lugaresRepo: LugaresRepository
+    private val lugaresRepo: LugaresRepository,
+    private val preferenciasRepo: PreferenciasRepository
 ) : ViewModel() {
     private val _estado = MutableStateFlow<UbicacionUi>(UbicacionUi.Inicial)
     val estado: StateFlow<UbicacionUi> = _estado.asStateFlow()
@@ -47,6 +49,16 @@ class MapaViewModel(
     private val _seguimientoActivo = MutableStateFlow(false)
     val seguimientoActivo: StateFlow<Boolean> = _seguimientoActivo.asStateFlow()
     private var seguimientoJob: Job? = null
+
+    init {
+        viewModelScope.launch {
+            preferenciasRepo.ultimoLugarVisitadoId.collect { id ->
+                if (id != null && lugaresRepo.obtenerLugares().any { it.id == id }) {
+                    _seleccionado.value = id
+                }
+            }
+        }
+    }
 
     val masCercano: StateFlow<Lugar?> = lugares
         .map { lista -> lista.firstOrNull { it.metros != null }?.lugar }
@@ -75,7 +87,10 @@ class MapaViewModel(
         )
     }
 
-    fun seleccionar(id: Int?) { _seleccionado.value = id }
+    fun seleccionar(id: Int?) {
+        _seleccionado.value = id
+        if (id != null) viewModelScope.launch { preferenciasRepo.guardarUltimoLugarVisitado(id) }
+    }
     fun filtrarCategoria(categoria: String?) { _categoria.value = categoria }
     fun cambiarRadio(metros: Int?) { _radioMetros.value = metros }
 
@@ -114,12 +129,13 @@ class MapaViewModel(
 
     class Factory(
         private val ubicacionRepo: UbicacionRepository,
-        private val lugaresRepo: LugaresRepository
+        private val lugaresRepo: LugaresRepository,
+        private val preferenciasRepo: PreferenciasRepository
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (!modelClass.isAssignableFrom(MapaViewModel::class.java)) error("ViewModel desconocido")
-            return MapaViewModel(ubicacionRepo, lugaresRepo) as T
+            return MapaViewModel(ubicacionRepo, lugaresRepo, preferenciasRepo) as T
         }
     }
 }
