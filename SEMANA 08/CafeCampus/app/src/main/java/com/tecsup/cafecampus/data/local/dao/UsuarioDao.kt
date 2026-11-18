@@ -1,10 +1,10 @@
-package com.suarez.cafecampus.data.local.dao
+package com.tecsup.cafecampus.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.suarez.cafecampus.data.local.entity.Usuario
+import com.tecsup.cafecampus.data.local.entity.Usuario
 
 @Dao
 interface UsuarioDao {

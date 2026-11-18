@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.theme
+package com.tecsup.cafecampus.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -6,7 +6,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.suarez.cafecampus.model.Rol
+import com.tecsup.cafecampus.model.Rol
 
 private val LightClienteColorScheme = lightColorScheme(
     primary = ClientePrimary,

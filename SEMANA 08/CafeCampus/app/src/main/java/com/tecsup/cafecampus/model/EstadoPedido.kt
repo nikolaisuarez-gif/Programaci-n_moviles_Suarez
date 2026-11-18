@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.model
+package com.tecsup.cafecampus.model
 
 enum class EstadoPedido {
     RECIBIDO,

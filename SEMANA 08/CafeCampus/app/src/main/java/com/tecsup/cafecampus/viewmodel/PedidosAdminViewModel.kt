@@ -1,10 +1,10 @@
-package com.suarez.cafecampus.viewmodel
+package com.tecsup.cafecampus.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.suarez.cafecampus.data.local.relation.PedidoConDetalle
-import com.suarez.cafecampus.data.repository.CafeRepository
-import com.suarez.cafecampus.model.EstadoPedido
+import com.tecsup.cafecampus.data.local.relation.PedidoConDetalle
+import com.tecsup.cafecampus.data.repository.CafeRepository
+import com.tecsup.cafecampus.model.EstadoPedido
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

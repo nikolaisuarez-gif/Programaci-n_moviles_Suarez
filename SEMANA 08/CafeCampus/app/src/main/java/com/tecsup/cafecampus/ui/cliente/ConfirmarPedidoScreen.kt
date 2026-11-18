@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.cliente
+package com.tecsup.cafecampus.ui.cliente
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -49,12 +49,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.suarez.cafecampus.data.prefs.PreferenciasStore
-import com.suarez.cafecampus.ui.components.AppTopBar
-import com.suarez.cafecampus.ui.components.CafeButton
-import com.suarez.cafecampus.ui.components.ProductoIcono
-import com.suarez.cafecampus.viewmodel.MenuViewModel
-import com.suarez.cafecampus.viewmodel.PedidosClienteViewModel
+import com.tecsup.cafecampus.data.prefs.PreferenciasStore
+import com.tecsup.cafecampus.ui.components.AppTopBar
+import com.tecsup.cafecampus.ui.components.CafeButton
+import com.tecsup.cafecampus.ui.components.ProductoIcono
+import com.tecsup.cafecampus.viewmodel.MenuViewModel
+import com.tecsup.cafecampus.viewmodel.PedidosClienteViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -354,7 +354,7 @@ fun ConfirmarPedidoScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier.padding(16.dp)
                             ) {
-                                com.suarez.cafecampus.ui.components.QrCodeImage(
+                                com.tecsup.cafecampus.ui.components.QrCodeImage(
                                     contenido = yapeUrl,
                                     modifier = Modifier.size(180.dp)
                                 )

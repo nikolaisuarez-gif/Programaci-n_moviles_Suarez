@@ -1,7 +1,7 @@
-package com.suarez.footballaianalyst.data.local
+package com.tecsup.footballaianalyst.data.local
 
-import com.suarez.footballaianalyst.model.Team
-import com.suarez.footballaianalyst.model.TeamStats
+import com.tecsup.footballaianalyst.model.Team
+import com.tecsup.footballaianalyst.model.TeamStats
 import java.util.concurrent.ConcurrentHashMap
 
 data class CacheEntry<T>(

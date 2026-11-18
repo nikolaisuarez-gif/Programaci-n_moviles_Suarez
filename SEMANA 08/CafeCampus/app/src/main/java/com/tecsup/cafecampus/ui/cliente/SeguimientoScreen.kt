@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.cliente
+package com.tecsup.cafecampus.ui.cliente
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,10 +25,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.suarez.cafecampus.model.EstadoPedido
-import com.suarez.cafecampus.ui.components.AppTopBar
-import com.suarez.cafecampus.ui.components.StepperEstado
-import com.suarez.cafecampus.viewmodel.PedidosClienteViewModel
+import com.tecsup.cafecampus.model.EstadoPedido
+import com.tecsup.cafecampus.ui.components.AppTopBar
+import com.tecsup.cafecampus.ui.components.StepperEstado
+import com.tecsup.cafecampus.viewmodel.PedidosClienteViewModel
 
 @Composable
 fun SeguimientoScreen(

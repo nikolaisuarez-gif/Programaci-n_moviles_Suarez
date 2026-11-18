@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.admin
+package com.tecsup.cafecampus.ui.admin
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,12 +30,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.suarez.cafecampus.model.EstadoPedido
-import com.suarez.cafecampus.ui.components.AppTopBar
-import com.suarez.cafecampus.ui.components.EstadoChip
-import com.suarez.cafecampus.ui.theme.AdminPrimary
-import com.suarez.cafecampus.ui.theme.StatusCancelado
-import com.suarez.cafecampus.viewmodel.PedidosAdminViewModel
+import com.tecsup.cafecampus.model.EstadoPedido
+import com.tecsup.cafecampus.ui.components.AppTopBar
+import com.tecsup.cafecampus.ui.components.EstadoChip
+import com.tecsup.cafecampus.ui.theme.AdminPrimary
+import com.tecsup.cafecampus.ui.theme.StatusCancelado
+import com.tecsup.cafecampus.viewmodel.PedidosAdminViewModel
 
 @Composable
 fun PedidosAdminScreen(

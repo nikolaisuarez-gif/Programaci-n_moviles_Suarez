@@ -1,13 +1,13 @@
-package com.suarez.cafecampus.data.local.dao
+package com.tecsup.cafecampus.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.suarez.cafecampus.data.local.entity.DetallePedido
-import com.suarez.cafecampus.data.local.entity.Pedido
-import com.suarez.cafecampus.data.local.relation.PedidoConDetalle
+import com.tecsup.cafecampus.data.local.entity.DetallePedido
+import com.tecsup.cafecampus.data.local.entity.Pedido
+import com.tecsup.cafecampus.data.local.relation.PedidoConDetalle
 import kotlinx.coroutines.flow.Flow
 
 @Dao

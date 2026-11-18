@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.admin
+package com.tecsup.cafecampus.ui.admin
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,11 +33,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.suarez.cafecampus.ui.theme.AdminPrimary
-import com.suarez.cafecampus.ui.theme.StatusListo
-import com.suarez.cafecampus.ui.theme.StatusPreparando
-import com.suarez.cafecampus.ui.theme.StatusRecibido
-import com.suarez.cafecampus.viewmodel.PanelAdminViewModel
+import com.tecsup.cafecampus.ui.theme.AdminPrimary
+import com.tecsup.cafecampus.ui.theme.StatusListo
+import com.tecsup.cafecampus.ui.theme.StatusPreparando
+import com.tecsup.cafecampus.ui.theme.StatusRecibido
+import com.tecsup.cafecampus.viewmodel.PanelAdminViewModel
 
 @Composable
 fun PanelScreen(

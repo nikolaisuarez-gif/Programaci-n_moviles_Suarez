@@ -1,4 +1,4 @@
-package com.suarez.footballaianalyst.ui.navigation
+package com.tecsup.footballaianalyst.ui.navigation
 
 sealed class Routes(val route: String) {
     object Home : Routes("home")

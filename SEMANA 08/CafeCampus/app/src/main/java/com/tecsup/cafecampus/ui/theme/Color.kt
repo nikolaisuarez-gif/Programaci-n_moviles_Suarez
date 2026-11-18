@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.theme
+package com.tecsup.cafecampus.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

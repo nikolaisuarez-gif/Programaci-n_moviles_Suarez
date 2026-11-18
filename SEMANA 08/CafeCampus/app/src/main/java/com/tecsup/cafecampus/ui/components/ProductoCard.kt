@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.components
+package com.tecsup.cafecampus.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.suarez.cafecampus.data.local.entity.Producto
+import com.tecsup.cafecampus.data.local.entity.Producto
 
 @Composable
 fun ProductoCard(
@@ -102,7 +102,7 @@ fun ProductoCard(
 @androidx.compose.ui.tooling.preview.Preview
 @Composable
 fun ProductoCardPreview() {
-    com.suarez.cafecampus.ui.theme.CafeTheme {
+    com.tecsup.cafecampus.ui.theme.CafeTheme {
         ProductoCard(
             producto = Producto(
                 id = 1,

@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.cliente
+package com.tecsup.cafecampus.ui.cliente
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,10 +37,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.suarez.cafecampus.ui.components.AppTopBar
-import com.suarez.cafecampus.ui.components.CafeButton
-import com.suarez.cafecampus.ui.components.ProductoIcono
-import com.suarez.cafecampus.viewmodel.MenuViewModel
+import com.tecsup.cafecampus.ui.components.AppTopBar
+import com.tecsup.cafecampus.ui.components.CafeButton
+import com.tecsup.cafecampus.ui.components.ProductoIcono
+import com.tecsup.cafecampus.viewmodel.MenuViewModel
 
 @Composable
 fun DetalleProductoScreen(

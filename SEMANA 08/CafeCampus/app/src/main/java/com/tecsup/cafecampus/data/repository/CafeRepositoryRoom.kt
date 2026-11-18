@@ -1,15 +1,15 @@
-package com.suarez.cafecampus.data.repository
+package com.tecsup.cafecampus.data.repository
 
-import com.suarez.cafecampus.data.local.dao.PedidoDao
-import com.suarez.cafecampus.data.local.dao.ProductoDao
-import com.suarez.cafecampus.data.local.dao.UsuarioDao
-import com.suarez.cafecampus.data.local.entity.DetallePedido
-import com.suarez.cafecampus.data.local.entity.Pedido
-import com.suarez.cafecampus.data.local.entity.Producto
-import com.suarez.cafecampus.data.local.entity.Usuario
-import com.suarez.cafecampus.data.local.relation.PedidoConDetalle
-import com.suarez.cafecampus.model.EstadoPedido
-import com.suarez.cafecampus.model.ItemCarrito
+import com.tecsup.cafecampus.data.local.dao.PedidoDao
+import com.tecsup.cafecampus.data.local.dao.ProductoDao
+import com.tecsup.cafecampus.data.local.dao.UsuarioDao
+import com.tecsup.cafecampus.data.local.entity.DetallePedido
+import com.tecsup.cafecampus.data.local.entity.Pedido
+import com.tecsup.cafecampus.data.local.entity.Producto
+import com.tecsup.cafecampus.data.local.entity.Usuario
+import com.tecsup.cafecampus.data.local.relation.PedidoConDetalle
+import com.tecsup.cafecampus.model.EstadoPedido
+import com.tecsup.cafecampus.model.ItemCarrito
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -30,7 +30,7 @@ class CafeRepositoryRoom(
             nombre = nombre.trim(),
             correo = correo.trim(),
             clave = clave.trim(),
-            rol = com.suarez.cafecampus.model.Rol.CLIENTE.name
+            rol = com.tecsup.cafecampus.model.Rol.CLIENTE.name
         )
         val id = usuarioDao.insertar(nuevo)
         return nuevo.copy(id = id.toInt())

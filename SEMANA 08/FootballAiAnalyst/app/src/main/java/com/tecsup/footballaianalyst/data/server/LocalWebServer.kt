@@ -1,10 +1,10 @@
-package com.suarez.footballaianalyst.data.server
+package com.tecsup.footballaianalyst.data.server
 
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
 import com.sun.net.httpserver.HttpServer
-import com.suarez.footballaianalyst.data.repository.FootballRepository
-import com.suarez.footballaianalyst.model.Match
+import com.tecsup.footballaianalyst.data.repository.FootballRepository
+import com.tecsup.footballaianalyst.model.Match
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull

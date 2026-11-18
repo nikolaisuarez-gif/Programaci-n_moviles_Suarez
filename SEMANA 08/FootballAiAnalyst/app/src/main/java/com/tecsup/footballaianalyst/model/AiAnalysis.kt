@@ -1,4 +1,4 @@
-package com.suarez.footballaianalyst.model
+package com.tecsup.footballaianalyst.model
 
 data class AiAnalysis(
     val matchId: Int,

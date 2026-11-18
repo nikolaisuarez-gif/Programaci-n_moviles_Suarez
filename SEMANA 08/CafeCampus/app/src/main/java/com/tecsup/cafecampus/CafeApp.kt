@@ -1,11 +1,11 @@
-package com.suarez.cafecampus
+package com.tecsup.cafecampus
 
 import android.app.Application
-import com.suarez.cafecampus.data.local.CafeDatabase
-import com.suarez.cafecampus.data.local.DatosIniciales
-import com.suarez.cafecampus.data.prefs.PreferenciasStore
-import com.suarez.cafecampus.data.repository.CafeRepository
-import com.suarez.cafecampus.data.repository.CafeRepositoryRoom
+import com.tecsup.cafecampus.data.local.CafeDatabase
+import com.tecsup.cafecampus.data.local.DatosIniciales
+import com.tecsup.cafecampus.data.prefs.PreferenciasStore
+import com.tecsup.cafecampus.data.repository.CafeRepository
+import com.tecsup.cafecampus.data.repository.CafeRepositoryRoom
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

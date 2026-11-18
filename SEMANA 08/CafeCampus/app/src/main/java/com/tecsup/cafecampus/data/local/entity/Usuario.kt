@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.data.local.entity
+package com.tecsup.cafecampus.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

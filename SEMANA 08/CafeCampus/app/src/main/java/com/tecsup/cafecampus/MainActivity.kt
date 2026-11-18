@@ -1,4 +1,4 @@
-package com.suarez.cafecampus
+package com.tecsup.cafecampus
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,15 +7,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.suarez.cafecampus.ui.navigation.NavCafe
-import com.suarez.cafecampus.ui.theme.CafeTheme
-import com.suarez.cafecampus.viewmodel.CafeViewModelFactory
-import com.suarez.cafecampus.viewmodel.MenuAdminViewModel
-import com.suarez.cafecampus.viewmodel.MenuViewModel
-import com.suarez.cafecampus.viewmodel.PanelAdminViewModel
-import com.suarez.cafecampus.viewmodel.PedidosAdminViewModel
-import com.suarez.cafecampus.viewmodel.PedidosClienteViewModel
-import com.suarez.cafecampus.viewmodel.SesionViewModel
+import com.tecsup.cafecampus.ui.navigation.NavCafe
+import com.tecsup.cafecampus.ui.theme.CafeTheme
+import com.tecsup.cafecampus.viewmodel.CafeViewModelFactory
+import com.tecsup.cafecampus.viewmodel.MenuAdminViewModel
+import com.tecsup.cafecampus.viewmodel.MenuViewModel
+import com.tecsup.cafecampus.viewmodel.PanelAdminViewModel
+import com.tecsup.cafecampus.viewmodel.PedidosAdminViewModel
+import com.tecsup.cafecampus.viewmodel.PedidosClienteViewModel
+import com.tecsup.cafecampus.viewmodel.SesionViewModel
 
 class MainActivity : ComponentActivity() {
 

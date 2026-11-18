@@ -1,16 +1,16 @@
-package com.suarez.cafecampus.data.local
+package com.tecsup.cafecampus.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.suarez.cafecampus.data.local.dao.PedidoDao
-import com.suarez.cafecampus.data.local.dao.ProductoDao
-import com.suarez.cafecampus.data.local.dao.UsuarioDao
-import com.suarez.cafecampus.data.local.entity.DetallePedido
-import com.suarez.cafecampus.data.local.entity.Pedido
-import com.suarez.cafecampus.data.local.entity.Producto
-import com.suarez.cafecampus.data.local.entity.Usuario
+import com.tecsup.cafecampus.data.local.dao.PedidoDao
+import com.tecsup.cafecampus.data.local.dao.ProductoDao
+import com.tecsup.cafecampus.data.local.dao.UsuarioDao
+import com.tecsup.cafecampus.data.local.entity.DetallePedido
+import com.tecsup.cafecampus.data.local.entity.Pedido
+import com.tecsup.cafecampus.data.local.entity.Producto
+import com.tecsup.cafecampus.data.local.entity.Usuario
 
 @Database(
     entities = [Producto::class, Usuario::class, Pedido::class, DetallePedido::class],

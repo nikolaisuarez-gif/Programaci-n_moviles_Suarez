@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.data.prefs
+package com.tecsup.cafecampus.data.prefs
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey

@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.admin
+package com.tecsup.cafecampus.ui.admin
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,13 +30,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.suarez.cafecampus.data.local.entity.Producto
-import com.suarez.cafecampus.ui.components.AppTopBar
-import com.suarez.cafecampus.ui.components.CafeButton
-import com.suarez.cafecampus.ui.components.CafeTextField
-import com.suarez.cafecampus.ui.components.ProductoIcono
-import com.suarez.cafecampus.ui.theme.AdminPrimary
-import com.suarez.cafecampus.viewmodel.MenuAdminViewModel
+import com.tecsup.cafecampus.data.local.entity.Producto
+import com.tecsup.cafecampus.ui.components.AppTopBar
+import com.tecsup.cafecampus.ui.components.CafeButton
+import com.tecsup.cafecampus.ui.components.CafeTextField
+import com.tecsup.cafecampus.ui.components.ProductoIcono
+import com.tecsup.cafecampus.ui.theme.AdminPrimary
+import com.tecsup.cafecampus.viewmodel.MenuAdminViewModel
 
 @Composable
 fun FormularioProductoScreen(

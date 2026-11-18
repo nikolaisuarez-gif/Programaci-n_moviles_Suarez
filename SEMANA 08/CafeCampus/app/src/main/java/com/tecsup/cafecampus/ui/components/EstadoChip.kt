@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.components
+package com.tecsup.cafecampus.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -11,12 +11,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.suarez.cafecampus.model.EstadoPedido
-import com.suarez.cafecampus.ui.theme.StatusCancelado
-import com.suarez.cafecampus.ui.theme.StatusEntregado
-import com.suarez.cafecampus.ui.theme.StatusListo
-import com.suarez.cafecampus.ui.theme.StatusPreparando
-import com.suarez.cafecampus.ui.theme.StatusRecibido
+import com.tecsup.cafecampus.model.EstadoPedido
+import com.tecsup.cafecampus.ui.theme.StatusCancelado
+import com.tecsup.cafecampus.ui.theme.StatusEntregado
+import com.tecsup.cafecampus.ui.theme.StatusListo
+import com.tecsup.cafecampus.ui.theme.StatusPreparando
+import com.tecsup.cafecampus.ui.theme.StatusRecibido
 
 @Composable
 fun EstadoChip(

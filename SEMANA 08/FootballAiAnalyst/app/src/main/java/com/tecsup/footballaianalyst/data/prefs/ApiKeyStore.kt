@@ -1,4 +1,4 @@
-package com.suarez.footballaianalyst.data.prefs
+package com.tecsup.footballaianalyst.data.prefs
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit

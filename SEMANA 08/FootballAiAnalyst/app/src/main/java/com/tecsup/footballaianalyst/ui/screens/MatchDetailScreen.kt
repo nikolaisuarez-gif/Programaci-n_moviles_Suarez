@@ -1,4 +1,4 @@
-package com.suarez.footballaianalyst.ui.screens
+package com.tecsup.footballaianalyst.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,12 +35,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.suarez.footballaianalyst.model.Match
-import com.suarez.footballaianalyst.ui.components.AiAnalysisCard
-import com.suarez.footballaianalyst.ui.components.LiveBadge
-import com.suarez.footballaianalyst.ui.components.StatsBar
-import com.suarez.footballaianalyst.ui.theme.AccentCyan
-import com.suarez.footballaianalyst.viewmodel.MatchDetailViewModel
+import com.tecsup.footballaianalyst.model.Match
+import com.tecsup.footballaianalyst.ui.components.AiAnalysisCard
+import com.tecsup.footballaianalyst.ui.components.LiveBadge
+import com.tecsup.footballaianalyst.ui.components.StatsBar
+import com.tecsup.footballaianalyst.ui.theme.AccentCyan
+import com.tecsup.footballaianalyst.viewmodel.MatchDetailViewModel
 
 @Composable
 fun MatchDetailScreen(

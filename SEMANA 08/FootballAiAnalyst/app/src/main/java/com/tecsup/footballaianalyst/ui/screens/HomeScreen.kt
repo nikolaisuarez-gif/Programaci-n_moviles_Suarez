@@ -1,4 +1,4 @@
-package com.suarez.footballaianalyst.ui.screens
+package com.tecsup.footballaianalyst.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -31,10 +31,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.suarez.footballaianalyst.model.Match
-import com.suarez.footballaianalyst.ui.components.MatchCard
-import com.suarez.footballaianalyst.ui.theme.AccentCyan
-import com.suarez.footballaianalyst.viewmodel.FootballViewModel
+import com.tecsup.footballaianalyst.model.Match
+import com.tecsup.footballaianalyst.ui.components.MatchCard
+import com.tecsup.footballaianalyst.ui.theme.AccentCyan
+import com.tecsup.footballaianalyst.viewmodel.FootballViewModel
 
 @Composable
 fun HomeScreen(

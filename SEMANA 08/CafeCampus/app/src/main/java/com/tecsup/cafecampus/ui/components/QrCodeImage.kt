@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.components
+package com.tecsup.cafecampus.ui.components
 
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -49,7 +49,7 @@ fun QrCodeImage(
 @androidx.compose.ui.tooling.preview.Preview(showBackground = true)
 @Composable
 fun QrCodePreview() {
-    com.suarez.cafecampus.ui.theme.CafeTheme {
+    com.tecsup.cafecampus.ui.theme.CafeTheme {
         QrCodeImage(
             contenido = "https://qr.yape.pe/pay?phone=987654321&amount=16.50&note=Pedido%20CafeCampus",
             modifier = Modifier.size(200.dp)

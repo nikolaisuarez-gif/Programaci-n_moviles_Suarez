@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.components
+package com.tecsup.cafecampus.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.suarez.cafecampus.data.local.relation.PedidoConDetalle
+import com.tecsup.cafecampus.data.local.relation.PedidoConDetalle
 
 @Composable
 fun PedidoCard(

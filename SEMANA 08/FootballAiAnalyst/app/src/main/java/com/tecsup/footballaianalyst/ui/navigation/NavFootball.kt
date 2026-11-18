@@ -1,4 +1,4 @@
-package com.suarez.footballaianalyst.ui.navigation
+package com.tecsup.footballaianalyst.ui.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -25,20 +25,20 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.suarez.footballaianalyst.model.Match
-import com.suarez.footballaianalyst.model.Team
-import com.suarez.footballaianalyst.ui.screens.HomeScreen
-import com.suarez.footballaianalyst.ui.screens.MatchDetailScreen
-import com.suarez.footballaianalyst.ui.screens.SettingsScreen
-import com.suarez.footballaianalyst.ui.screens.StandingsScreen
-import com.suarez.footballaianalyst.ui.screens.TeamCompareScreen
-import com.suarez.footballaianalyst.ui.screens.TeamDetailScreen
-import com.suarez.footballaianalyst.ui.screens.TeamSearchScreen
-import com.suarez.footballaianalyst.viewmodel.FootballViewModel
-import com.suarez.footballaianalyst.viewmodel.MatchDetailViewModel
-import com.suarez.footballaianalyst.viewmodel.SettingsViewModel
-import com.suarez.footballaianalyst.viewmodel.TeamCompareViewModel
-import com.suarez.footballaianalyst.viewmodel.TeamStatsViewModel
+import com.tecsup.footballaianalyst.model.Match
+import com.tecsup.footballaianalyst.model.Team
+import com.tecsup.footballaianalyst.ui.screens.HomeScreen
+import com.tecsup.footballaianalyst.ui.screens.MatchDetailScreen
+import com.tecsup.footballaianalyst.ui.screens.SettingsScreen
+import com.tecsup.footballaianalyst.ui.screens.StandingsScreen
+import com.tecsup.footballaianalyst.ui.screens.TeamCompareScreen
+import com.tecsup.footballaianalyst.ui.screens.TeamDetailScreen
+import com.tecsup.footballaianalyst.ui.screens.TeamSearchScreen
+import com.tecsup.footballaianalyst.viewmodel.FootballViewModel
+import com.tecsup.footballaianalyst.viewmodel.MatchDetailViewModel
+import com.tecsup.footballaianalyst.viewmodel.SettingsViewModel
+import com.tecsup.footballaianalyst.viewmodel.TeamCompareViewModel
+import com.tecsup.footballaianalyst.viewmodel.TeamStatsViewModel
 
 @Composable
 fun NavFootball(

@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.navigation
+package com.tecsup.cafecampus.ui.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -24,28 +24,28 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.suarez.cafecampus.data.prefs.PreferenciasStore
-import com.suarez.cafecampus.model.Rol
-import com.suarez.cafecampus.ui.admin.AjustesScreen
-import com.suarez.cafecampus.ui.admin.DetallePedidoAdminScreen
-import com.suarez.cafecampus.ui.admin.FormularioProductoScreen
-import com.suarez.cafecampus.ui.admin.MenuAdminScreen
-import com.suarez.cafecampus.ui.admin.PanelScreen
-import com.suarez.cafecampus.ui.admin.PedidosAdminScreen
-import com.suarez.cafecampus.ui.cliente.ConfirmarPedidoScreen
-import com.suarez.cafecampus.ui.cliente.DetalleProductoScreen
-import com.suarez.cafecampus.ui.cliente.LoginScreen
-import com.suarez.cafecampus.ui.cliente.MenuScreen
-import com.suarez.cafecampus.ui.cliente.MisPedidosScreen
-import com.suarez.cafecampus.ui.cliente.RegistroScreen
-import com.suarez.cafecampus.ui.cliente.SeguimientoScreen
-import com.suarez.cafecampus.ui.cliente.SplashScreen
-import com.suarez.cafecampus.viewmodel.MenuAdminViewModel
-import com.suarez.cafecampus.viewmodel.MenuViewModel
-import com.suarez.cafecampus.viewmodel.PanelAdminViewModel
-import com.suarez.cafecampus.viewmodel.PedidosAdminViewModel
-import com.suarez.cafecampus.viewmodel.PedidosClienteViewModel
-import com.suarez.cafecampus.viewmodel.SesionViewModel
+import com.tecsup.cafecampus.data.prefs.PreferenciasStore
+import com.tecsup.cafecampus.model.Rol
+import com.tecsup.cafecampus.ui.admin.AjustesScreen
+import com.tecsup.cafecampus.ui.admin.DetallePedidoAdminScreen
+import com.tecsup.cafecampus.ui.admin.FormularioProductoScreen
+import com.tecsup.cafecampus.ui.admin.MenuAdminScreen
+import com.tecsup.cafecampus.ui.admin.PanelScreen
+import com.tecsup.cafecampus.ui.admin.PedidosAdminScreen
+import com.tecsup.cafecampus.ui.cliente.ConfirmarPedidoScreen
+import com.tecsup.cafecampus.ui.cliente.DetalleProductoScreen
+import com.tecsup.cafecampus.ui.cliente.LoginScreen
+import com.tecsup.cafecampus.ui.cliente.MenuScreen
+import com.tecsup.cafecampus.ui.cliente.MisPedidosScreen
+import com.tecsup.cafecampus.ui.cliente.RegistroScreen
+import com.tecsup.cafecampus.ui.cliente.SeguimientoScreen
+import com.tecsup.cafecampus.ui.cliente.SplashScreen
+import com.tecsup.cafecampus.viewmodel.MenuAdminViewModel
+import com.tecsup.cafecampus.viewmodel.MenuViewModel
+import com.tecsup.cafecampus.viewmodel.PanelAdminViewModel
+import com.tecsup.cafecampus.viewmodel.PedidosAdminViewModel
+import com.tecsup.cafecampus.viewmodel.PedidosClienteViewModel
+import com.tecsup.cafecampus.viewmodel.SesionViewModel
 
 @Composable
 fun NavCafe(

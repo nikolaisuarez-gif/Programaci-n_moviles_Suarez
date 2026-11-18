@@ -1,11 +1,11 @@
-package com.suarez.footballaianalyst.viewmodel
+package com.tecsup.footballaianalyst.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.suarez.footballaianalyst.data.prefs.ApiKeyStore
-import com.suarez.footballaianalyst.data.repository.FootballRepository
-import com.suarez.footballaianalyst.model.Team
-import com.suarez.footballaianalyst.model.TeamStats
+import com.tecsup.footballaianalyst.data.prefs.ApiKeyStore
+import com.tecsup.footballaianalyst.data.repository.FootballRepository
+import com.tecsup.footballaianalyst.model.Team
+import com.tecsup.footballaianalyst.model.TeamStats
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

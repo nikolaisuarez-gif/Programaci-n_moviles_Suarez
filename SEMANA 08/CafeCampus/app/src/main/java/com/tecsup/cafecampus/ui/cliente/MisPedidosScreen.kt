@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.cliente
+package com.tecsup.cafecampus.ui.cliente
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,11 +22,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.suarez.cafecampus.data.local.relation.PedidoConDetalle
-import com.suarez.cafecampus.model.EstadoPedido
-import com.suarez.cafecampus.ui.components.AppTopBar
-import com.suarez.cafecampus.ui.components.PedidoCard
-import com.suarez.cafecampus.viewmodel.PedidosClienteViewModel
+import com.tecsup.cafecampus.data.local.relation.PedidoConDetalle
+import com.tecsup.cafecampus.model.EstadoPedido
+import com.tecsup.cafecampus.ui.components.AppTopBar
+import com.tecsup.cafecampus.ui.components.PedidoCard
+import com.tecsup.cafecampus.viewmodel.PedidosClienteViewModel
 
 @Composable
 fun MisPedidosScreen(

@@ -1,4 +1,4 @@
-package com.suarez.footballaianalyst.ui.screens
+package com.tecsup.footballaianalyst.ui.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,9 +35,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.suarez.footballaianalyst.model.Team
-import com.suarez.footballaianalyst.ui.theme.AccentCyan
-import com.suarez.footballaianalyst.viewmodel.TeamStatsViewModel
+import com.tecsup.footballaianalyst.model.Team
+import com.tecsup.footballaianalyst.ui.theme.AccentCyan
+import com.tecsup.footballaianalyst.viewmodel.TeamStatsViewModel
 
 @Composable
 fun TeamSearchScreen(

@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.suarez.footballaianalyst"
+    namespace = "com.tecsup.footballaianalyst"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.suarez.footballaianalyst"
+        applicationId = "com.tecsup.footballaianalyst"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

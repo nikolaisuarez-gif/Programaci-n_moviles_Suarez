@@ -1,4 +1,4 @@
-package com.suarez.cafecampus.ui.cliente
+package com.tecsup.cafecampus.ui.cliente
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,8 +35,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.suarez.cafecampus.ui.components.ProductoCard
-import com.suarez.cafecampus.viewmodel.MenuViewModel
+import com.tecsup.cafecampus.ui.components.ProductoCard
+import com.tecsup.cafecampus.viewmodel.MenuViewModel
 
 @Composable
 fun MenuScreen(
@@ -172,15 +172,15 @@ fun MenuScreen(
 @Composable
 fun MenuGridPreview() {
     val sampleProductos = listOf(
-        com.suarez.cafecampus.data.local.entity.Producto(id = 1, nombre = "Café americano", descripcion = "", categoria = "Bebidas", precio = 4.0, icono = "cafe_americano"),
-        com.suarez.cafecampus.data.local.entity.Producto(id = 2, nombre = "Sándwich de pollo", descripcion = "", categoria = "Desayunos", precio = 9.0, icono = "sandwich_pollo"),
-        com.suarez.cafecampus.data.local.entity.Producto(id = 3, nombre = "Menú del día", descripcion = "", categoria = "Almuerzos", precio = 12.0, icono = "menu_dia"),
-        com.suarez.cafecampus.data.local.entity.Producto(id = 4, nombre = "Jugo de naranja", descripcion = "", categoria = "Bebidas", precio = 5.0, icono = "jugo_naranja"),
-        com.suarez.cafecampus.data.local.entity.Producto(id = 5, nombre = "Empanada de carne", descripcion = "", categoria = "Desayunos", precio = 4.5, icono = "empanada_carne"),
-        com.suarez.cafecampus.data.local.entity.Producto(id = 6, nombre = "Chicha morada", descripcion = "", categoria = "Bebidas", precio = 3.5, icono = "chicha_morada")
+        com.tecsup.cafecampus.data.local.entity.Producto(id = 1, nombre = "Café americano", descripcion = "", categoria = "Bebidas", precio = 4.0, icono = "cafe_americano"),
+        com.tecsup.cafecampus.data.local.entity.Producto(id = 2, nombre = "Sándwich de pollo", descripcion = "", categoria = "Desayunos", precio = 9.0, icono = "sandwich_pollo"),
+        com.tecsup.cafecampus.data.local.entity.Producto(id = 3, nombre = "Menú del día", descripcion = "", categoria = "Almuerzos", precio = 12.0, icono = "menu_dia"),
+        com.tecsup.cafecampus.data.local.entity.Producto(id = 4, nombre = "Jugo de naranja", descripcion = "", categoria = "Bebidas", precio = 5.0, icono = "jugo_naranja"),
+        com.tecsup.cafecampus.data.local.entity.Producto(id = 5, nombre = "Empanada de carne", descripcion = "", categoria = "Desayunos", precio = 4.5, icono = "empanada_carne"),
+        com.tecsup.cafecampus.data.local.entity.Producto(id = 6, nombre = "Chicha morada", descripcion = "", categoria = "Bebidas", precio = 3.5, icono = "chicha_morada")
     )
 
-    com.suarez.cafecampus.ui.theme.CafeTheme(darkTheme = true) {
+    com.tecsup.cafecampus.ui.theme.CafeTheme(darkTheme = true) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(12.dp),

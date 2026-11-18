@@ -1,4 +1,4 @@
-package com.suarez.footballaianalyst.ui.theme
+package com.tecsup.footballaianalyst.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

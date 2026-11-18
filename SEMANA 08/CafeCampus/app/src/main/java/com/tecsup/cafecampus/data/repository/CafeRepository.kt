@@ -1,10 +1,10 @@
-package com.suarez.cafecampus.data.repository
+package com.tecsup.cafecampus.data.repository
 
-import com.suarez.cafecampus.data.local.entity.Producto
-import com.suarez.cafecampus.data.local.entity.Usuario
-import com.suarez.cafecampus.data.local.relation.PedidoConDetalle
-import com.suarez.cafecampus.model.EstadoPedido
-import com.suarez.cafecampus.model.ItemCarrito
+import com.tecsup.cafecampus.data.local.entity.Producto
+import com.tecsup.cafecampus.data.local.entity.Usuario
+import com.tecsup.cafecampus.data.local.relation.PedidoConDetalle
+import com.tecsup.cafecampus.model.EstadoPedido
+import com.tecsup.cafecampus.model.ItemCarrito
 import kotlinx.coroutines.flow.Flow
 
 interface CafeRepository {
@@ -36,5 +36,5 @@ interface CafeRepository {
     // Panel
     fun observarVentasHoy(inicioDia: Long): Flow<Double>
     fun observarCantidadPorEstado(estado: EstadoPedido): Flow<Int>
-    fun observarPedidosHoy(inicioDia: Long): Flow<List<com.suarez.cafecampus.data.local.entity.Pedido>>
+    fun observarPedidosHoy(inicioDia: Long): Flow<List<com.tecsup.cafecampus.data.local.entity.Pedido>>
 }

@@ -1,4 +1,4 @@
-package com.suarez.footballaianalyst.ui.screens
+package com.tecsup.footballaianalyst.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,11 +38,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.suarez.footballaianalyst.model.Team
-import com.suarez.footballaianalyst.ui.theme.AccentCyan
-import com.suarez.footballaianalyst.ui.theme.AccentGreen
-import com.suarez.footballaianalyst.ui.theme.AccentYellow
-import com.suarez.footballaianalyst.viewmodel.TeamCompareViewModel
+import com.tecsup.footballaianalyst.model.Team
+import com.tecsup.footballaianalyst.ui.theme.AccentCyan
+import com.tecsup.footballaianalyst.ui.theme.AccentGreen
+import com.tecsup.footballaianalyst.ui.theme.AccentYellow
+import com.tecsup.footballaianalyst.viewmodel.TeamCompareViewModel
 
 @Composable
 fun TeamCompareScreen(
