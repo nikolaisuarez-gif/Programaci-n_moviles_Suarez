@@ -1,4 +1,4 @@
-package com.tecsup.cafecampus.ui.admin
+package com.suarez.cafecampus.ui.admin
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,10 +38,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tecsup.cafecampus.ui.components.AppTopBar
-import com.tecsup.cafecampus.ui.components.ProductoIcono
-import com.tecsup.cafecampus.ui.theme.AdminPrimary
-import com.tecsup.cafecampus.viewmodel.MenuAdminViewModel
+import com.suarez.cafecampus.ui.components.AppTopBar
+import com.suarez.cafecampus.ui.components.ProductoIcono
+import com.suarez.cafecampus.ui.theme.AdminPrimary
+import com.suarez.cafecampus.viewmodel.MenuAdminViewModel
 
 @Composable
 fun MenuAdminScreen(

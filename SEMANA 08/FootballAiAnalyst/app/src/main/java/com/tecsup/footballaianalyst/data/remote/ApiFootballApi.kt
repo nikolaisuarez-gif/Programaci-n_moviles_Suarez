@@ -1,9 +1,9 @@
-package com.tecsup.footballaianalyst.data.remote
+package com.suarez.footballaianalyst.data.remote
 
-import com.tecsup.footballaianalyst.data.remote.dto.ApiFootballResponse
-import com.tecsup.footballaianalyst.data.remote.dto.FixtureResponseDto
-import com.tecsup.footballaianalyst.data.remote.dto.TeamSearchWrapperDto
-import com.tecsup.footballaianalyst.data.remote.dto.TeamStatsResponseDto
+import com.suarez.footballaianalyst.data.remote.dto.ApiFootballResponse
+import com.suarez.footballaianalyst.data.remote.dto.FixtureResponseDto
+import com.suarez.footballaianalyst.data.remote.dto.TeamSearchWrapperDto
+import com.suarez.footballaianalyst.data.remote.dto.TeamStatsResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query

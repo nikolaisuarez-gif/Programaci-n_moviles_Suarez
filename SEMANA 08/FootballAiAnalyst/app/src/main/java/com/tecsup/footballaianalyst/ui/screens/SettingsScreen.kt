@@ -1,4 +1,4 @@
-package com.tecsup.footballaianalyst.ui.screens
+package com.suarez.footballaianalyst.ui.screens
 
 import android.content.Intent
 import android.net.Uri
@@ -40,8 +40,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tecsup.footballaianalyst.ui.theme.AccentCyan
-import com.tecsup.footballaianalyst.viewmodel.SettingsViewModel
+import com.suarez.footballaianalyst.ui.theme.AccentCyan
+import com.suarez.footballaianalyst.viewmodel.SettingsViewModel
 
 @Composable
 fun SettingsScreen(

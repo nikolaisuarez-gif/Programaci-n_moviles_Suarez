@@ -1,10 +1,10 @@
-package com.tecsup.cafecampus.viewmodel
+package com.suarez.cafecampus.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tecsup.cafecampus.data.local.entity.Producto
-import com.tecsup.cafecampus.data.repository.CafeRepository
-import com.tecsup.cafecampus.model.ItemCarrito
+import com.suarez.cafecampus.data.local.entity.Producto
+import com.suarez.cafecampus.data.repository.CafeRepository
+import com.suarez.cafecampus.model.ItemCarrito
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -77,7 +77,7 @@ class MenuViewModel(private val repo: CafeRepository) : ViewModel() {
         _carrito.value = emptyList()
     }
 
-    fun repetirPedido(detalles: List<com.tecsup.cafecampus.data.local.entity.DetallePedido>) {
+    fun repetirPedido(detalles: List<com.suarez.cafecampus.data.local.entity.DetallePedido>) {
         val productosExistentes = productos.value
         detalles.forEach { detalle ->
             val producto = productosExistentes.find { it.id == detalle.productoId }

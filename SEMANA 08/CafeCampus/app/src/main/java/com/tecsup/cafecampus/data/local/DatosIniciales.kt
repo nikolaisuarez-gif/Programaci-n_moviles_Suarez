@@ -1,8 +1,8 @@
-package com.tecsup.cafecampus.data.local
+package com.suarez.cafecampus.data.local
 
-import com.tecsup.cafecampus.data.local.entity.Producto
-import com.tecsup.cafecampus.data.local.entity.Usuario
-import com.tecsup.cafecampus.model.Rol
+import com.suarez.cafecampus.data.local.entity.Producto
+import com.suarez.cafecampus.data.local.entity.Usuario
+import com.suarez.cafecampus.model.Rol
 
 object DatosIniciales {
     suspend fun sembrar(db: CafeDatabase) {

@@ -1,4 +1,4 @@
-package com.tecsup.footballaianalyst
+package com.suarez.footballaianalyst
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,17 +7,17 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.tecsup.footballaianalyst.data.remote.ApiFootballApi
-import com.tecsup.footballaianalyst.data.remote.FootballDataApi
-import com.tecsup.footballaianalyst.data.repository.FootballRepositoryImpl
-import com.tecsup.footballaianalyst.data.server.LocalWebServer
-import com.tecsup.footballaianalyst.ui.navigation.NavFootball
-import com.tecsup.footballaianalyst.ui.theme.FootballAiTheme
-import com.tecsup.footballaianalyst.viewmodel.FootballViewModel
-import com.tecsup.footballaianalyst.viewmodel.MatchDetailViewModel
-import com.tecsup.footballaianalyst.viewmodel.SettingsViewModel
-import com.tecsup.footballaianalyst.viewmodel.TeamCompareViewModel
-import com.tecsup.footballaianalyst.viewmodel.TeamStatsViewModel
+import com.suarez.footballaianalyst.data.remote.ApiFootballApi
+import com.suarez.footballaianalyst.data.remote.FootballDataApi
+import com.suarez.footballaianalyst.data.repository.FootballRepositoryImpl
+import com.suarez.footballaianalyst.data.server.LocalWebServer
+import com.suarez.footballaianalyst.ui.navigation.NavFootball
+import com.suarez.footballaianalyst.ui.theme.FootballAiTheme
+import com.suarez.footballaianalyst.viewmodel.FootballViewModel
+import com.suarez.footballaianalyst.viewmodel.MatchDetailViewModel
+import com.suarez.footballaianalyst.viewmodel.SettingsViewModel
+import com.suarez.footballaianalyst.viewmodel.TeamCompareViewModel
+import com.suarez.footballaianalyst.viewmodel.TeamStatsViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

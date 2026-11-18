@@ -1,4 +1,4 @@
-package com.tecsup.cafecampus.ui.components
+package com.suarez.cafecampus.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,7 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tecsup.cafecampus.R
+import com.suarez.cafecampus.R
 
 @Composable
 fun ProductoIcono(

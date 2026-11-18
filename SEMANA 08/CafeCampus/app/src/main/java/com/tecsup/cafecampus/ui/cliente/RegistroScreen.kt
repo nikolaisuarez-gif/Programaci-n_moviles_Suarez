@@ -1,4 +1,4 @@
-package com.tecsup.cafecampus.ui.cliente
+package com.suarez.cafecampus.ui.cliente
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -27,11 +27,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tecsup.cafecampus.model.Rol
-import com.tecsup.cafecampus.ui.components.AppTopBar
-import com.tecsup.cafecampus.ui.components.CafeButton
-import com.tecsup.cafecampus.ui.components.CafeTextField
-import com.tecsup.cafecampus.viewmodel.SesionViewModel
+import com.suarez.cafecampus.model.Rol
+import com.suarez.cafecampus.ui.components.AppTopBar
+import com.suarez.cafecampus.ui.components.CafeButton
+import com.suarez.cafecampus.ui.components.CafeTextField
+import com.suarez.cafecampus.viewmodel.SesionViewModel
 
 @Composable
 fun RegistroScreen(

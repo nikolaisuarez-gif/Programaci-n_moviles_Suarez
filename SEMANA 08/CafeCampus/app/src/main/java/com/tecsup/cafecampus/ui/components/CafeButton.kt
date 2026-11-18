@@ -1,4 +1,4 @@
-package com.tecsup.cafecampus.ui.components
+package com.suarez.cafecampus.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height

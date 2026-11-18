@@ -1,4 +1,4 @@
-package com.tecsup.cafecampus.model
+package com.suarez.cafecampus.model
 
 enum class Rol {
     CLIENTE,

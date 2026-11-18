@@ -1,7 +1,7 @@
-package com.tecsup.footballaianalyst
+package com.suarez.footballaianalyst
 
 import android.app.Application
-import com.tecsup.footballaianalyst.data.prefs.ApiKeyStore
+import com.suarez.footballaianalyst.data.prefs.ApiKeyStore
 
 class FootballAiApp : Application() {
     lateinit var apiKeyStore: ApiKeyStore

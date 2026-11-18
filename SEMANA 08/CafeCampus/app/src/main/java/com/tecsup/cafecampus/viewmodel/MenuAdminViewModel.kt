@@ -1,9 +1,9 @@
-package com.tecsup.cafecampus.viewmodel
+package com.suarez.cafecampus.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tecsup.cafecampus.data.local.entity.Producto
-import com.tecsup.cafecampus.data.repository.CafeRepository
+import com.suarez.cafecampus.data.local.entity.Producto
+import com.suarez.cafecampus.data.repository.CafeRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

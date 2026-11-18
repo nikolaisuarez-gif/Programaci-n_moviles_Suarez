@@ -1,4 +1,4 @@
-package com.tecsup.footballaianalyst.data.remote.dto
+package com.suarez.footballaianalyst.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
 

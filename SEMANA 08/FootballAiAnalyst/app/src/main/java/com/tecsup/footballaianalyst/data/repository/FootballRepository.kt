@@ -1,13 +1,13 @@
-package com.tecsup.footballaianalyst.data.repository
+package com.suarez.footballaianalyst.data.repository
 
-import com.tecsup.footballaianalyst.model.AiAnalysis
-import com.tecsup.footballaianalyst.model.LeagueStandings
-import com.tecsup.footballaianalyst.model.Match
-import com.tecsup.footballaianalyst.model.MatchLineups
-import com.tecsup.footballaianalyst.model.MatchStatistics
-import com.tecsup.footballaianalyst.model.Team
-import com.tecsup.footballaianalyst.model.TeamComparison
-import com.tecsup.footballaianalyst.model.TeamStats
+import com.suarez.footballaianalyst.model.AiAnalysis
+import com.suarez.footballaianalyst.model.LeagueStandings
+import com.suarez.footballaianalyst.model.Match
+import com.suarez.footballaianalyst.model.MatchLineups
+import com.suarez.footballaianalyst.model.MatchStatistics
+import com.suarez.footballaianalyst.model.Team
+import com.suarez.footballaianalyst.model.TeamComparison
+import com.suarez.footballaianalyst.model.TeamStats
 import kotlinx.coroutines.flow.Flow
 
 interface FootballRepository {

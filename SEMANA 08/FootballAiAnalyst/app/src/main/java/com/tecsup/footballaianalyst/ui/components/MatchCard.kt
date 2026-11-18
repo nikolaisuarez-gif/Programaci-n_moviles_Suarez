@@ -1,4 +1,4 @@
-package com.tecsup.footballaianalyst.ui.components
+package com.suarez.footballaianalyst.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.tecsup.footballaianalyst.model.Match
+import com.suarez.footballaianalyst.model.Match
 
 @Composable
 fun MatchCard(

@@ -1,4 +1,4 @@
-package com.tecsup.footballaianalyst.ui.components
+package com.suarez.footballaianalyst.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -25,11 +25,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tecsup.footballaianalyst.model.AiAnalysis
-import com.tecsup.footballaianalyst.model.Match
-import com.tecsup.footballaianalyst.ui.theme.AccentCyan
-import com.tecsup.footballaianalyst.ui.theme.AccentGreen
-import com.tecsup.footballaianalyst.ui.theme.AccentYellow
+import com.suarez.footballaianalyst.model.AiAnalysis
+import com.suarez.footballaianalyst.model.Match
+import com.suarez.footballaianalyst.ui.theme.AccentCyan
+import com.suarez.footballaianalyst.ui.theme.AccentGreen
+import com.suarez.footballaianalyst.ui.theme.AccentYellow
 
 @Composable
 fun AiAnalysisCard(

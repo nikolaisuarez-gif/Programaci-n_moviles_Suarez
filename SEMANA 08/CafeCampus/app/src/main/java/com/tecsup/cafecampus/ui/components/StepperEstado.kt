@@ -1,4 +1,4 @@
-package com.tecsup.cafecampus.ui.components
+package com.suarez.cafecampus.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tecsup.cafecampus.model.EstadoPedido
+import com.suarez.cafecampus.model.EstadoPedido
 
 @Composable
 fun StepperEstado(

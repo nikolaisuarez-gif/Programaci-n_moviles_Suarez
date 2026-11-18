@@ -1,4 +1,4 @@
-package com.tecsup.footballaianalyst.ui.screens
+package com.suarez.footballaianalyst.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -27,18 +27,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.tecsup.footballaianalyst.model.TeamStanding
-import com.tecsup.footballaianalyst.ui.theme.AccentCyan
+import com.suarez.footballaianalyst.model.TeamStanding
+import com.suarez.footballaianalyst.ui.theme.AccentCyan
 
 @Composable
 fun StandingsScreen(
     modifier: Modifier = Modifier
 ) {
     val standings = listOf(
-        TeamStanding(1, com.tecsup.footballaianalyst.model.Team(1, "Real Madrid", "https://media.api-sports.io/football/teams/541.png"), 27, 10, 8, 3, 0, 24, 7, 17, "WWWDW"),
-        TeamStanding(2, com.tecsup.footballaianalyst.model.Team(2, "FC Barcelona", "https://media.api-sports.io/football/teams/529.png"), 25, 10, 8, 1, 1, 28, 10, 18, "WWLWW"),
-        TeamStanding(3, com.tecsup.footballaianalyst.model.Team(3, "Atlético de Madrid", "https://media.api-sports.io/football/teams/530.png"), 20, 10, 5, 5, 0, 16, 6, 10, "DWDWD"),
-        TeamStanding(4, com.tecsup.footballaianalyst.model.Team(4, "Villarreal CF", "https://media.api-sports.io/football/teams/533.png"), 18, 10, 5, 3, 2, 19, 17, 2, "WLWLD")
+        TeamStanding(1, com.suarez.footballaianalyst.model.Team(1, "Real Madrid", "https://media.api-sports.io/football/teams/541.png"), 27, 10, 8, 3, 0, 24, 7, 17, "WWWDW"),
+        TeamStanding(2, com.suarez.footballaianalyst.model.Team(2, "FC Barcelona", "https://media.api-sports.io/football/teams/529.png"), 25, 10, 8, 1, 1, 28, 10, 18, "WWLWW"),
+        TeamStanding(3, com.suarez.footballaianalyst.model.Team(3, "Atlético de Madrid", "https://media.api-sports.io/football/teams/530.png"), 20, 10, 5, 5, 0, 16, 6, 10, "DWDWD"),
+        TeamStanding(4, com.suarez.footballaianalyst.model.Team(4, "Villarreal CF", "https://media.api-sports.io/football/teams/533.png"), 18, 10, 5, 3, 2, 19, 17, 2, "WLWLD")
     )
 
     Scaffold(

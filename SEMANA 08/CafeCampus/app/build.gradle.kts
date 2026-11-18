@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.tecsup.cafecampus"
+    namespace = "com.suarez.cafecampus"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.tecsup.cafecampus"
+        applicationId = "com.suarez.cafecampus"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

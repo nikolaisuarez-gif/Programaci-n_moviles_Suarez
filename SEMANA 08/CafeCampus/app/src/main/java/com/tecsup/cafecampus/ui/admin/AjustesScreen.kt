@@ -1,4 +1,4 @@
-package com.tecsup.cafecampus.ui.admin
+package com.suarez.cafecampus.ui.admin
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -46,11 +46,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.tecsup.cafecampus.data.local.entity.Usuario
-import com.tecsup.cafecampus.data.prefs.PreferenciasStore
-import com.tecsup.cafecampus.model.Rol
-import com.tecsup.cafecampus.ui.components.AppTopBar
-import com.tecsup.cafecampus.ui.theme.StatusCancelado
+import com.suarez.cafecampus.data.local.entity.Usuario
+import com.suarez.cafecampus.data.prefs.PreferenciasStore
+import com.suarez.cafecampus.model.Rol
+import com.suarez.cafecampus.ui.components.AppTopBar
+import com.suarez.cafecampus.ui.theme.StatusCancelado
 import kotlinx.coroutines.launch
 
 @Composable

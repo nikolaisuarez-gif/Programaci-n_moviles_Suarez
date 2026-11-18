@@ -1,10 +1,10 @@
-package com.tecsup.cafecampus.viewmodel
+package com.suarez.cafecampus.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tecsup.cafecampus.data.local.entity.Usuario
-import com.tecsup.cafecampus.data.repository.CafeRepository
-import com.tecsup.cafecampus.model.Rol
+import com.suarez.cafecampus.data.local.entity.Usuario
+import com.suarez.cafecampus.data.repository.CafeRepository
+import com.suarez.cafecampus.model.Rol
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

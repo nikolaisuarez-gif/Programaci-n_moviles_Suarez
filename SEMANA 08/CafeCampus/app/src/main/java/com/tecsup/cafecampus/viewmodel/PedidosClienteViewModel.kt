@@ -1,10 +1,10 @@
-package com.tecsup.cafecampus.viewmodel
+package com.suarez.cafecampus.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tecsup.cafecampus.data.local.relation.PedidoConDetalle
-import com.tecsup.cafecampus.data.repository.CafeRepository
-import com.tecsup.cafecampus.model.ItemCarrito
+import com.suarez.cafecampus.data.local.relation.PedidoConDetalle
+import com.suarez.cafecampus.data.repository.CafeRepository
+import com.suarez.cafecampus.model.ItemCarrito
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,9 +1,9 @@
-package com.tecsup.cafecampus.viewmodel
+package com.suarez.cafecampus.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.tecsup.cafecampus.data.prefs.PreferenciasStore
-import com.tecsup.cafecampus.data.repository.CafeRepository
+import com.suarez.cafecampus.data.prefs.PreferenciasStore
+import com.suarez.cafecampus.data.repository.CafeRepository
 
 class CafeViewModelFactory(
     private val repository: CafeRepository,

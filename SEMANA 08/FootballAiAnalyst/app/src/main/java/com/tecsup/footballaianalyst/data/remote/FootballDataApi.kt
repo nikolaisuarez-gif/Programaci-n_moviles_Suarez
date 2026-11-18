@@ -1,6 +1,6 @@
-package com.tecsup.footballaianalyst.data.remote
+package com.suarez.footballaianalyst.data.remote
 
-import com.tecsup.footballaianalyst.data.remote.dto.FootballDataMatchesResponse
+import com.suarez.footballaianalyst.data.remote.dto.FootballDataMatchesResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path

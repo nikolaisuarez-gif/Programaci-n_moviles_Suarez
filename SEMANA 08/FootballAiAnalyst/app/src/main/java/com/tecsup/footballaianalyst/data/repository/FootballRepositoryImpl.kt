@@ -1,20 +1,20 @@
-package com.tecsup.footballaianalyst.data.repository
+package com.suarez.footballaianalyst.data.repository
 
-import com.tecsup.footballaianalyst.data.local.TeamCacheManager
-import com.tecsup.footballaianalyst.data.remote.ApiFootballApi
-import com.tecsup.footballaianalyst.data.remote.FootballDataApi
-import com.tecsup.footballaianalyst.model.AiAnalysis
-import com.tecsup.footballaianalyst.model.AiPredictionResult
-import com.tecsup.footballaianalyst.model.LeagueStandings
-import com.tecsup.footballaianalyst.model.Match
-import com.tecsup.footballaianalyst.model.MatchLineups
-import com.tecsup.footballaianalyst.model.MatchStatistics
-import com.tecsup.footballaianalyst.model.Player
-import com.tecsup.footballaianalyst.model.Team
-import com.tecsup.footballaianalyst.model.TeamComparison
-import com.tecsup.footballaianalyst.model.TeamLineup
-import com.tecsup.footballaianalyst.model.TeamStanding
-import com.tecsup.footballaianalyst.model.TeamStats
+import com.suarez.footballaianalyst.data.local.TeamCacheManager
+import com.suarez.footballaianalyst.data.remote.ApiFootballApi
+import com.suarez.footballaianalyst.data.remote.FootballDataApi
+import com.suarez.footballaianalyst.model.AiAnalysis
+import com.suarez.footballaianalyst.model.AiPredictionResult
+import com.suarez.footballaianalyst.model.LeagueStandings
+import com.suarez.footballaianalyst.model.Match
+import com.suarez.footballaianalyst.model.MatchLineups
+import com.suarez.footballaianalyst.model.MatchStatistics
+import com.suarez.footballaianalyst.model.Player
+import com.suarez.footballaianalyst.model.Team
+import com.suarez.footballaianalyst.model.TeamComparison
+import com.suarez.footballaianalyst.model.TeamLineup
+import com.suarez.footballaianalyst.model.TeamStanding
+import com.suarez.footballaianalyst.model.TeamStats
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlin.math.roundToInt
@@ -285,7 +285,7 @@ class FootballRepositoryImpl(
             val homeStats = response.response.firstOrNull()?.statistics ?: emptyList()
             val awayStats = response.response.getOrNull(1)?.statistics ?: emptyList()
 
-            fun parseVal(statsList: List<com.tecsup.footballaianalyst.data.remote.dto.StatisticItemDto>, typeName: String): Int {
+            fun parseVal(statsList: List<com.suarez.footballaianalyst.data.remote.dto.StatisticItemDto>, typeName: String): Int {
                 val item = statsList.firstOrNull { it.type.equals(typeName, ignoreCase = true) }?.value
                 if (item == null) return 0
                 val str = item.toString().replace("%", "").trim()

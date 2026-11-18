@@ -1,6 +1,6 @@
-package com.tecsup.cafecampus.model
+package com.suarez.cafecampus.model
 
-import com.tecsup.cafecampus.data.local.entity.Producto
+import com.suarez.cafecampus.data.local.entity.Producto
 
 data class ItemCarrito(
     val producto: Producto,

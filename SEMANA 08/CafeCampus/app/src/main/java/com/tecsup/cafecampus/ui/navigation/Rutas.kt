@@ -1,4 +1,4 @@
-package com.tecsup.cafecampus.ui.navigation
+package com.suarez.cafecampus.ui.navigation
 
 sealed class Rutas(val ruta: String) {
     object Splash : Rutas("splash")

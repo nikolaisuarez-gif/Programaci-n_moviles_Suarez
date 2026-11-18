@@ -1,4 +1,4 @@
-package com.tecsup.cafecampus.ui.cliente
+package com.suarez.cafecampus.ui.cliente
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,8 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tecsup.cafecampus.ui.components.CafeButton
-import com.tecsup.cafecampus.ui.components.ProductoIcono
+import com.suarez.cafecampus.ui.components.CafeButton
+import com.suarez.cafecampus.ui.components.ProductoIcono
 
 @Composable
 fun SplashScreen(

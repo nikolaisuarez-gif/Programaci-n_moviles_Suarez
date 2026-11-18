@@ -1,4 +1,4 @@
-package com.tecsup.footballaianalyst.ui.components
+package com.suarez.footballaianalyst.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -17,8 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tecsup.footballaianalyst.ui.theme.AccentGreen
-import com.tecsup.footballaianalyst.ui.theme.AccentRed
+import com.suarez.footballaianalyst.ui.theme.AccentGreen
+import com.suarez.footballaianalyst.ui.theme.AccentRed
 
 @Composable
 fun LiveBadge(
