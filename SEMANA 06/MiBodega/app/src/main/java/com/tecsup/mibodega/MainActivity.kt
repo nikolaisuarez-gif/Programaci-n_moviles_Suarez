@@ -1,11 +1,11 @@
-package com.tecsup.mibodega
+package com.suarez.mibodega
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.tecsup.mibodega.ui.cliente.ClienteApp
-import com.tecsup.mibodega.ui.theme.BodegaTheme
+import com.suarez.mibodega.ui.cliente.ClienteApp
+import com.suarez.mibodega.ui.theme.BodegaTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

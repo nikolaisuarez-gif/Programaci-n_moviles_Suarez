@@ -1,4 +1,4 @@
-package com.tecsup.mibodega
+package com.suarez.mibodega
 
 import org.junit.Test
 

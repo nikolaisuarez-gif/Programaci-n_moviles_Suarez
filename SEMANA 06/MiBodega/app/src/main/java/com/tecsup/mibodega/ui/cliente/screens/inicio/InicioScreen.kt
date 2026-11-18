@@ -1,4 +1,4 @@
-package com.tecsup.mibodega.ui.cliente.screens.inicio
+package com.suarez.mibodega.ui.cliente.screens.inicio
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -54,13 +54,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.tecsup.mibodega.ui.cliente.modelo.Pedido
-import com.tecsup.mibodega.ui.cliente.modelo.Producto
-import com.tecsup.mibodega.ui.cliente.modelo.listaCategorias
-import com.tecsup.mibodega.ui.cliente.modelo.listaProductosFake
-import com.tecsup.mibodega.ui.componentes.ProductoCard
-import com.tecsup.mibodega.ui.theme.GrisClaro
-import com.tecsup.mibodega.ui.theme.VerdeBodega
+import com.suarez.mibodega.ui.cliente.modelo.Pedido
+import com.suarez.mibodega.ui.cliente.modelo.Producto
+import com.suarez.mibodega.ui.cliente.modelo.listaCategorias
+import com.suarez.mibodega.ui.cliente.modelo.listaProductosFake
+import com.suarez.mibodega.ui.componentes.ProductoCard
+import com.suarez.mibodega.ui.theme.GrisClaro
+import com.suarez.mibodega.ui.theme.VerdeBodega
 
 /**
  * Pantalla 3: Inicio / Productos (mockup "Cliente").

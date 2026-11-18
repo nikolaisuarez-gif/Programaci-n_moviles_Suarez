@@ -1,4 +1,4 @@
-package com.tecsup.mibodega.ui.componentes
+package com.suarez.mibodega.ui.componentes
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

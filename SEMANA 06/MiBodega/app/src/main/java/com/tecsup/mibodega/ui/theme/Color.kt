@@ -1,4 +1,4 @@
-package com.tecsup.mibodega.ui.theme
+package com.suarez.mibodega.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
