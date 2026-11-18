@@ -1,6 +1,10 @@
 package com.tecsup.centrotareas.data
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.withContext
 
 class TareasRepositoryLocal : TareasRepository {
     override suspend fun cargarPerfil(): String {
@@ -14,5 +18,22 @@ class TareasRepositoryLocal : TareasRepository {
         return listOf("Pedido 101", "Pedido 102", "Pedido 103")
     }
 
-    override suspend fun contarPrimos(hasta: Int): Int = 0 // TODO: Paso 5
+    override suspend fun contarPrimos(hasta: Int): Int = withContext(Dispatchers.Default) {
+        var cantidad = 0
+        for (numero in 2..hasta) {
+            currentCoroutineContext().ensureActive()
+            if (esPrimo(numero)) cantidad++
+        }
+        cantidad
+    }
+
+    private fun esPrimo(numero: Int): Boolean {
+        if (numero < 2) return false
+        var divisor = 2
+        while (divisor * divisor <= numero) {
+            if (numero % divisor == 0) return false
+            divisor++
+        }
+        return true
+    }
 }
