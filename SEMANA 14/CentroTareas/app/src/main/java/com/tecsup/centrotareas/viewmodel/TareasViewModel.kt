@@ -7,6 +7,8 @@ import com.tecsup.centrotareas.data.TareasRepository
 import com.tecsup.centrotareas.model.CargaUi
 import com.tecsup.centrotareas.model.PrimosUi
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -84,4 +86,33 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
 
     private val _carga = MutableStateFlow<CargaUi>(CargaUi.Inicial)
     val carga: StateFlow<CargaUi> = _carga.asStateFlow()
+    private var trabajoCarga: Job? = null
+
+    fun cargarUnaPorUna() = iniciarCarga("Una por una", paralelo = false)
+
+    fun cargarALaVez() = iniciarCarga("A la vez", paralelo = true)
+
+    private fun iniciarCarga(modo: String, paralelo: Boolean) {
+        if (_carga.value == CargaUi.Cargando) return
+        _carga.value = CargaUi.Cargando
+        trabajoCarga = viewModelScope.launch {
+            val inicio = System.currentTimeMillis()
+            val (perfil, pedidos) = if (paralelo) {
+                coroutineScope {
+                    val perfilAsync = async { repo.cargarPerfil() }
+                    val pedidosAsync = async { repo.cargarPedidos(simularError = false) }
+                    perfilAsync.await() to pedidosAsync.await()
+                }
+            } else {
+                repo.cargarPerfil() to repo.cargarPedidos(simularError = false)
+            }
+            _carga.value = CargaUi.Exito(
+                modo = modo,
+                perfil = perfil,
+                pedidos = pedidos.size,
+                milisegundos = System.currentTimeMillis() - inicio
+            )
+            trabajoCarga = null
+        }
+    }
 }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -24,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -37,6 +39,7 @@ fun PantallaTareas(viewModel: TareasViewModel) {
     val progreso by viewModel.progreso.collectAsState()
     val corriendo by viewModel.corriendo.collectAsState()
     val primos by viewModel.primos.collectAsState()
+    val carga by viewModel.carga.collectAsState()
     var toques by remember { mutableIntStateOf(0) }
     var limitePrimos by remember { androidx.compose.runtime.mutableStateOf("100000") }
     Scaffold(topBar = { TopAppBar(title = { Text("CentroTareas") }) }) { insets ->
@@ -104,7 +107,40 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                     }
                 }
             }
-            TarjetaBase("Dos cargas", "Perfil y pedidos simulados")
+            Card(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("Dos cargas", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleMedium)
+                    androidx.compose.foundation.layout.Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Button(
+                            onClick = viewModel::cargarUnaPorUna,
+                            enabled = carga != com.tecsup.centrotareas.model.CargaUi.Cargando,
+                            modifier = Modifier.weight(1f)
+                        ) { Text("Una por una") }
+                        Button(
+                            onClick = viewModel::cargarALaVez,
+                            enabled = carga != com.tecsup.centrotareas.model.CargaUi.Cargando,
+                            modifier = Modifier.weight(1f)
+                        ) { Text("A la vez") }
+                    }
+                    when (val estado = carga) {
+                        com.tecsup.centrotareas.model.CargaUi.Inicial -> Text("Perfil y pedidos se cargan con demoras simuladas.")
+                        com.tecsup.centrotareas.model.CargaUi.Cargando -> Text("Cargando…")
+                        is com.tecsup.centrotareas.model.CargaUi.Exito -> Card(
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E9))
+                        ) {
+                            Column(modifier = Modifier.padding(12.dp)) {
+                                Text("${estado.modo}: ${estado.milisegundos} ms")
+                                Text("Perfil: ${estado.perfil}")
+                                Text("Pedidos: ${estado.pedidos}")
+                            }
+                        }
+                        is com.tecsup.centrotareas.model.CargaUi.Error -> Text(estado.mensaje, color = MaterialTheme.colorScheme.error)
+                    }
+                }
+            }
         }
     }
 }
