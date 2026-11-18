@@ -40,6 +40,7 @@ fun PantallaTareas(viewModel: TareasViewModel) {
     val progreso by viewModel.progreso.collectAsState()
     val corriendo by viewModel.corriendo.collectAsState()
     val primos by viewModel.primos.collectAsState()
+    val progresoPrimos by viewModel.progresoPrimos.collectAsState()
     val carga by viewModel.carga.collectAsState()
     val simularError by viewModel.simularError.collectAsState()
     var toques by remember { mutableIntStateOf(0) }
@@ -103,7 +104,10 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                     }
                     when (val estado = primos) {
                         PrimosUi.Inicial -> Text("Ingresa un número desde 2.")
-                        PrimosUi.Calculando -> Text("Calculando primos…")
+                        PrimosUi.Calculando -> Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            LinearProgressIndicator(progress = progresoPrimos, modifier = Modifier.fillMaxWidth())
+                            Text("Calculando primos: ${(progresoPrimos * 100).toInt()} %")
+                        }
                         PrimosUi.Cancelado -> Text("Cálculo cancelado.", color = MaterialTheme.colorScheme.error)
                         is PrimosUi.Listo -> Text("${estado.cantidad} primos en ${estado.milisegundos} ms")
                     }

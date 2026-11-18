@@ -39,6 +39,20 @@ class TareasRepositoryLocal : TareasRepository {
         cantidad
     }
 
+    override fun contarPrimosConProgreso(hasta: Int): Flow<AvancePrimos> = flow {
+        var cantidad = 0
+        val total = (hasta - 1).coerceAtLeast(1)
+        val intervalo = (total / 100).coerceAtLeast(1)
+        for (numero in 2..hasta) {
+            currentCoroutineContext().ensureActive()
+            if (esPrimo(numero)) cantidad++
+            if ((numero - 1) % intervalo == 0 || numero == hasta) {
+                emit(AvancePrimos((numero - 1).toFloat() / total))
+            }
+        }
+        emit(AvancePrimos(1f, cantidad))
+    }.flowOn(Dispatchers.Default)
+
     private fun esPrimo(numero: Int): Boolean {
         if (numero < 2) return false
         var divisor = 2
