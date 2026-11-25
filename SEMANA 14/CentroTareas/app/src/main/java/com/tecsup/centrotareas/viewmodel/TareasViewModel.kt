@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tecsup.centrotareas.data.TareasRepository
 import com.tecsup.centrotareas.model.CargaUi
+import com.tecsup.centrotareas.model.MedicionCarga
 import com.tecsup.centrotareas.model.PrimosUi
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
@@ -12,11 +13,8 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
     private val _mensaje = MutableStateFlow("Listo")
@@ -37,16 +35,12 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
         _corriendo.value = true
         trabajo = viewModelScope.launch {
             try {
-            Log.d("HILO", "Antes: ${Thread.currentThread().name}")
-            withContext(Dispatchers.Default) {
-                Log.d("HILO", "Dentro: ${Thread.currentThread().name}")
-                repeat(100) { indice ->
-                    delay(40)
-                    _progreso.value = (indice + 1) / 100f
+                Log.d("HILO", "Antes: ${Thread.currentThread().name}")
+                repo.progresoTareaLarga().collect { avance ->
+                    _progreso.value = avance
                 }
-            }
-            Log.d("HILO", "Después: ${Thread.currentThread().name}")
-            _mensaje.value = "Terminó"
+                Log.d("HILO", "Después: ${Thread.currentThread().name}")
+                _mensaje.value = "Terminó"
             } finally {
                 _corriendo.value = false
                 trabajo = null
@@ -61,15 +55,22 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
 
     private val _primos = MutableStateFlow<PrimosUi>(PrimosUi.Inicial)
     val primos: StateFlow<PrimosUi> = _primos.asStateFlow()
+    private val _progresoPrimos = MutableStateFlow(0f)
+    val progresoPrimos: StateFlow<Float> = _progresoPrimos.asStateFlow()
     private var trabajoPrimos: Job? = null
 
     fun contar(hasta: Int) {
         if (hasta < 2 || _primos.value == PrimosUi.Calculando) return
         _primos.value = PrimosUi.Calculando
+        _progresoPrimos.value = 0f
         trabajoPrimos = viewModelScope.launch {
             val inicio = System.currentTimeMillis()
             try {
-                val cantidad = repo.contarPrimos(hasta)
+                var cantidad = 0
+                repo.contarPrimosConProgreso(hasta).collect { avance ->
+                    _progresoPrimos.value = avance.porcentaje
+                    avance.cantidadFinal?.let { cantidad = it }
+                }
                 _primos.value = PrimosUi.Listo(cantidad, System.currentTimeMillis() - inicio)
             } catch (e: CancellationException) {
                 _primos.value = PrimosUi.Cancelado
@@ -86,6 +87,8 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
 
     private val _carga = MutableStateFlow<CargaUi>(CargaUi.Inicial)
     val carga: StateFlow<CargaUi> = _carga.asStateFlow()
+    private val _tiemposCarga = MutableStateFlow<List<MedicionCarga>>(emptyList())
+    val tiemposCarga: StateFlow<List<MedicionCarga>> = _tiemposCarga.asStateFlow()
     private val _simularError = MutableStateFlow(false)
     val simularError: StateFlow<Boolean> = _simularError.asStateFlow()
     private var trabajoCarga: Job? = null
@@ -114,11 +117,16 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
                 } else {
                     repo.cargarPerfil() to repo.cargarPedidos(simularError = simularErrorAhora)
                 }
+                val duracion = System.currentTimeMillis() - inicio
                 _carga.value = CargaUi.Exito(
                     modo = modo,
                     perfil = perfil,
                     pedidos = pedidos.size,
-                    milisegundos = System.currentTimeMillis() - inicio
+                    milisegundos = duracion
+                )
+                _tiemposCarga.value = _tiemposCarga.value + MedicionCarga(
+                    modo = modo,
+                    milisegundos = duracion
                 )
             } catch (e: CancellationException) {
                 throw e

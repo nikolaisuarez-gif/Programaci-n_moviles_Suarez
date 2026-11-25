@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -33,6 +32,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,7 +51,9 @@ fun PantallaTareas(viewModel: TareasViewModel) {
     val progreso by viewModel.progreso.collectAsState()
     val corriendo by viewModel.corriendo.collectAsState()
     val primos by viewModel.primos.collectAsState()
+    val progresoPrimos by viewModel.progresoPrimos.collectAsState()
     val carga by viewModel.carga.collectAsState()
+    val tiemposCarga by viewModel.tiemposCarga.collectAsState()
     val simularError by viewModel.simularError.collectAsState()
     var toques by remember { mutableIntStateOf(0) }
     var limitePrimos by remember { mutableStateOf("500000") }
@@ -76,29 +78,43 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Tarjeta("Tarea con progreso") {
+            Tarjeta(titulo = "Tarea con progreso") {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                     Button(onClick = { toques++ }) { Text("Tócame: $toques") }
                 }
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                    Button(onClick = viewModel::tareaLarga, enabled = !corriendo) { Text("Iniciar") }
-                    OutlinedButton(onClick = viewModel::cancelar, enabled = corriendo) { Text("Cancelar") }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Button(
+                        onClick = viewModel::tareaLarga,
+                        enabled = !corriendo
+                    ) { Text("Iniciar") }
+                    OutlinedButton(
+                        onClick = viewModel::cancelar,
+                        enabled = corriendo
+                    ) { Text("Cancelar") }
                 }
                 LinearProgressIndicator(progress = { progreso }, modifier = Modifier.fillMaxWidth())
                 Text("${(progreso * 100).toInt()} %", modifier = Modifier.align(Alignment.CenterHorizontally))
                 Text(mensaje, modifier = Modifier.align(Alignment.CenterHorizontally))
             }
 
-            Tarjeta("Contar números primos") {
+            Tarjeta(titulo = "Contar números primos") {
                 OutlinedTextField(
                     value = limitePrimos,
-                    onValueChange = { nuevo -> if (nuevo.all(Char::isDigit)) limitePrimos = nuevo },
+                    onValueChange = { nuevo ->
+                        if (nuevo.all(Char::isDigit)) limitePrimos = nuevo
+                    },
                     label = { Text("Hasta el número") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
                     Button(
                         onClick = { limitePrimos.toIntOrNull()?.let(viewModel::contar) },
                         enabled = primos != PrimosUi.Calculando && (limitePrimos.toIntOrNull() ?: 0) >= 2
@@ -110,16 +126,19 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                 }
                 when (val estado = primos) {
                     PrimosUi.Inicial -> Unit
-                    PrimosUi.Calculando -> CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    PrimosUi.Calculando -> Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        LinearProgressIndicator(progress = { progresoPrimos }, modifier = Modifier.fillMaxWidth())
+                        Text("Contando: ${(progresoPrimos * 100).toInt()} %")
+                    }
                     PrimosUi.Cancelado -> Text("Cálculo cancelado.", color = MaterialTheme.colorScheme.error)
                     is PrimosUi.Listo -> ResultadoVerde {
-                        Text("Primos hasta $limitePrimos: ${estado.cantidad}")
+                        Text("Primos hasta ${limitePrimos}: ${estado.cantidad}")
                         Text("Tiempo: ${estado.milisegundos} ms")
                     }
                 }
             }
 
-            Tarjeta("Dos cargas") {
+            Tarjeta(titulo = "Dos cargas") {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -128,14 +147,18 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                     Switch(checked = simularError, onCheckedChange = viewModel::cambiarSimularError)
                     Text("Simular error")
                 }
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
                     OutlinedButton(
                         onClick = viewModel::cargarUnaPorUna,
                         enabled = carga != CargaUi.Cargando
                     ) { Text("Una por una") }
-                    Button(onClick = viewModel::cargarALaVez, enabled = carga != CargaUi.Cargando) {
-                        Text("A la vez")
-                    }
+                    Button(
+                        onClick = viewModel::cargarALaVez,
+                        enabled = carga != CargaUi.Cargando
+                    ) { Text("A la vez") }
                 }
                 when (val estado = carga) {
                     CargaUi.Inicial -> Unit
@@ -161,6 +184,21 @@ fun PantallaTareas(viewModel: TareasViewModel) {
                     }
                 }
             }
+
+            if (tiemposCarga.isNotEmpty()) {
+                Tarjeta(titulo = "Comparación de tiempos") {
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        Text("Modo", modifier = Modifier.weight(1f))
+                        Text("Tiempo (ms)")
+                    }
+                    tiemposCarga.forEach { medicion ->
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            Text(medicion.modo, modifier = Modifier.weight(1f))
+                            Text(medicion.milisegundos.toString())
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -173,8 +211,15 @@ private fun Tarjeta(titulo: String, contenido: @Composable ColumnScope.() -> Uni
         border = BorderStroke(1.dp, Color(0xFFD6E3F0)),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
-        Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(titulo, color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleSmall)
+        Column(
+            modifier = Modifier.padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = titulo,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleSmall
+            )
             contenido()
         }
     }

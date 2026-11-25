@@ -36,6 +36,8 @@ com.suarez.campusgps/
 ├── data/
 │   ├── LugaresRepository.kt
 │   ├── LugaresRepositoryLocal.kt
+│   ├── PreferenciasRepository.kt
+│   ├── PreferenciasRepositoryDataStore.kt
 │   ├── UbicacionRepository.kt
 │   └── UbicacionRepositoryGoogle.kt
 ├── model/Modelos.kt
@@ -57,8 +59,20 @@ flowchart LR
     VM --> LR[LugaresRepository]
     UR --> GPS[FusedLocationProviderClient]
     LR --> DATA[5 lugares ficticios]
+    VM --> PR[PreferenciasRepository]
+    PR --> DS[DataStore]
     VM --> DIST[Distancia y formato]
 ```
+
+## Mejoras de la Fase 2 con IA
+
+- Filtros por categoría y radio de 100, 200 o 500 m, aplicados a la lista y a los marcadores.
+- Punto azul y control nativo de ubicación cuando ya se concedió el permiso.
+- Seguimiento en vivo con acciones para iniciar y detener las actualizaciones.
+- Último lugar seleccionado persistido con DataStore y restaurado al volver a abrir la app.
+- Botón en la barra superior para cambiar entre tema claro y oscuro; Material 3 y Google Maps cambian juntos.
+- Portada de bienvenida con acceso directo al mapa y control de tema claro/oscuro.
+- Al entrar al mapa, CampusGPS solicita el permiso de ubicación y busca la posición actual para mostrar el punto azul y lugares cercanos.
 
 ## Capturas
 
