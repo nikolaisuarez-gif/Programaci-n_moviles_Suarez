@@ -32,7 +32,8 @@ class PostsViewModel(private val repo: PostRepository) : ViewModel() {
     fun cargar() {
         viewModelScope.launch {
             _lista.value = UiState.Cargando
-            val resultado = _usuarioFiltro.value?.let(repo::porUsuario) ?: repo.listar()
+            val usuario = _usuarioFiltro.value
+            val resultado = if (usuario == null) repo.listar() else repo.porUsuario(usuario)
             _lista.value = resultado.fold(
                 onSuccess = { UiState.Exito(it) },
                 onFailure = { UiState.Error(mensajeDe(it)) }
