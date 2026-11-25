@@ -53,7 +53,7 @@ La UI solo presenta `UiState` y envía acciones al ViewModel. El ViewModel conoc
 
 ## Capturas
 
-No se generaron capturas de la aplicación porque no se logró completar una ejecución en emulador. Estos cinco archivos quedan pendientes y no se han inventado:
+La aplicación se ejecutó en el emulador Pixel 7a (API 37). Las capturas para adjuntar a la entrega siguen pendientes:
 
 1. `capturas/lista.png`
 2. `capturas/detalle.png`
@@ -72,4 +72,4 @@ No se generaron capturas de la aplicación porque no se logró completar una eje
 
 ## Validación
 
-`assembleDebug` compiló correctamente en las ramas `main` y `mejora-ia` con Gradle 8.13 y JDK 17. En este equipo, el Java predeterminado apunta a un lanzador antiguo y Android Studio incluye JDK 25; para repetir la compilación aquí se seleccionó temporalmente JDK 17. No se ejecutó la app en emulador ni se verificaron visualmente las llamadas HTTP. Las cinco capturas siguen pendientes.
+Android Studio compiló, instaló y ejecutó la aplicación en un emulador Pixel 7a (API 37). Se verificaron visualmente la lista, el filtro y la barra superior azul. JSONPlaceholder entrega títulos y cuerpos de ejemplo en inglés o texto de relleno; la guía del laboratorio indica conservar esos datos. Los rótulos y mensajes propios de la interfaz están en español. Las cinco capturas para adjuntar a la entrega siguen pendientes.
