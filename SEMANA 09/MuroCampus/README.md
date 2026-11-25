@@ -49,6 +49,7 @@ La UI solo presenta `UiState` y envía acciones al ViewModel. El ViewModel conoc
 - Filtro por Todos y usuarios 1–10 mediante `@Query("userId")`.
 - Detalle y comentarios mediante `@Path`; el botón Atrás vuelve a la lista conservada en el ViewModel.
 - Formulario de publicación con validación, estado de envío, resultado y mensaje de error que conserva el texto.
+- En la rama `mejora-ia`: eliminación simulada con `@DELETE`, búsqueda local por título e interceptor `Accept: application/json`.
 
 ## Capturas
 
