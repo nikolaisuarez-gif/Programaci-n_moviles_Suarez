@@ -122,7 +122,8 @@ fun PantallaTareas(viewModel: TareasViewModel) {
             Tarjeta("Dos cargas") {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Switch(checked = simularError, onCheckedChange = viewModel::cambiarSimularError)
                     Text("Simular error")
