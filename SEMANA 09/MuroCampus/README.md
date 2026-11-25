@@ -72,4 +72,4 @@ No se generaron capturas de la aplicación porque no se logró completar una eje
 
 ## Validación
 
-La compilación `assembleDebug` se intentó desde este entorno, pero Gradle quedó bloqueado sin emitir salida y se interrumpió. La compilación aún debe confirmarse en Android Studio tras sincronizar Gradle. Tampoco se ejecutó en emulador ni se verificaron visualmente las llamadas HTTP.
+`assembleDebug` compiló correctamente en las ramas `main` y `mejora-ia` con Gradle 8.13 y JDK 17. En este equipo, el Java predeterminado apunta a un lanzador antiguo y Android Studio incluye JDK 25; para repetir la compilación aquí se seleccionó temporalmente JDK 17. No se ejecutó la app en emulador ni se verificaron visualmente las llamadas HTTP. Las cinco capturas siguen pendientes.
