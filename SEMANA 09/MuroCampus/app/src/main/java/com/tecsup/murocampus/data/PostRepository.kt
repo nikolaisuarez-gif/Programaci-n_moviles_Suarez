@@ -16,11 +16,15 @@ interface PostRepository {
     suspend fun borrar(id: Int): Result<Unit>
 }
 
+class HttpStatusException(val statusCode: Int) : Exception("HTTP $statusCode")
+
 class PostRepositoryRemote(private val api: PostApi) : PostRepository {
     private suspend fun <T> llamar(bloque: suspend () -> T): Result<T> = try {
         Result.success(bloque())
     } catch (e: CancellationException) {
         throw e
+    } catch (e: HttpException) {
+        Result.failure(HttpStatusException(e.code()))
     } catch (e: Exception) {
         Result.failure(e)
     }
