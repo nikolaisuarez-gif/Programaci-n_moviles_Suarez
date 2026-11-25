@@ -30,6 +30,9 @@ class PostsViewModel(private val repo: PostRepository) : ViewModel() {
     private val _usuarioFiltro = MutableStateFlow<Int?>(null)
     val usuarioFiltro = _usuarioFiltro.asStateFlow()
 
+    private val _busqueda = MutableStateFlow("")
+    val busqueda = _busqueda.asStateFlow()
+
     init { cargar() }
 
     fun cargar() {
@@ -47,6 +50,10 @@ class PostsViewModel(private val repo: PostRepository) : ViewModel() {
         if (_usuarioFiltro.value == userId) return
         _usuarioFiltro.value = userId
         cargar()
+    }
+
+    fun buscar(texto: String) {
+        _busqueda.value = texto
     }
 
     fun abrir(id: Int) {

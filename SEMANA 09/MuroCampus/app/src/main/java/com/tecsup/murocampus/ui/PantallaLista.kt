@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -32,6 +33,7 @@ fun PantallaLista(
 ) {
     val estado by viewModel.lista.collectAsStateWithLifecycle()
     val filtro by viewModel.usuarioFiltro.collectAsStateWithLifecycle()
+    val busqueda by viewModel.busqueda.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("MuroCampus") }) },
@@ -40,6 +42,13 @@ fun PantallaLista(
         }
     ) { padding ->
         Column(Modifier.fillMaxSize().padding(padding)) {
+            OutlinedTextField(
+                value = busqueda,
+                onValueChange = viewModel::buscar,
+                label = { Text("Buscar por título") },
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp),
+                singleLine = true
+            )
             LazyRow(
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
@@ -61,7 +70,10 @@ fun PantallaLista(
                 UiState.Cargando -> Cargando()
                 is UiState.Error -> ErrorConReintento(actual.mensaje, viewModel::cargar)
                 is UiState.Exito -> {
-                    if (actual.datos.isEmpty()) {
+                    val publicaciones = actual.datos.filter {
+                        it.title.contains(busqueda.trim(), ignoreCase = true)
+                    }
+                    if (publicaciones.isEmpty()) {
                         Text("Sin publicaciones", modifier = Modifier.padding(20.dp),
                             style = MaterialTheme.typography.bodyLarge)
                     } else {
@@ -70,7 +82,7 @@ fun PantallaLista(
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            items(actual.datos, key = { it.id }) { post ->
+                            items(publicaciones, key = { it.id }) { post ->
                                 TarjetaPost(post, onClick = { onSeleccionar(post.id) })
                             }
                         }
