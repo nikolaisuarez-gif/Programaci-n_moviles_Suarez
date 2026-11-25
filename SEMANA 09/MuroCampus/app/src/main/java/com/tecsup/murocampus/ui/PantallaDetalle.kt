@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -29,6 +30,7 @@ import com.tecsup.murocampus.viewmodel.UiState
 @Composable
 fun PantallaDetalle(postId: Int, viewModel: PostsViewModel, onBack: () -> Unit) {
     val estado by viewModel.detalle.collectAsStateWithLifecycle()
+    val eliminacion by viewModel.eliminacion.collectAsStateWithLifecycle()
     BackHandler(onBack = onBack)
 
     Scaffold(topBar = { TopAppBar(title = { Text("MuroCampus") }) }) { padding ->
@@ -47,6 +49,25 @@ fun PantallaDetalle(postId: Int, viewModel: PostsViewModel, onBack: () -> Unit) 
                         Text(actual.datos.post.title, style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 6.dp, bottom = 10.dp))
                         Text(actual.datos.post.body, style = MaterialTheme.typography.bodyLarge)
+                        Button(
+                            onClick = { viewModel.borrarPublicacion(postId) },
+                            enabled = eliminacion !is UiState.Cargando && eliminacion !is UiState.Exito,
+                            modifier = Modifier.padding(top = 12.dp)
+                        ) { Text("Eliminar publicación") }
+                        when (val borrado = eliminacion) {
+                            null -> Unit
+                            UiState.Cargando -> Text("Eliminando…")
+                            is UiState.Error -> Column {
+                                Text(borrado.mensaje, color = MaterialTheme.colorScheme.error)
+                                Button(onClick = { viewModel.reintentarBorrado(postId) }) {
+                                    Text("Reintentar eliminación")
+                                }
+                            }
+                            is UiState.Exito -> Column {
+                                Text("Publicación eliminada (simulación).")
+                                Button(onClick = onBack) { Text("Volver a la lista") }
+                            }
+                        }
                         Text("Comentarios (${actual.datos.comentarios.size})",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,

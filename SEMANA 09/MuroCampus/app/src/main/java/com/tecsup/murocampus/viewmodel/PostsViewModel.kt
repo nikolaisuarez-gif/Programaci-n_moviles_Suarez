@@ -24,6 +24,9 @@ class PostsViewModel(private val repo: PostRepository) : ViewModel() {
     private val _publicacion = MutableStateFlow<UiState<Post>?>(null)
     val publicacion = _publicacion.asStateFlow()
 
+    private val _eliminacion = MutableStateFlow<UiState<Unit>?>(null)
+    val eliminacion = _eliminacion.asStateFlow()
+
     private val _usuarioFiltro = MutableStateFlow<Int?>(null)
     val usuarioFiltro = _usuarioFiltro.asStateFlow()
 
@@ -49,6 +52,7 @@ class PostsViewModel(private val repo: PostRepository) : ViewModel() {
     fun abrir(id: Int) {
         viewModelScope.launch {
             _detalle.value = UiState.Cargando
+            _eliminacion.value = null
             val resultado = coroutineScope {
                 val post = async { repo.detalle(id) }
                 val comentarios = async { repo.comentarios(id) }
@@ -72,6 +76,18 @@ class PostsViewModel(private val repo: PostRepository) : ViewModel() {
     }
 
     fun reintentarDetalle(id: Int) = abrir(id)
+
+    fun borrarPublicacion(id: Int) {
+        viewModelScope.launch {
+            _eliminacion.value = UiState.Cargando
+            _eliminacion.value = repo.borrar(id).fold(
+                onSuccess = { UiState.Exito(Unit) },
+                onFailure = { UiState.Error(mensajeDe(it)) }
+            )
+        }
+    }
+
+    fun reintentarBorrado(id: Int) = borrarPublicacion(id)
 
     fun publicar(titulo: String, texto: String) {
         if (titulo.isBlank() || texto.isBlank()) return
