@@ -76,8 +76,8 @@ fun PantallaLista(
             }
 
             when (val actual = estado) {
-                UiState.Cargando -> Cargando()
-                is UiState.Error -> ErrorConReintento(actual.mensaje, viewModel::cargar)
+                UiState.Cargando -> Cargando(modifier = Modifier.weight(1f))
+                is UiState.Error -> ErrorConReintento(actual.mensaje, viewModel::cargar, Modifier.weight(1f))
                 is UiState.Exito -> {
                     val publicaciones = actual.datos.filter {
                         it.title.contains(busqueda.trim(), ignoreCase = true)

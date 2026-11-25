@@ -1,6 +1,7 @@
 package com.tecsup.murocampus.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,10 +14,13 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -30,12 +34,16 @@ fun TarjetaPost(post: Post, onClick: () -> Unit, modifier: Modifier = Modifier) 
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text(
-                text = "Usuario ${post.userId}",
-                color = MaterialTheme.colorScheme.primary,
-                style = MaterialTheme.typography.labelSmall,
-                fontWeight = FontWeight.Bold
-            )
+            val fondoUsuario = if (post.userId == 2) Color(0xFFFFC107) else MaterialTheme.colorScheme.primary
+            val textoUsuario = if (post.userId == 2) Color(0xFF202124) else MaterialTheme.colorScheme.onPrimary
+            Surface(color = fondoUsuario, contentColor = textoUsuario, shape = RoundedCornerShape(6.dp)) {
+                Text(
+                    text = "Usuario ${post.userId}",
+                    modifier = Modifier.padding(horizontal = 7.dp, vertical = 2.dp),
+                    style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold
+                )
+            }
             Text(post.title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold,
                 maxLines = 1, overflow = TextOverflow.Ellipsis)
             Text(post.body, style = MaterialTheme.typography.bodySmall, maxLines = 2,
@@ -45,31 +53,37 @@ fun TarjetaPost(post: Post, onClick: () -> Unit, modifier: Modifier = Modifier) 
 }
 
 @Composable
-fun Cargando(mensaje: String = "Cargando publicaciones…") {
-    Column(
-        modifier = Modifier.fillMaxWidth().padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        CircularProgressIndicator(Modifier.size(32.dp))
-        Spacer(Modifier.height(12.dp))
-        Text(mensaje, style = MaterialTheme.typography.bodyMedium)
+fun Cargando(mensaje: String = "Cargando publicaciones…", modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxWidth().padding(24.dp), contentAlignment = Alignment.Center) {
+        Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
+            Column(
+                modifier = Modifier.padding(horizontal = 28.dp, vertical = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                CircularProgressIndicator(Modifier.size(32.dp))
+                Spacer(Modifier.height(12.dp))
+                Text(mensaje, style = MaterialTheme.typography.bodyMedium)
+            }
+        }
     }
 }
 
 @Composable
-fun ErrorConReintento(mensaje: String, onReintentar: () -> Unit) {
-    Card(
-        modifier = Modifier.fillMaxWidth().padding(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+fun ErrorConReintento(mensaje: String, onReintentar: () -> Unit, modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxWidth().padding(16.dp), contentAlignment = Alignment.Center) {
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
         ) {
-            Text(mensaje, color = MaterialTheme.colorScheme.onErrorContainer)
-            Spacer(Modifier.height(8.dp))
-            Button(onClick = onReintentar) { Text("Reintentar") }
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(mensaje, color = MaterialTheme.colorScheme.onErrorContainer)
+                Spacer(Modifier.height(8.dp))
+                Button(onClick = onReintentar) { Text("Reintentar") }
+            }
         }
     }
 }
