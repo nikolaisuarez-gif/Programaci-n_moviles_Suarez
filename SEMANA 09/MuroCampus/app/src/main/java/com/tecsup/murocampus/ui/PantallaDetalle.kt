@@ -2,6 +2,7 @@ package com.tecsup.murocampus.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,8 +34,12 @@ fun PantallaDetalle(postId: Int, viewModel: PostsViewModel, onBack: () -> Unit) 
 
     Scaffold(topBar = { TopAppBar(title = { Text("MuroCampus") }) }) { padding ->
         when (val actual = estado) {
-            UiState.Cargando -> Cargando("Cargando publicación…")
-            is UiState.Error -> ErrorConReintento(actual.mensaje) { viewModel.reintentarDetalle(postId) }
+            UiState.Cargando -> Box(Modifier.fillMaxSize().padding(padding)) {
+                Cargando("Cargando publicación…")
+            }
+            is UiState.Error -> Box(Modifier.fillMaxSize().padding(padding)) {
+                ErrorConReintento(actual.mensaje) { viewModel.reintentarDetalle(postId) }
+            }
             is UiState.Exito -> {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize().padding(padding),
