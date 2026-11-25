@@ -46,10 +46,10 @@ fun PantallaDetalle(postId: Int, viewModel: PostsViewModel, onBack: () -> Unit) 
     ) { padding ->
         when (val actual = estado) {
             UiState.Cargando -> Box(Modifier.fillMaxSize().padding(padding)) {
-                Cargando("Cargando publicación…")
+                Cargando("Cargando publicación…", modifier = Modifier.fillMaxSize())
             }
             is UiState.Error -> Box(Modifier.fillMaxSize().padding(padding)) {
-                ErrorConReintento(actual.mensaje) { viewModel.reintentarDetalle(postId) }
+                ErrorConReintento(actual.mensaje, { viewModel.reintentarDetalle(postId) }, Modifier.fillMaxSize())
             }
             is UiState.Exito -> {
                 LazyColumn(

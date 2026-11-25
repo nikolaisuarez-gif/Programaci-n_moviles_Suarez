@@ -67,8 +67,8 @@ fun PantallaLista(
             }
 
             when (val actual = estado) {
-                UiState.Cargando -> Cargando()
-                is UiState.Error -> ErrorConReintento(actual.mensaje, viewModel::cargar)
+                UiState.Cargando -> Cargando(modifier = Modifier.weight(1f))
+                is UiState.Error -> ErrorConReintento(actual.mensaje, viewModel::cargar, Modifier.weight(1f))
                 is UiState.Exito -> {
                     if (actual.datos.isEmpty()) {
                         Text("Sin publicaciones", modifier = Modifier.padding(20.dp),

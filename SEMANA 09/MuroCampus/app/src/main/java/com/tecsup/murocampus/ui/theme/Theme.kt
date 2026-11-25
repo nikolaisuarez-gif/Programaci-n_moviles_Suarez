@@ -11,6 +11,8 @@ private val MuroColors = lightColorScheme(
     secondary = Color(0xFF2783B4),
     background = Color(0xFFFFFCFF),
     surface = Color(0xFFFFFCFF),
+    surfaceVariant = Color(0xFFF0F3F7),
+    onSurfaceVariant = Color(0xFF4B5563),
     error = Color(0xFFB3261E)
 )
 

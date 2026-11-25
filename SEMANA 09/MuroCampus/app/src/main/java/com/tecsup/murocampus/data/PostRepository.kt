@@ -5,6 +5,7 @@ import com.tecsup.murocampus.model.Comentario
 import com.tecsup.murocampus.model.NuevoPost
 import com.tecsup.murocampus.model.Post
 import kotlinx.coroutines.CancellationException
+import retrofit2.HttpException
 
 interface PostRepository {
     suspend fun listar(): Result<List<Post>>
