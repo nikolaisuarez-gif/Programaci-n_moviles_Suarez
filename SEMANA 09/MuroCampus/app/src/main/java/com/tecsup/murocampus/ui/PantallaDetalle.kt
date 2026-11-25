@@ -17,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -32,7 +33,17 @@ fun PantallaDetalle(postId: Int, viewModel: PostsViewModel, onBack: () -> Unit) 
     val estado by viewModel.detalle.collectAsStateWithLifecycle()
     BackHandler(onBack = onBack)
 
-    Scaffold(topBar = { TopAppBar(title = { Text("MuroCampus") }) }) { padding ->
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("MuroCampus") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                )
+            )
+        }
+    ) { padding ->
         when (val actual = estado) {
             UiState.Cargando -> Box(Modifier.fillMaxSize().padding(padding)) {
                 Cargando("Cargando publicación…")

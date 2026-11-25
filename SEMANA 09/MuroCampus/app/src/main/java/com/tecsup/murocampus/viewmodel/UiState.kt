@@ -1,8 +1,8 @@
 package com.tecsup.murocampus.viewmodel
 
 import java.io.IOException
+import com.tecsup.murocampus.data.HttpStatusException
 import kotlinx.serialization.SerializationException
-import retrofit2.HttpException
 
 sealed interface UiState<out T> {
     data object Cargando : UiState<Nothing>
@@ -12,7 +12,7 @@ sealed interface UiState<out T> {
 
 fun mensajeDe(e: Throwable): String = when (e) {
     is IOException -> "Sin conexión a internet.\nRevisa tu red e inténtalo otra vez."
-    is HttpException -> "Error del servidor (${e.code()})"
+    is HttpStatusException -> "Error del servidor (${e.statusCode})"
     is SerializationException -> "Respuesta inesperada"
-    else -> e.localizedMessage ?: "Error desconocido"
+    else -> "Ocurrió un error inesperado"
 }

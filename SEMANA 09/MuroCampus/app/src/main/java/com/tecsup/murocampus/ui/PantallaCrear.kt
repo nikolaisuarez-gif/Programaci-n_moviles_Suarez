@@ -10,8 +10,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -39,7 +41,17 @@ fun PantallaCrear(viewModel: PostsViewModel, onBack: () -> Unit) {
         }
     }
 
-    Scaffold(topBar = { TopAppBar(title = { Text("MuroCampus") }) }) { padding ->
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("MuroCampus") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                )
+            )
+        }
+    ) { padding ->
         Column(
             modifier = Modifier.fillMaxSize().padding(padding).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -68,9 +80,9 @@ fun PantallaCrear(viewModel: PostsViewModel, onBack: () -> Unit) {
             when (val actual = estado) {
                 null -> Unit
                 UiState.Cargando -> Cargando("Publicando…")
-                is UiState.Error -> Text(actual.mensaje, color = androidx.compose.material3.MaterialTheme.colorScheme.error)
+                is UiState.Error -> Text(actual.mensaje, color = MaterialTheme.colorScheme.error)
                 is UiState.Exito -> Text("Publicado con id ${actual.datos.id}",
-                    color = androidx.compose.material3.MaterialTheme.colorScheme.primary)
+                    color = MaterialTheme.colorScheme.primary)
             }
         }
     }
