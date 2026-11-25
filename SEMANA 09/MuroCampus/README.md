@@ -71,4 +71,4 @@ La aplicación se ejecutó en el emulador Pixel 7a (API 37). Las capturas para a
 
 ## Validación
 
-Android Studio compiló, instaló y ejecutó la aplicación en un emulador Pixel 7a (API 37). Se verificaron visualmente la lista, el filtro y la barra superior azul. JSONPlaceholder entrega títulos y cuerpos de ejemplo en inglés o texto de relleno; la guía del laboratorio indica conservar esos datos. Los rótulos y mensajes propios de la interfaz están en español. Las cinco capturas para adjuntar a la entrega siguen pendientes.
+Android Studio compiló, instaló y ejecutó la aplicación en un emulador Pixel 7a (API 37). Se verificaron visualmente la lista, el filtro, la barra superior azul y el formulario de publicación. El POST de prueba respondió con id 101 y limpió el formulario. JSONPlaceholder entrega títulos y cuerpos de ejemplo en inglés o texto de relleno; la guía del laboratorio indica conservar esos datos. Los rótulos y mensajes propios de la interfaz están en español. Las cinco capturas para adjuntar a la entrega siguen pendientes.
